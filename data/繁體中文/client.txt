@@ -1,0 +1,445 @@
+;#####################################################
+;## 一般資訊/說明
+;#####################################################
+
+;## 此檔案的用途
+	;## 腳本使用此檔案偵測從遊戲客戶端複製的資料中的特定文字模式，以提取資訊
+	;## 這些模式已從硬編碼的英文改為透過此 txt 檔案暴露，可以適配新的目標語言
+
+;## 檔案結構
+	;## 腳本會忽略 TAB、空行，以及標記為註解的行/區段 (;##)
+	;## 此檔案中的每個非註解行都是一對 key/value，分為兩部分：
+		;##	key			=	"value"
+		;## value 必須用引號括起來
+
+
+
+;#####################################################
+;## 系統設定
+;#####################################################
+
+;## 這些是依目標語言而定的全域系統設定
+		system_font			=	"Microsoft JhengHei"
+		system_fullstop			=	"。"
+		system_parenthesis		=	"(#)"
+		system_poedb_lang		=	"tw"
+		system_poedb_lang		=	"修飾"
+
+
+;#####################################################
+;## 貢獻者
+;#####################################################
+
+		contributor			=	"Exile-UI 繁體中文翻譯"
+
+
+
+;#####################################################
+;## 地圖相關字串
+;#####################################################
+
+		maps_heist			=	"劫盜"
+		maps_logbook			=	"探險日誌"
+		maps_delirium			=	"幻境模擬"
+		maps_boss			=	"頭目"
+		maps_tower			=	"塔"
+
+		maps_maven_invitation		=	"釋界邀請函"
+		maps_maven			=	"釋界"
+		maps_hunger			=	"小藍"
+		maps_blackstar			=	"小紅"
+		maps_exarch			=	"紅王"
+		maps_eater			=	"藍王"
+		maps_shaper			=	"塑界者"
+		maps_elder			=	"尊師"
+		maps_elder			=	"究極尊師"
+		maps_oshabi			=	"奧莎比"
+		maps_atziri			=	"女王"
+		maps_atziri			=	"終極女王"
+		maps_sirus			=	"賽勒斯"
+		maps_cortex			=	"深沉"
+
+
+		maps_ritualboss			=	"迷霧中的王"
+		maps_ritualboss			=	"虛無核心"
+
+
+		maps_xesht			=	"謝胥特"
+		maps_xesht			=	"扭曲領域"
+		maps_arbiter			=	"灰燼仲裁者"
+		maps_arbiter			=	"燃燒巨碑"
+
+
+		maps_hideout			=	"藏身處"
+		maps_limestone_hideout		=	"石灰岩藏身處"
+		maps_felled_hideout		=	"伐木場藏身處"
+		maps_canal_hideout		=	"水道藏身處"
+		maps_shrine_hideout		=	"神殿藏身處"
+
+		maps_seer			=	"無名預言家"
+		maps_vaults			=	"卡馬薩寶庫"
+
+		maps_voidreliquary		=	"聖物寶庫"
+		maps_biome			=	"生態域："
+
+		maps_stats_full			=	"詞綴#物品數量#物品稀有度#怪物群大小#地圖#聖甲蟲#通貨#輿圖石"
+		maps_stats			=	"x#q#r#p#m#s#c#w"
+
+
+
+;#####################################################
+;## 角色追蹤
+;#####################################################
+
+		log_location			=	"0"
+		log_enter			=	"你已進入"
+
+		log_level			=	"已達到等級"
+		log_whois			=	"是等級 # 的"
+		log_whois_class			=	"等級 # 的"
+		log_slain			=	"已被殺死"
+		log_suicide			=	"自殺了"
+		log_killed			=	"你已殺死 # 個怪物"
+
+
+		lab_aspirant's trial      = "昇華試煉"
+		lab_basilica annex        = "教堂側廳"
+		lab_basilica atrium       = "教堂庭院"
+		lab_basilica halls        = "教堂大廳"
+		lab_basilica passage      = "教堂通道"
+
+		lab_domain crossing       = "領域十字路"
+		lab_domain enclosure      = "領域圍區"
+		lab_domain path           = "領域小徑"
+		lab_domain walkways       = "領域走道"
+
+		lab_estate crossing       = "莊園十字路"
+		lab_estate enclosure      = "莊園圍區"
+		lab_estate path           = "莊園小徑"
+		lab_estate walkways       = "莊園走道"
+
+		lab_mansion annex         = "宅邸側廳"
+		lab_mansion atrium        = "宅邸庭院"
+		lab_mansion halls         = "宅邸大廳"
+		lab_mansion passage       = "宅邸通道"
+
+		lab_sanitorium annex      = "療養院側廳"
+		lab_sanitorium atrium     = "療養院庭院"
+		lab_sanitorium halls      = "療養院大廳"
+		lab_sanitorium passage    = "療養院通道"
+
+		lab_sepulchre annex       = "陵墓側廳"
+		lab_sepulchre atrium      = "陵墓庭院"
+		lab_sepulchre halls       = "陵墓大廳"
+		lab_sepulchre passage     = "陵墓通道"
+
+
+
+;#####################################################
+;## 透過聊天視窗追蹤聯盟內容
+;#####################################################
+
+		log_delirium			=	"奇異之聲："
+
+		log_blight			=	"卡西亞修女："
+		log_harvest			=	"歐夏碧："
+		log_incursion			=	"探險大師‧乙曼："
+		log_bestiary			=	"獸獵大師‧艾恩哈："
+		log_delve			=	"掘挖大師‧尼科："
+		log_betrayal			=	"隱匿大師‧瓊恩："
+		log_betrayal			=	"沉默屠夫‧亞斯琳："
+		log_betrayal			=	"冷血‧乞沐利亞："
+		log_betrayal			=	"光之審判‧艾爾瑞恩："
+		log_betrayal			=	"重生的葛拉維奇斯："
+		log_betrayal			=	"小乖乖‧乞芙："
+		log_betrayal			=	"戰爭大師‧哈乞："
+		log_betrayal			=	"鐵匠‧希拉克："
+		log_betrayal			=	"出逃者："
+		log_betrayal			=	"杰拉斯‧乞蘭德斯："
+		log_betrayal			=	"放逐者‧乞金："
+		log_betrayal			=	"石之子‧柯雷爾："
+		log_betrayal			=	"狼鬥士‧里歐："
+		log_betrayal			=	"午夜工匠‧利刻："
+		log_betrayal			=	"玲·優修："
+		log_betrayal			=	"狩獵者‧乞拉："
+		log_betrayal			=	"勝利先鋒‧瓦乞："
+		log_betrayal			=	"沉默兄弟‧佛里奇："
+		log_ultimatum			=	"試煉大師："
+		log_maven			=	"乘願者："
+		log_seer			=	"The Nameless Seer has appeared nearby"
+		log_mist			=	"A Reflecting Mist has manifested nearby"
+		log_infamous			=	", the Cyaxan"
+		log_infamous			=	", the Keitan"
+		log_infamous			=	", the Azadin"
+		log_infamous			=	", the Bardiyan"
+		log_graftblood			=	"Equipped Grafts"
+
+
+		log_expedition			=	"戰爭吟唱者‧丹尼格："
+		log_expedition			=	"賭徒‧乞雯恩："
+		log_expedition			=	"羅格："
+		log_expedition			=	"議價者‧圖賈："
+
+		log_expedition 2		=	"戰爭吟唱者‧丹尼格："
+		log_expedition 2		=	"乞雯恩："
+		log_expedition 2		=	"羅格："
+		log_expedition 2		=	"圖賈："
+
+
+
+;#####################################################
+;## 物品相關字串
+;#####################################################
+
+		items_waystone			=	"輿圖石"
+		items_soul_core			=	"靈魂核心"
+		items_idol			=	"神像"
+		items_uncut_gem			=	"未切割技能寶石"
+		items_uncut_gem			=	"未切割輔助寶石"
+		items_uncut_gem			=	"未切割靈魂寶石"
+
+		items_unidentified		=	"未鑑定"
+		items_unmodifiable		=	"無法被改造"
+		items_corrupted			=	"已汙染"
+		items_mirrored			=	"已鏡像"
+		items_unequippable		=	"你無法使用此物品。其屬性將被忽略"
+
+
+		items_armour			=	"護甲："
+		items_evasion			=	"閃避值："
+		items_energy			=	"能量護盾："
+		items_ward			=	"護體："
+		items_aps			=	"每秒攻擊次數："
+		items_quality			=	"品質："
+		items_phys_dmg			=	"物理傷害："
+		items_dmg			=	"# 傷害："
+		items_chaos_dmg			=	"混沌傷害："
+
+		items_ele_dmg			=	"元素傷害："
+
+		items_map_waystonechance	=	"輿圖石掉落機率："
+		items_map_revives		=	"可復活次數："
+		items_sockets			=	"插槽："
+
+
+		items_maptier			=	"地圖階級："
+		items_mapreward			=	"獎勵："
+		items_mapreward_foil		=	"閃卡 "
+
+
+		items_mapquantity		=	"物品數量："
+		items_maprarity			=	"物品稀有度："
+		items_mappacksize		=	"怪物群大小："
+
+
+		items_mapmaps			=	"更多地圖："
+		items_mapscarabs		=	"更多聖甲蟲："
+		items_mapcurrency		=	"更多通貨："
+
+
+		items_stack			=	"堆疊數量："
+
+
+		items_mapname			=	"# 地圖"
+		items_elderguardian		=	"地圖被佔據"
+		items_enslaver			=	"奴役者"
+		items_eradicator		=	"根除者"
+		items_constrictor		=	"壓縮者"
+		items_purifier			=	"淨化者"
+
+
+		items_conqueror			=	"地圖包含 # 城塞"
+		items_baran			=	"巴倫"
+		items_drox			=	"卓克斯"
+		items_al-hezmin			=	"乞赫茲敏"
+		items_veritania			=	"維里塔尼亞"
+
+
+		items_prefix			=	"前綴詞綴"
+		items_prefix_allowed		=	"前綴詞綴#允許"
+		items_suffix			=	"後綴詞綴"
+		items_suffix_allowed		=	"後綴詞綴#允許"
+		items_affix			=	""#""
+		items_uniquemod			=	"傳奇詞綴"
+		items_implicit			=	"固定詞綴"
+		items_implicit_exarch		=	"灼炎尊師固定詞綴"
+		items_implicit_eater		=	"噬界者固定詞綴"
+		items_implicit_vaal		=	"汙染固定詞綴"
+		items_implicit_tiers		=	"次級"
+		items_implicit_tiers		=	"高級"
+		items_implicit_tiers		=	"極級"
+		items_implicit_tiers		=	"卓越"
+		items_implicit_tiers		=	"精良"
+		items_implicit_tiers		=	"完美"
+		items_tier			=	"階級："
+		items_unscalable		=	"無法縮放的數值"
+
+
+		items_ilevel			=	"物品等級："
+		items_requirements		=	"需求："
+		items_level			=	"等級："
+		items_str			=	"力量："
+		items_str			=	"力量："
+		items_dex			=	"敏捷："
+		items_dex			=	"敏捷："
+		items_int			=	"智慧："
+		items_int			=	"智慧："
+
+
+		items_rarity			=	"稀有度："
+		items_rare			=	"稀有"
+		items_unique			=	"傳奇"
+		items_normal			=	"普通"
+		items_magic			=	"魔法"
+		items_currency			=	"通貨"
+		items_gem			=	"寶石"
+
+
+		items_class			=	"物品類別："
+		items_relics			=	"聖物"
+		items_gem			=	"輔助寶石"
+		items_map fragments		=	"地圖碎片"
+		items_heist brooches		=	"劫盜胸針"
+		items_heist cloaks		=	"劫盜斗篷"
+		items_heist gear		=	"劫盜裝備"
+		items_heist tools		=	"劫盜工具"
+
+		items_shaper			=	"塑界者物品"
+		items_shaper_prefix		=	"塑界者的"
+		items_shaper_suffix		=	"塑型的"
+
+		items_elder			=	"尊師物品"
+		items_elder_prefix		=	"尊師的"
+		items_elder_suffix		=	"尊者的"
+
+		items_crusader			=	"聖戰軍王物品"
+		items_crusader_prefix		=	"聖戰軍王的"
+		items_crusader_suffix		=	"聖戰的"
+
+		items_redeemer			=	"救贖者物品"
+		items_redeemer_prefix		=	"救贖者的"
+		items_redeemer_suffix		=	"救贖的"
+
+		items_hunter			=	"獵人物品"
+		items_hunter_prefix		=	"獵人的"
+		items_hunter_suffix		=	"狩獵的"
+
+		items_warlord			=	"軍閥物品"
+		items_warlord_prefix		=	"軍閥的"
+		items_warlord_suffix		=	"征服的"
+
+		items_synthesis			=	"忘卻之物"
+
+
+		items_class_Claws		=	"爪"
+		items_class_Daggers		=	"匕首"
+		items_class_Wands		=	"法杖"
+		items_class_One Hand Swords	=	"單手劍"
+		items_class_One Hand Axes	=	"單手斧"
+		items_class_One Hand Maces	=	"單手錘"
+		items_class_Sceptres		=	"權杖"
+		items_class_Spears		=	"長矛"
+		items_class_Flails		=	"連枷"
+		items_class_Bows		=	"弓"
+		items_class_Staves		=	"長杖"
+		items_class_Two Hand Swords	=	"雙手劍"
+		items_class_Two Hand Axes	=	"雙手斧"
+		items_class_Two Hand Maces	=	"雙手錘"
+		items_class_Quarterstaves	=	"四分之一杖"
+		items_class_Crossbows		=	"弩"
+		items_class_Traps		=	"陷阱"
+		items_class_Talismans		=	"護身符"
+		items_class_Amulets		=	"項鍊"
+		items_class_Rings		=	"戒指"
+		items_class_Belts		=	"腰帶"
+		items_class_Gloves		=	"手套"
+		items_class_Boots		=	"鞋子"
+		items_class_Body Armours	=	"胸甲"
+		items_class_Helmets		=	"頭盔"
+		items_class_Quivers		=	"箭袋"
+		items_class_Foci		=	"核心"
+		items_class_Shields		=	"盾牌"
+		items_class_Bucklers		=	"圓盾"
+		items_class_Jewels		=	"珠寶"
+		items_class_Life Flasks		=	"生命藥劑"
+		items_class_Mana Flasks		=	"魔力藥劑"
+		items_class_Charms		=	"護符"
+		items_class_Augment		=	"鑲嵌物"
+
+
+		mods_cluster_enchant		=	"增加 # 個被動技能"
+		mods_cluster_passive		=	"增加的小型被動技能給予："
+		mods_cluster_passive		=	"增加的小型被動技能也給予："
+		mods_cluster_passive		=	"1 個增加的被動技能是"
+		mods_cluster_remove		=	"匕首攻擊的擊中和異常狀態增加傷害"
+		mods_cluster_remove		=	"劍攻擊的擊中和異常狀態增加傷害"
+		mods_cluster_remove		=	"錘或權杖攻擊的擊中和異常狀態增加傷害"
+		mods_cluster_remove		=	"藥劑的魔力恢復增加"
+
+
+		mods_cluster_replace		=	"斧攻擊"
+		mods_cluster_replace		=	"斧和劍攻擊"
+		mods_cluster_replace		=	"長杖攻擊"
+		mods_cluster_replace		=	"長杖、錘或權杖攻擊"
+		mods_cluster_replace		=	"爪攻擊"
+		mods_cluster_replace		=	"爪和匕首攻擊"
+		mods_cluster_replace		=	"生命恢復"
+		mods_cluster_replace		=	"生命和魔力恢復"
+		mods_cluster_replace		=	"持續傷害"
+		mods_cluster_replace		=	"持傷"
+
+
+		mods_cluster_replace_res	=	"的 "
+		mods_cluster_replace_res	=	"抗性"
+
+
+		mods_blight_enchant		=	"配置"
+		mods_eldritch_condition		=	"當一個 # 在你的範圍內時，"
+		mods_eldritch_interval		=	"，每 # 秒不超過一次"
+		mods_eldritch_targets		=	"非瓦爾打擊技能擊中額外 # 個鄰近的"
+		mods_implicit_vendor		=	"物品賣給商人的價格大幅提高"
+		mods_qual_enchant		=	"品質不會增加防禦"
+
+
+		mods_armour_flat		=	"+# 護甲"
+		mods_evasion_flat		=	"+# 閃避值"
+		mods_energy_flat		=	"+# 最大能量護盾"
+		mods_ward_flat			=	"+# 護體"
+		mods_armour_%			=	"% 增加護甲"
+		mods_evasion_%			=	"% 增加閃避值"
+		mods_energy_%			=	"% 增加能量護盾"
+		mods_ward_%			=	"% 增加護體"
+		mods_armour_evasion_%		=	"% 增加護甲和閃避"
+		mods_armour_energy_%		=	"% 增加護甲和能量護盾"
+		mods_evasion_energy_%		=	"% 增加閃避和能量護盾"
+		mods_damage_flat		=	"增加 # 至 # 傷害"
+		mods_phys_%			=	"% 增加物理傷害"
+
+		mods_armour_evasion_energy_%	=	"% 增加護甲、閃避和能量護盾"
+		mods_contract_alert		=	"每 # 警報等級"
+		mods_memory_magnitude		=	"增加顯性詞綴幅度"
+
+
+		quest_lilly			=	"莉莉"
+		quest_tarkleigh			=	"塔克雷"
+
+		quest_fixture			=	"命運的裝置"
+		quest_mercy			=	"慈悲任務"
+		quest_fallen			=	"失落的恩典"
+		quest_breaking			=	"砸碎一些蛋"
+
+		seed_brutal restraint		=	"亞森娜絲"
+		seed_brutal restraint		=	"芭芭拉"
+		seed_brutal restraint		=	"娜西瑪"
+		seed_elegant hubris		=	"卡迪羅"
+		seed_elegant hubris		=	"卡斯乞洛"
+		seed_elegant hubris		=	"維多里奧"
+		seed_glorious vanity		=	"阿瓦娜"
+		seed_glorious vanity		=	"多里亞尼"
+		seed_glorious vanity		=	"希巴丘亞"
+		seed_lethal pride		=	"秋谷"
+		seed_lethal pride		=	"凱恩"
+		seed_lethal pride		=	"拉奇雅塔"
+		seed_militant faith		=	"亞瓦里斯"
+		seed_militant faith		=	"多米勒斯"
+		seed_militant faith		=	"馬克薩里斯"

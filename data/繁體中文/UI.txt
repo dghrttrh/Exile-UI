@@ -1,0 +1,1254 @@
+﻿;#####################################################
+;## general information/instructions
+;#####################################################
+
+;## purpose of this file
+	;## this file contains all the strings that are displayed in the tool's UIs
+
+
+;## file structure
+	;## the tool ignores TABs, empty lines, as well as lines/sections marked as comments (;##)
+	;## each non-comment line in this file is a key/value pair, divided into two parts:
+		;##	key			=	"value"
+		;## the value has to be enclosed in quotation marks
+
+
+;## how to translate/localize the data in this file
+	;## NEVER edit the key of a line, i.e. whatever is left of the equal sign
+	;## if a value contains an abbreviation or text-string that's not immediately clear, look for comments or at the key-name for more context (e.g. global_calibrate = "cal")
+	;## unlike the client.txt file, this file contains strings that can be freely translated however you see fit
+
+
+;## some notation remarks
+	;## in order to add line-breaks to a string, include ";" in the value, e.g. "line 1;line2"
+	;## I often use <> as a replacement for quotation marks because they look better when using Fontin Smallcaps
+
+
+;## case-sensitivity
+	;## I personally prefer to display these strings all lower-case because I think it looks better with Fontin Smallcaps
+
+
+
+;#####################################################
+;## system-settings
+;#####################################################
+
+;## these are some global system-settings that are dependent on the target language
+		system_font			=	"Microsoft JhengHei"		;## except for Fontin SmallCaps, the specified font-type has to be installed on the system
+											;## this key is also present in the client.txt file, where it takes precedence (i.e. the value there will override this one)
+
+
+;#####################################################
+;## credits: translators
+;#####################################################
+
+;## these names will be shown in a tooltip when hovering over the "credits" label	;## the tooltip is segmented into smaller boxes
+		translator			=	"Exile-UI 繁體中文翻譯"		;## you can add additional <contributor> lines, and each value will have its own box
+
+
+
+;#####################################################
+;## settings menu: sections
+;#####################################################
+
+;## these are the individual sections of the settings menu, and most refer to a feature
+;## these don't necessarily have to be translated, it's up to the translator(s)
+;## the feature-names are used here and there, so make sure to be consistent across each mention
+		ms_general			=	"一般"
+		ms_actdecoder			=	"章節解碼器"
+		ms_anoints			=	"附魔搜尋器"
+		ms_betrayal-info		=	"背叛情報"
+		ms_cheat-sheets		=	"速查表"
+		ms_clone-frames		=	"複製框架"
+		ms_donations			=	"捐贈"
+		ms_filterspoon			=	"濾湯匙"		;## sarcastically derived from FilterBlade
+		ms_hotkeys			=	"快捷鍵"
+		ms_item-info			=	"物品資訊"
+		ms_leveling tracker		=	"章節追蹤器"
+		ms_macros				=	"聊天巨集"
+		ms_mapping tracker		=	"地圖追蹤器"
+		ms_map-info			=	"地圖資訊"
+		ms_minor qol tools		=	"生活品質工具"
+		ms_news				=	"公告"
+		ms_sanctum			=	"聖堂規劃師"
+		ms_sanctum			=	"瑟赫瑪規劃師"
+		ms_screen-checks		=	"螢幕檢查"
+		ms_search-strings		=	"搜尋字串"
+		ms_stash-ninja			=	"倉庫忍者"
+		ms_statlas			=	"統計地圖"
+		ms_stream-clients		=	"串流客戶端"
+		ms_tldr-tooltips		=	"簡要提示"
+		ms_exchange			=	"瓦爾街"		;## reference to Wall Street
+		ms_updater			=	"更新器"
+
+
+
+;#####################################################
+;## global: recurring/common strings
+;#####################################################
+
+;## these strings are commonly used throughout the tool
+		global_screencap		=	"螢幕截圖"
+		global_error			=	"錯誤"
+		global_success			=	"成功"
+		global_fail			=	"失敗"
+		global_abort			=	"已中止"
+		global_delete			=	"刪除"
+		global_delete			=	"刪"
+		global_scan			=	"掃描中..."
+		global_scan			=	"掃描"
+		global_match			=	"無匹配"
+		global_match			=	"不夠具體"
+		global_window			=	"設定選單"
+		global_general			=	"一般設定："
+		global_ui				=	"介面設定："
+		global_font			=	"文字大小："
+		global_button			=	"按鈕大小："
+		global_enable			=	"啟用"
+		global_reset			=	"重置"
+		global_color			=	"顏色"
+		global_color			=	"顏色："
+		global_opacity			=	"不透明度："
+		global_tier			=	"階級"
+		global_ilvl			=	"物等"
+		global_name			=	"名稱："
+		global_type			=	"類型："
+		global_add			=	"新增"
+		global_calibrate		=	"校準"
+		global_calibrate		=	"需要校準"
+		global_import			=	"匯入"
+		global_test			=	"測試"
+		global_edit			=	"編輯"
+		global_info			=	"資訊"
+		global_negative		=	"負面"
+		global_positive		=	"正面"
+		global_paste			=	"貼上"
+		global_snip			=	"截取"
+		global_show			=	"顯示"
+		global_preview			=	"預覽"
+		global_image			=	"圖片"
+		global_save			=	"儲存"
+		global_discard			=	"捨棄"
+		global_restart			=	"套用並重啟"
+		global_imgfolder		=	"開啟圖片資料夾"
+		global_newentry		=	"新增項目："
+		global_savedentry		=	"已儲存的項目："
+		global_errorname		=	"輸入不能為空"
+		global_errorname		=	"輸入無效"
+		global_errorname		=	"僅允許字母、空格;和數字"
+		global_errorname		=	"名稱已被使用"
+		global_errorname		=	"名稱不能包含：;"
+		global_inventory		=	"背包"
+		global_skilltree		=	"天賦樹"
+		global_ascendancy		=	"昇華樹"
+		global_atlas			=	"輿圖"
+		global_stash			=	"倉庫"
+		global_nothing			=	"沒有;可顯示的內容"
+		global_imageinvalid		=	"在剪貼簿中;找不到圖片資料"
+		global_releasekey		=	"釋放按鍵："
+		global_configwindow		=	"請先關閉;設定視窗"
+		global_ultrawide		=	"目前的寬高比超出遊戲官方支援的範圍。"
+		global_ultrawide		=	"除非你使用了模組，否則客戶端會在兩側顯示黑邊。"
+		global_ultrawide		=	"客戶端兩側有黑邊嗎？"
+		global_credits			=	"貢獻者"
+		global_none			=	"無"
+		global_axis			=	"x 軸"
+		global_axis			=	"y 軸"
+		global_width			=	"寬度"
+		global_height			=	"高度"
+		global_gap			=	"間距"
+		global_pattern			=	"樣式"		;## as in color pattern
+		global_regular			=	"預設"		;## as in default
+		global_setup			=	"設定"
+		global_variance		=	"容差 (0-255)"
+		global_hotkey			=	"快捷鍵："
+		global_hotkey			=	"備用快捷鍵："		;## alternative hotkey
+		global_panelsize		=	"面板大小："
+		global_uisize			=	"介面大小："
+		global_auto			=	"自動"
+		global_price			=	"價格"
+		global_all			=	"全部"
+		global_confirm			=	"確認"
+		global_mouse			=	"左#中#右"		;## left, middle, right mouse-button
+		global_coordinates		=	"座標"
+		global_time			=	"時間："
+		global_refresh			=	"重新整理"
+		global_settings		=	"設定"
+		global_regex			=	"複製正則"
+		global_clipboard		=	"已複製到剪貼簿"
+		global_start			=	"開始"
+		global_cancel			=	"取消"
+		global_downloading		=	"下載中..."
+		global_search			=	"搜尋："
+		global_toggle			=	"切換"		;## pressing a hotkey opens a feature
+		global_hold			=	"按住"		;## feature stays open while holding a hotkey, then closes on release
+		global_hide			=	"隱藏"
+		global_unhide			=	"取消隱藏"
+		global_revert			=	"還原"
+		global_apply			=	"套用"
+		global_apply			=	"套用變更"
+		global_global			=	"全域"
+		global_controller		=	"控制器"		;## gamepad
+		global_keyboard		=	"鍵盤"
+		global_multithreading	=	"多執行緒"		;## i.e. using multiple CPU cores/threads
+		global_multithreading	=	"單執行緒"
+		global_ignore			=	"忽略"
+		global_custom			=	"自訂"
+		global_condition		=	"條件："
+		global_yes			=	"是"
+		global_no				=	"否"
+		global_activation		=	"啟動方式："
+		global_maps			=	"地圖"
+		global_league			=	"聯盟"
+		global_league_sc		=	"sc"				;## softcore league
+		global_league_hc		=	"hc"				;## hardcore league
+		global_league_standard	=	"standard"
+		global_league_keepers	=	"keepers"
+		global_league_phrecia	=	"phrecia"
+		global_league_vaal		=	"vaal"
+		global_league_ssf		=	"ssf"
+		global_league_trade		=	"trade"
+		global_league_ruthless	=	"殘酷"
+		global_league_normal	=	"一般"		;## unofficial term, used as an opposite for ruthless
+		global_copy			=	"複製"
+		global_icon			=	"圖示"
+		global_off			=	"關閉"
+		global_keywords		=	"關鍵字"		;## related to search-results: words that come up often
+		global_matches			=	"匹配項"		;## matches of a search-result
+		global_colon			=	"："
+		global_ok				=	"確定"
+		global_cost			=	"花費"
+		global_ascending		=	"遞增"
+		global_descending		=	"遞減"
+		global_calculate		=	"計算"
+		global_databaseinfo		=	"資料庫資訊"
+		global_current			=	"目前"
+		global_updatewait		=	"請稍後再試"
+		global_duration		=	"持續時間 (秒)"
+		global_position		=	"位置"
+		global_exchange		=	"通貨交換"
+		global_timeunits		=	"分鐘#分鐘#小時#小時#天#天#週#週"
+		global_day			=	"天"
+		global_day			=	"天"
+		global_week			=	"週"
+		global_trade			=	"交易"
+		global_trade			=	"筆交易"
+		global_last			=	"最近"
+		global_gem			=	"寶石"
+		global_gem			=	"寶石"
+		global_act			=	"章節"
+		global_ctrl			=	"ctrl"			;## modifier-keys
+		global_alt			=	"alt"
+		global_shift			=	"shift"
+		global_shiftclick		=	"shift+點擊"
+		global_pause			=	"暫停"
+		global_resume			=	"繼續"
+		global_filter			=	"篩選"
+		global_clear			=	"清除"
+
+		mechanic_bestiary		=	"獸獵"
+		mechanic_betrayal		=	"背叛"
+		mechanic_blight		=	"荒枯"
+		mechanic_delirium		=	"譫妄"
+		mechanic_delve			=	"掘挖"
+		mechanic_expedition		=	"遠征"
+		mechanic_harvest		=	"豐收"
+		mechanic_incursion		=	"潛行"
+		mechanic_legion		=	"軍團"
+		mechanic_ritual		=	"儀式"
+		mechanic_vaal area		=	"瓦爾區域"
+		mechanic_abyssal depths	=	"深淵深處"
+		mechanic_lab trial		=	"迷宮試煉"
+		mechanic_starfall crater	=	"星落坑"
+		mechanic_ultimatum		=	"最後通牒"
+		mechanic_maven			=	"乘願者"
+		mechanic_baran			=	"巴倫"
+		mechanic_drox			=	"卓克斯"
+		mechanic_al-hezmin		=	"乞赫茲敏"
+		mechanic_veritania		=	"維里塔尼亞"
+		mechanic_constrictor	=	"壓縮者"
+		mechanic_enslaver		=	"奴役者"
+		mechanic_eradicator		=	"根除者"
+		mechanic_purifier		=	"淨化者"
+		mechanic_seer			=	"無名預言家"
+		mechanic_mist			=	"映射之霧"
+		mechanic_infamous		=	"惡名傭兵"
+		mechanic_graftblood		=	"嫁接血液"
+
+
+
+;#####################################################
+;## anoints/enchant finder
+;#####################################################
+
+;## these strings are displayed/required in the enchant finder overlay
+		anoints_reforging		=	"升級"
+		anoints_reforging		=	"重鑄"
+		anoints_materials		=	"材料"		;## as in crafting materials
+		anoints_statgroups		=	"且"		;## same as on the trade site
+		anoints_statgroups		=	"計數"
+		anoints_statgroups		=	"非"
+		anoints_rings			=	"戒指"
+
+
+
+;#####################################################
+;## betrayal-info
+;#####################################################
+
+;## in order to use the betrayal-info feature with a different language, the tool will access the file "data\Betrayal_XYZ.json"
+;## make a copy of "data\Betrayal.json" and rename that accordingly, then translate the contained strings with reward-texts
+;## the file is structured as follows:
+;## object "aisling":
+;##	object "rewards":
+;##		array "transportation":
+;##			string 1: "this is the regular reward"
+;##			string 2: "this is the ruthless reward"
+;## ONLY TRANSLATE THE STRINGS, NOT THE OBJECT/ARRAY NAMES
+
+
+;## these strings are displayed/required in the betrayal overlays, using only the short version in order to make the overlay more compact
+;## it's not likely any name other than "it" needs to be translated, but I have still included the whole list just in case
+		betrayal_aisling		=	"aisling"
+		betrayal_cameria		=	"cameria"
+		betrayal_elreon		=	"elreon"
+		betrayal_gravicius		=	"gravicius"
+		betrayal_guff			=	"guff"
+		betrayal_haku			=	"haku"
+		betrayal_hillock		=	"hillock"
+		betrayal_it			=	"it"
+		betrayal_janus			=	"janus"
+		betrayal_jorgin		=	"jorgin"
+		betrayal_korell		=	"korell"
+		betrayal_leo			=	"leo"
+		betrayal_riker			=	"riker"
+		betrayal_rin			=	"rin"
+		betrayal_tora			=	"tora"
+		betrayal_vagan			=	"vagan"
+		betrayal_vorici		=	"vorici"
+
+
+;## these division strings are displayed at the top of the overlay, using abbreviations (where applicable) in order to make it more compact
+		betrayal_transportation	=	"運輸"
+		betrayal_fortification	=	"防禦"
+		betrayal_unassigned		=	"未分配"		;## refers to a member not being assigned to any division
+		betrayal_research		=	"研究"
+		betrayal_intervention	=	"介入"
+
+
+;## these division strings are displayed in the calibration setup-window (not abbreviated)
+		betrayal_transportation	=	"運輸"
+		betrayal_fortification	=	"防禦"
+		betrayal_research		=	"研究"
+		betrayal_intervention	=	"介入"
+		betrayal_abort			=	"回到遊戲以中止"
+
+
+
+;#####################################################
+;## cheat-sheet toolkit
+;#####################################################
+
+;## these strings are displayed/required when using the cheat-sheet toolkit feature
+		cheat_header			=	"速查表設定"
+		cheat_check			=	"螢幕檢查："
+		cheat_static			=	"靜態"
+		cheat_dynamic			=	"動態"
+		cheat_manage			=	"管理圖片檔案："
+		cheat_title			=	"視窗標題："
+		cheat_launch			=	"若找不到視窗，;改為啟動此應用程式："
+		cheat_exe				=	"選擇 .exe/捷徑"
+		cheat_notes			=	"為選定項目輸入備註："
+		cheat_calibrate		=	"指定此螢幕檢查連結的項目"
+		cheat_entrynotext		=	"項目 <#>;沒有文字"
+		cheat_nowindowtitle		=	"速查表沒有;視窗標題"
+		cheat_nowindow			=	"找不到視窗：;"#""
+		cheat_nofiles			=	"速查表沒有;任何匯入的檔案"
+		cheat_shorttitle		=	"標題太短"
+		cheat_noexe			=	"請先選擇檔案"
+		cheat_multifiles		=	"無法將多個;檔案貼到索引 00"
+		cheat_filemissing		=	"檔案不存在"
+		cheat_loaderror		=	"無法載入檔案："
+		cheat_duplicate		=	"已存在相同名稱的速查表，將被覆蓋。是否繼續？"
+		cheat_flip			=	"無法翻頁"		;## this string + one of the following two form a sentence
+		cheat_flip			=	"在分段的速查表中"
+		cheat_flip			=	"在使用字母鍵之後"
+
+
+
+;#####################################################
+;## vaal street
+;#####################################################
+
+;## these strings are displayed/required when using the vaal street feature
+		exchange_chaos_div		=	"需要轉換;比率！"
+		exchange_7days			=	"過去 7 天"
+		async_listheader		=	"目前追蹤列表："
+		async_listheader		=	"已記錄的購買："
+		async_nolist			=	"尚未追蹤任何物品"
+		async_nolist			=	"找不到任何紀錄"
+		async_listing			=	"已新增追蹤"
+		async_listing			=	"已在追蹤中"
+		async_history			=	"價格歷史："
+		async_adjust			=	"調整價格："
+		async_pricefailed		=	"poe.ninja 目前無法使用"
+		async_pricefailed		=	"（無法依價格排序）"
+		async_pricefailed		=	"（無法進行價格轉換）"
+
+
+
+;#####################################################
+;## item-info
+;#####################################################
+
+;## these strings are displayed/required when using the item-info feature
+		iteminfo_unsupported	=	"不支援的物品"
+		iteminfo_dps			=	"dps"		;## damage per second
+		iteminfo_base			=	"基底"		;## as in item-base / crafting-base
+		iteminfo_qual_scaling	=	"縮放"
+		iteminfo_ruleblock		=	"被全域規則阻擋"
+		iteminfo_clearfirst		=	"請先清除;類別特定的高亮"
+		iteminfo_drop_tier		=	"掉落"
+		iteminfo_drop_league	=	"聯盟"		;## unique is limited to a specific...
+		iteminfo_drop_boss		=	"頭目"
+		iteminfo_drop_limited	=	"限定"		;## either limited to div-cards or special events (e.g. oni-goroshi)
+		iteminfo_drop_uber		=	"究極"
+		iteminfo_drop_recipe	=	"配方"		;## vendor-recipes
+		iteminfo_drop_pinnacle	=	"尖峰"
+		iteminfo_drop_vaal		=	"瓦爾"		;## exclusive to corruption
+		iteminfo_drop_retired	=	"已退役"		;## item is currently not obtainable
+		iteminfo_drop_unknown	=	"未知"		;## no database-entry for this unique (e.g. new league)
+		iteminfo_drop_global	=	"全域"
+
+
+
+;#####################################################
+;## leveling tracker / act-tracker
+;#####################################################
+
+;## these strings are displayed/required when using the leveling tracker / act-tracker
+		lvltracker_header			=	"天賦樹設定"
+		lvltracker_deleteall		=	"全部刪除"
+
+
+		lvltracker_gemnotes			=	"未包含在 PoB 中"
+		lvltracker_gemfail			=	"PoB 中無寶石"
+		lvltracker_gemregex			=	"正則已複製"
+		lvltracker_gemregex			=	"正則失敗"
+
+		lvltracker_gearlist			=	"角色 (等級)："
+		lvltracker_gearadd			=	"已新增物品"
+		lvltracker_gearadd			=	"物品已新增過"
+		lvltracker_gearadd			=	"物品已可;裝備"
+		lvltracker_gearadd			=	"物品沒有;任何需求"
+		lvltracker_gear5levels		=	"僅顯示接下來 5 個等級"
+		lvltracker_gearready		=	"裝備就緒"		;## needs to be as short as possible
+		lvltracker_clearequip		=	"清除：可裝備"		;## button to clear a list of gear that is equippable (lvl-requirements are met)
+		lvltracker_cleargems		=	"清除：寶石"
+
+
+		lvltracker_endreached		=	"無法再繼續"
+		lvltracker_fastforwarderror	=	"目前位置不包含;在任何剩餘步驟中"
+		lvltracker_guidemissing		=	"指南尚未;載入"
+		lvltracker_importerror		=	"不支援「僅寶石」;指南"
+		lvltracker_importerror		=	"無效的匯入資料"
+		lvltracker_multipaste		=	"部分檔案;不受支援"
+		lvltracker_multipaste		=	"昇華樹不支援;多重貼上"
+		lvltracker_multipaste		=	"從 # 開始的 # 個項目可能會被覆蓋。;是否繼續？"		;## the placeholders will be replaced by numbers
+		lvltracker_noimages			=	"找不到;圖片檔案"
+		lvltracker_timererror		=	"無法繼續：完成運行"		;## campaign timer can't be resumed because the run has finished
+		lvltracker_timererror		=	"進入第一個區域或城鎮以重置"		;## timer can only be reset in specific areas
+		lvltracker_timererror		=	"請先暫停計時器"
+		lvltracker_timererror		=	"被藏身處暫停設定阻擋"
+		lvltracker_timermessage		=	"開始計時"
+		lvltracker_timermessage		=	"計時器繼續"
+		lvltracker_timermessage		=	"計時器暫停"
+		lvltracker_treeerror		=	"天賦樹版本;不相容"
+		lvltracker_treenone			=	"匯入的 PoB 沒有;可用的天賦樹"
+		lvltracker_treeascendancy	=	"位置為空"
+		lvltracker_exp				=	"等級差："		;## stands for level-difference, i.e. character-level - area-level = X
+		lvltracker_recommended		=	"建議等級："		;## PoE1 only, used to filter out lvl-recommendations in the guide
+		lvltracker_recommended		=	"刷等等級："		;## PoE1 only, used to filter out lvl-recommendations in the guide
+
+
+		lvltracker_format_kill		=	"擊殺"		;## the string that follows this word will automatically be highlighted as a unique boss
+		lvltracker_format_act		=	"a"							;## abbreviation: used when the guide leads to a location in a different act (e.g. "enter a1 | clearfell encampment")
+		lvltracker_format_interlude	=	"int "						;## abbreviation: used when the guide leads to a location in a different act (e.g. "enter int 1 | the refuge")
+		lvltracker_format_epilogue	=	"尾聲"
+		lvltracker_format_optional	=	"可選："		;## in guides, lines with optional tasks/steps can be toggled dynamically if tagged with this string
+		lvltracker_format_league		=	"開荒："		;## same as above but related to league-start tasks/steps
+
+
+		lvltracker_editor			=	"指南編輯器"		;## PoE2 only (whole block)
+		lvltracker_editor_slot		=	"欄位"		;## the act-tracker has multiple slots to save guides into
+		lvltracker_editor_acts		=	"章節："
+		lvltracker_editor_save		=	"未儲存的變更："
+		lvltracker_editor_export		=	"匯出指南"
+		lvltracker_editor_areas		=	"區域名稱（點擊以貼上）："
+		lvltracker_editor_icons		=	"圖示（點擊以貼上）："
+		lvltracker_editor_highlight	=	"高亮選取的文字："
+		lvltracker_editor_load		=	"載入預設指南"
+		lvltracker_editor_blocked	=	"（已封鎖）"
+		lvltracker_editor_hint		=	"提示 / 更多資訊"
+		lvltracker_editor_quest-name	=	"任務名稱"
+		lvltracker_editor_quest-item	=	"任務物品"
+		lvltracker_editor_color		=	"套用自訂顏色"
+		lvltracker_editor_remove		=	"移除頁面"
+		lvltracker_editor_condition	=	"無條件"
+
+		lvltracker_itembuy			=	"購買物品"
+		lvltracker_gempickups		=	"寶石拾取"		;## a manager to adjust when gems should be picked up
+		lvltracker_gemreward		=	"選擇："		;## when handing in quests, the guide will prompt you to take specific rewards
+		lvltracker_gembuy			=	"購買寶石"		;## the guide will tell you to buy gems that you unlocked via questing
+		lvltracker_gembuy			=	"（按住全能鍵）"
+
+
+;#####################################################
+;## lootfilter / filterspoon
+;#####################################################
+
+;## these strings are displayed/required when using the lootfilter / filterspoon feature
+		lootfilter_basefilter		=	"篩選器："
+		lootfilter_modifications		=	"目前修改："
+		lootfilter_unsaved			=	"長按以捨棄"
+		lootfilter_update			=	"套用基礎篩選器更新"
+		lootfilter_addstack			=	"新增堆疊："
+		lootfilter_selection		=	"目前選擇："
+
+
+
+;#####################################################
+;## map-info
+;#####################################################
+
+;## these strings are displayed/required when using the map-info feature
+		mapinfo_rip				=	"死亡"
+
+
+
+;#####################################################
+;## map-tracker
+;#####################################################
+
+;## these strings are displayed/required when using the map-tracker feature
+		maptracker_idle		=	"未追蹤"
+		maptracker_kills		=	"按下全能鍵以;啟動擊殺追蹤器"
+		maptracker_kills		=	"擊殺數已更新"
+		maptracker_check		=	"請確認;地圖內容！"
+		maptracker_save		=	"地圖已記錄"
+		maptracker_save		=	"無法在地圖中儲存"
+		maptracker_loot		=	"物品已記錄"
+		maptracker_loot		=	"物品已移除"
+		maptracker_loot		=	"錯誤"
+		maptracker_export		=	"匯出"
+		maptracker_logs		=	"紀錄："
+		maptracker_logs		=	"找不到任何地圖紀錄"
+		maptracker_page		=	"頁面："
+		maptracker_page		=	"每頁項目數："		;## i.e. how many entries to show on each page
+		maptracker_header		=	"地圖紀錄檢視器"
+		maptracker_dialogue		=	"必須在遊戲的 <ui> 設定中;啟用 <將對話輸出到聊天>"
+
+;## these strings are displayed/required at the top of the map-log viewer, using the shortest length possible in order to be more compact
+		maptracker_time		=	"時間"		;## time of day (e.g. 14:20)
+		maptracker_time		=	"日期, 時間"
+		maptracker_map			=	"地圖"
+		maptracker_tier		=	"t/l"		;## (map) tier / (area) level
+		maptracker_tier		=	"階級/等級"		;## as in map-tier / area-level
+		maptracker_tier		=	"t"
+		maptracker_run			=	"通關"		;## refers to run-time (how long it took to finish the map)
+		maptracker_e-exp		=	"有效經驗"		;## effective exp (after penalties)
+		maptracker_deaths		=	"死亡"
+		maptracker_portals		=	"傳送門"
+		maptracker_kills1		=	"擊殺"
+		maptracker_loot1		=	"戰利品"
+		maptracker_mapinfo		=	"詞綴"		;## as in map mods
+		maptracker_notes		=	"備註"
+		maptracker_character	=	"角色"
+		maptracker_content		=	"內容"		;## refers to map-content (league-mechanics, side-areas, etc.)
+
+;## these strings are displayed in the sum/average tooltips (while long-clicking colored cells in the Σ row)
+		maptracker_sum			=	"合計"
+		maptracker_average		=	"平均"
+
+;## these strings are displayed in the date selection
+		maptracker_all			=	"全選"
+		maptracker_periods		=	"年份："
+		maptracker_periods		=	"聯盟："
+		maptracker_periods		=	"月份："
+		maptracker_periods		=	"日期："
+
+
+
+;#####################################################
+;## minor QoL tools
+;#####################################################
+
+;## these strings are displayed/required when using minor QoL tools
+		notepad_addgems		=	"已新增寶石"
+		notepad_addgems		=	"寶石已新增過"
+		lab_outdated			=	"佈局已過時！"
+		lab_outdated			=	"已載入："
+		lab_outdated			=	"最新："
+		lab_mismatch			=	"佈局不匹配！"
+		lab_mismatch			=	"目前："
+		lab_movemarker			=	"長按以將標記移至此處"
+
+
+
+;#####################################################
+;## OCR / screen-reading
+;#####################################################
+
+;## these strings are displayed/required when using OCR features
+		ocr_notext			=	"找不到任何文字"
+		ocr_nousecase			=	"用途不明確"		;## scanned text doesn't fit any use-case
+		ocr_nocoords			=	"無法取得座標"
+		ocr_erroraltar			=	"無法可靠地讀取詞綴，請重試"
+		ocr_vaalarea			=	"區域"
+		ocr_vaalboss			=	"頭目"
+		ocr_vaalmonsters		=	"怪物"
+		ocr_vaalplayer			=	"玩家"
+		ocr_vaalvessel			=	"容器"
+		ocr_vaalunclear		=	"不確定"
+
+
+
+;#####################################################
+;## omni-key
+;#####################################################
+
+;## these strings are displayed/required when using the omni-key to access features
+		omnikey_language		=	"不支援的遊戲語言;無法使用全能鍵"
+		omnikey_copyfail		=	"剪貼簿複製失敗"
+		omnikey_escape			=	"（按 esc 退出）"
+		omnikey_scroll			=	"滾動中..."		;## as in scroll-wheel
+		omnikey_chromes		=	"點擊 <插槽總數>;欄位並按空白鍵"
+		omnikey_clustersearch	=	"按 ctrl-f 以高亮;選定的珠寶類型"
+		omnikey_labimport		=	"選擇迷宮難度"
+		omnikey_labimport		=	"右鍵點擊佈局圖片"
+		omnikey_labimport		=	"點擊 <複製圖片>;可選："
+		omnikey_labimport		=	"右鍵點擊 <迷宮指南針檔案>"		;## there's a link underneath each lab-layout image on poelab.com
+		omnikey_labimport		=	"點擊 <複製連結地址>"		;## when right-clicking a link in your browser
+		omnikey_labimport		=	"按 ctrl + a，ctrl + c"
+		omnikey_poedb			=	"修飾"		;## it's the name of this section on poeDB, displayed at the top: https://poedb.tw/us/Modifiers
+
+
+
+;#####################################################
+;## recombination
+;#####################################################
+
+;## these strings are displayed/required when using the recombination feature
+		recomb_prefixes		=	"所需前綴："
+		recomb_suffixes		=	"所需後綴："
+		recomb_simulation		=	"模擬："
+		recomb_desired			=	"所需詞綴過多"
+		recomb_rerun			=	"重新執行"
+		recomb_refresh			=	"點擊以重新整理"
+
+
+
+;#####################################################
+;## sanctum planner
+;#####################################################
+
+;## these strings are displayed/required when using the sanctum planner
+		sanctum_calibrate		=	"校準;路徑"
+		sanctum_calibrate		=	"校準;房間"
+
+		sanctum_floors			=	"聖堂檔案室"
+		sanctum_floors			=	"聖堂寶庫"
+		sanctum_floors			=	"聖堂大教堂"
+		sanctum_floors			=	"聖堂死靈地"
+
+		sanctum_rooms_1		=	"小頭目"
+		sanctum_rooms_2		=	"尋找出口"
+		sanctum_rooms_3		=	"清理房間"
+		sanctum_rooms_4		=	"出口陷阱"
+		sanctum_rooms_5		=	"戰鬥競技場"
+
+		sanctum_rooms_1_1		=	"scriptorium"
+		sanctum_rooms_1_2		=	"reliquary"
+		sanctum_rooms_1_3		=	"sanctum bellum"
+		sanctum_rooms_1_4		=	"mausoleum"
+
+		sanctum_rooms_2_1		=	"abandoned library"
+		sanctum_rooms_2_2		=	"decrepit cellar"
+		sanctum_rooms_2_3		=	"halls of worship"
+		sanctum_rooms_2_4		=	"undercroft"
+
+		sanctum_rooms_3_1		=	"chambers of inscription"
+		sanctum_rooms_3_2		=	"derelict caverns"
+		sanctum_rooms_3_3		=	"unholy lair"
+		sanctum_rooms_3_4		=	"lost catacombs"
+
+		sanctum_rooms_4_1		=	"holy trials"
+		sanctum_rooms_4_2		=	"gauntlet"
+		sanctum_rooms_4_3		=	"crucible"
+		sanctum_rooms_4_4		=	"entombment"
+
+		sanctum_rooms_5_1		=	"templar annals"
+		sanctum_rooms_5_2		=	"battlegrounds"
+		sanctum_rooms_5_3		=	"infernum"
+		sanctum_rooms_5_4		=	"desecrated crypt"
+
+		sanctum_info			=	"ben. fountain (150c):;+1 boon;;"	;## semicolons at the end to make it four lines
+		sanctum_info			=	"rad. fountain (5c):;+1 boon, -1 affl, +200 insp;rerolls afflicted rooms if an;affliction was removed"
+
+
+
+
+;#####################################################
+;## screen-checks
+;#####################################################
+
+;## these strings are displayed/required when using the screen-checks feature
+		screen_snipinstructions	=	"左鍵拖曳：一般截取"
+		screen_snipinstructions	=	"右鍵拖曳：可調整截取"
+		screen_snipinstructions	=	"wasd：移動調整截取"
+		screen_snipinstructions	=	"shift + wasd：調整截取大小"
+		screen_snipinstructions	=	"空白鍵：確認調整截取"
+		screen_snipinstructions	=	"esc：退出"
+
+;#####################################################
+;## search-strings
+;#####################################################
+
+;## these strings are displayed/required when using the search-strings feature
+		search_header			=	"搜尋字串設定："
+
+
+
+;#####################################################
+;## seed-explorer / vilsol's calculator
+;#####################################################
+
+;## these strings are displayed/required when using the seed-explorer feature
+		seed_profile			=	"設定檔："
+		seed_jewel			=	"珠寶："
+		seed_seed				=	"種子："		;## the number that rolls on Timeless Jewels
+		seed_conqueror			=	"征服者："		;## the name that rolls
+		seed_trade			=	"交易查詢"		;## button that opens the trade-site
+		seed_keystones			=	"核心天賦："
+		seed_notables			=	"結果天賦："
+		seed_notables			=	"插槽周圍天賦："		;## in range around a jewel socket on the passive tree
+		seed_notables			=	"軍團天賦："
+		seed_download			=	"下載資料庫"
+		seed_update			=	"更新資料庫"
+		seed_uptodate			=	"資料庫已是最新版本"
+
+
+
+;#####################################################
+;## stash-ninja
+;#####################################################
+
+;## these strings are displayed/required when using the stash-ninja feature
+		stash_update			=	"正在更新 poe.ninja;價格..."
+		stash_updateerror		=	"更新失敗，且沒有先前成功的備援資料。;這可能是連線問題，請稍後再試。"
+		stash_updateerror		=	"更新失敗"
+		stash_value			=	"市場價值"
+		stash_reminder			=	"請先切換到 <備註>"
+		stash_limits			=	"速率限制："		;## GGG's APIs have tiered rate limits that control how often you can access them
+		stash_open			=	"上架"
+		stash_nolistings		=	"沒有上架;物品"		;## i.e. no-one is selling that item right now
+		stash_bulk			=	"大量："
+		stash_stock			=	"庫存"		;## as in available stock
+		stash_pricetags		=	"價格標籤："
+		stash_solo			=	"單一"		;## as in a single person/thing/reason
+		stash_sell			=	"賣出"
+		stash_sell			=	"換取"
+		stash_bookmark			=	"書籤設定檔"
+
+
+;#####################################################
+;## statlas
+;#####################################################
+
+;## these strings are displayed/required when using the statlas feature
+		statlas_legacy			=	"舊版"
+		statlas_kills			=	"每分擊殺"		;## stands for kills per minute
+		statlas_filters		=	"篩選"
+
+
+
+;#####################################################
+;## minor QoL features
+;#####################################################
+
+;## these strings are displayed/required when using the minor QoL features
+		notepad_add			=	"新增分頁："
+		notepad_howto			=	"如何使用小工具"
+
+
+
+
+;#####################################################
+;## settings menu: general
+;#####################################################
+
+;## these strings are displayed/required in the "general" section of the settings menu
+		m_general_settings		=	"工具設定："
+		m_general_kill			=	"關閉遊戲後 x 分鐘結束工具："
+		m_general_browser		=	"瀏覽器功能"
+		m_general_capslock		=	"大寫鎖定切換"		;## by default, AHK will toggle capslock back and forth whenever it sends key-strokes
+		m_general_charleague	=	"角色與聯盟："
+		m_general_character		=	"角色"
+		m_general_level		=	"等級"
+		m_general_client		=	"遊戲客戶端設定："
+		m_general_client		=	"遊戲客戶端資訊："
+		m_general_logfile		=	"紀錄檔健康度："
+		m_general_language		=	"語言："
+		m_general_language		=	"偵測到的語言："
+		m_general_language		=	"不支援"
+		m_general_language		=	"（部分功能可能無法使用）"
+		m_general_display		=	"偵測到的視窗："		;## refers to the client-window
+		m_general_display		=	"全螢幕視窗化"
+		m_general_display		=	"視窗化"
+		m_general_display		=	"無邊框視窗化"
+		m_general_resolution	=	"自訂解析度："
+		m_general_filler		=	"將客戶端周圍的螢幕區域變黑"
+		m_general_position		=	"視窗位置："
+		m_general_posleft		=	"左"
+		m_general_poscenter		=	"中"
+		m_general_posright		=	"右"
+		m_general_postop		=	"上"
+		m_general_posbottom		=	"下"
+		m_general_borderless	=	"套用無邊框視窗化模式"
+		m_general_blackbars		=	"客戶端兩側有黑邊"		;## black bars as in letterboxes
+		m_general_permissions	=	"寫入權限測試："
+		m_general_start		=	"開始測試"
+		m_general_admin		=	"以管理員重啟"
+		m_general_menuwidget	=	"選單小工具大小："
+		m_general_animations	=	"停用介面動畫"
+		m_general_input		=	"輸入方式："
+
+
+
+;#####################################################
+;## settings menu: general (write-permissions test)
+;#####################################################
+
+;## these strings are displayed/required in the "test results" window after running the test
+		m_permission_header		=	"測試結果"
+		m_permission_yes		=	"是"
+		m_permission_no		=	"否"
+		m_permission_unknown	=	"未知"
+		m_permission_admin		=	"工具以管理員權限啟動："
+		m_permission_folder		=	"可以建立資料夾："
+		m_permission_folder		=	"可以刪除資料夾："
+		m_permission_ini		=	"可以建立 ini 檔案："
+		m_permission_ini		=	"可以寫入 ini 檔案："
+		m_permission_ini		=	"可以刪除 ini 檔案："
+		m_permission_image		=	"可以建立圖片檔案："
+		m_permission_image		=	"可以刪除圖片檔案："
+		m_permission_error		=	"先前的測試遺留了一些檔案，工具無法刪除它們。"
+		m_permission_error		=	"請在關閉此訊息後開啟的資料夾中刪除 'write-test' 資料夾。"		;## NOTE: don't translate the name of folders (as they're hard-coded and not localized)
+
+;## these strings are displayed/required in an error-message related to write-permissions
+		m_permission_error1		=	"工具無法建立檔案/資料夾："
+		m_permission_error1		=	"工具無法刪除檔案/資料夾："
+		m_permission_error1		=	"目前的資料夾位置似乎存在寫入權限問題。"
+		m_permission_error1		=	"請嘗試將工具移至其他位置或以管理員身分執行。"
+		m_permission_error1		=	"設定選單中有寫入權限測試，可用於排除此問題。"
+		m_permission_error1		=	"強烈建議修復此問題，否則許多功能將無法正常運作。"
+
+
+
+;#####################################################
+;## settings menu: act-decoder
+;#####################################################
+
+;## these strings are displayed/required in the "act-decoder" section of the settings menu
+		m_actdecoder_enable		=	"啟用章節解碼器覆蓋層"
+		m_actdecoder_opacity	=	"鎖定時的不透明度："
+		m_actdecoder_zoom		=	"鎖定時的縮放："
+		m_actdecoder_simple		=	"僅顯示通用佈局"
+		m_actdecoder_missing	=	"章節解碼器：;無佈局"
+
+
+
+;#####################################################
+;## settings menu: act-decoder
+;#####################################################
+
+;## these strings are displayed/required in the "act-decoder" section of the settings menu
+		m_anoints_enable		=	"啟用附魔搜尋器功能"
+
+
+
+;#####################################################
+;## settings menu: betrayal-info
+;#####################################################
+
+;## these strings are displayed/required in the "betrayal-info" section of the settings menu
+		m_betrayal_enable		=	"啟用背叛情報覆蓋層"
+		m_betrayal_ruthless		=	"殘酷獎勵與高亮"		;## it's a toggle to switch between regular and ruthless rewards
+		m_betrayal_recognition	=	"圖片辨識："
+		m_betrayal_colors		=	"獎勵顏色："
+		m_betrayal_rewards		=	"獎勵自訂："
+
+
+
+;#####################################################
+;## settings menu: cheat-sheets
+;#####################################################
+
+;## these strings are displayed/required in the "cheat-sheets" section of the settings menu
+		m_cheat_enable			=	"啟用速查表工具組"
+		m_cheat_hotkeys		=	"快捷鍵設定："
+		m_cheat_modifier		=	"全能鍵修飾鍵："		;## as in modifier-key (ALT, CTRL, etc.)
+		m_cheat_advance		=	"進階速查表"
+		m_cheat_create			=	"建立新速查表："
+		m_cheat_images			=	"圖片"
+		m_cheat_app			=	"應用程式"
+		m_cheat_advanced		=	"進階"
+		m_cheat_list			=	"可用速查表列表："
+
+
+
+;#####################################################
+;## settings menu: clone-frames
+;#####################################################
+
+;## these strings are displayed/required in the "clone-frames" section of the settings menu
+		m_clone_toggle			=	"自動切換："
+		m_clone_performance		=	"效能 (fps) 設定："		;## frames per second
+		m_clone_performance		=	"測量的 fps："
+		m_clone_performance		=	"低"
+		m_clone_performance		=	"中"
+		m_clone_performance		=	"高"
+		m_clone_performance		=	"最高"
+		m_clone_list			=	"複製框架："
+		m_clone_new			=	"新增"
+		m_clone_editing		=	"複製框架編輯："
+		m_clone_sourcexy		=	"來源 x/y："
+		m_clone_widthheight		=	"寬/高："
+		m_clone_targetxy		=	"目標 x/y："
+		m_clone_scale			=	"縮放："
+		m_clone_exitedit		=	"請先退出編輯模式"
+		m_clone_errorborders	=	"無效的框架邊界"
+		m_clone_closebutton		=	"使用 <關閉按鈕> 進行自動切換 (測試版)"
+		m_clone_town			=	"除非設定頁面開啟，否則複製框架在藏身處和城鎮中會隱藏"
+
+
+
+;#####################################################
+;## settings menu: vaal street
+;#####################################################
+
+;## these strings are displayed/required in the "vaal street" section of the settings menu
+		m_exchange_enable		=	"啟用通貨交換功能"
+		m_exchange_graphs		=	"顯示餘額圖表"
+		m_async_enable			=	"啟用非同步交易功能"
+		m_async_name			=	"顯示完整物品名稱"
+		m_async_minchange		=	"最小價格變動："		;## used for 'quick reprice' feature: new price needs to be at least x% lower than the current price
+
+
+
+;#####################################################
+;## settings menu: hotkeys
+;#####################################################
+
+;## these strings are displayed/required in the "hotkeys" section of the settings menu
+		m_hotkeys_settings		=	"遊戲內按鍵設定："
+		m_hotkeys_settings		=	"工具按鍵設定："
+		m_hotkeys_descriptions	=	"<顯示進階物品描述>;未綁定到 alt 鍵"		;## in-game setting, usually on ALT
+		m_hotkeys_descriptions	=	"而是綁定到："
+		m_hotkeys_ckey			=	"c 鍵用於;其他功能而非 <角色畫面>"		;## in-game setting, on C by default
+		m_hotkeys_movekey		=	"移動鍵："		;## i.e. the key used to move the character, default l-mouse
+		m_hotkeys_omnikey_new	=	"全能鍵："
+		m_hotkeys_omnikey_new	=	"全能鍵（一般）："
+		m_hotkeys_omnikey_new	=	"全能鍵 2（物品用）："
+		m_hotkeys_keyblock		=	"封鎖按鍵功能"		;## option that blocks what a key normally does, e.g. CapsLock-key toggles capslock-state, windows-key opens start-menu
+		m_hotkeys_keyblock		=	"按鍵已被封鎖"		;## same as above, but as a note instead of option
+		m_hotkeys_widget		=	"小工具鍵："
+		m_hotkeys_emergency		=	"強制重啟："		;## hotkey to force-restart the tool in case of crash/hang
+		m_hotkeys_winkey		=	"win 鍵"		;## Windows-key
+		m_hotkeys_menuwidget	=	"選單小工具（備用鍵）："
+		m_hotkeys_error		=	"無效的快捷鍵"
+		m_hotkeys_error		=	"偵測到重複的按鍵綁定"
+		m_hotkeys_error		=	"alt 鍵已重新綁定，但未設定;替代按鍵"		;## if certain tickboxes are ticked, the user has to provide an alternative hotkey
+		m_hotkeys_error		=	"c 鍵已重新綁定，但;全能鍵 2 未設定"		;## and these messages will appear if they have not provided that
+
+
+
+;#####################################################
+;## settings menu: item-info
+;#####################################################
+
+;## these strings are displayed/required in the "item-info" section of the settings menu
+		m_iteminfo_enable		=	"啟用物品資訊功能"
+		m_iteminfo_profiles		=	"設定檔選項："
+		m_iteminfo_profiles		=	"設定檔選擇："
+		m_iteminfo_profiles		=	"重置設定檔的："		;## you can choose between two options: a profile's desired, or undesired mods
+		m_iteminfo_desired		=	"需要的"
+		m_iteminfo_undesired	=	"不需要的"
+		m_iteminfo_undesired	=	"(不)需要的："
+		m_iteminfo_modbars		=	"數值範圍："
+		m_iteminfo_hiderange	=	"隱藏詞綴數值範圍"
+		m_iteminfo_league		=	"啟用開荒模式"
+		m_iteminfo_base		=	"顯示並比較物品基礎屬性"		;## base-stats as in armor, evasion, ES, attack-speed, phys/ele dmg
+		m_iteminfo_class		=	"物品類別"
+		m_iteminfo_ilvl		=	"顯示物品等級需求"
+		m_iteminfo_highlight	=	"高亮自訂："
+		m_iteminfo_fractured	=	"裂"
+		m_iteminfo_override		=	"<不需要的> 覆蓋階級/物等顏色"
+		m_iteminfo_rules		=	"全域規則/覆蓋："
+		m_iteminfo_rules		=	"武器抗性"		;## as in ele-resistance mods on weapons (which are generally undesired)
+		m_iteminfo_rules		=	"攻擊傷害"
+		m_iteminfo_rules		=	"法術傷害"
+		m_iteminfo_rules		=	"抗性"
+		m_iteminfo_rules		=	"擊中/殺敵時恢復生命/魔力"
+		m_iteminfo_rules		=	"暴擊"
+		m_iteminfo_quality		=	"顯示品質與鐵符文縮放"
+		m_iteminfo_affixinfo	=	"詞綴資訊："
+		m_iteminfo_maxtier		=	"最高階級"
+
+
+
+;#####################################################
+;## settings menu: filterspoon
+;#####################################################
+
+;## these strings are displayed/required in the "filterspoon" section of the settings menu
+		m_lootfilter_enable		=	"啟用濾湯匙功能（實驗性）"
+
+
+
+;#####################################################
+;## settings menu: leveling tracker / act-tracker
+;#####################################################
+
+;## these strings are displayed/required in the "act-tracker" section of the settings menu
+		m_lvltracker_enable			=	"啟用章節追蹤器功能"
+		m_lvltracker_timer			=	"啟用計時器"
+		m_lvltracker_pause			=	"在藏身處暫停計時器"
+		m_lvltracker_fade			=	"x 秒後淡出："
+		m_lvltracker_fade			=	"滑鼠懸停時淡入"
+		m_lvltracker_gear			=	"裝備追蹤器"
+		m_lvltracker_recommend		=	"等級建議"
+		m_lvltracker_hotkeys		=	"啟用翻頁快捷鍵"
+		m_lvltracker_poboverlays		=	"pob 覆蓋層設定："
+		m_lvltracker_pobgems		=	"寶石：使用切換而非按住"
+		m_lvltracker_pobmanual		=	"天賦樹：使用截圖而非示意圖"
+		m_lvltracker_pob			=	"pob：中鍵點擊開啟截圖選單"
+		m_lvltracker_screencap		=	"截圖選單"
+		m_lvltracker_guide			=	"指南："
+		m_lvltracker_incompatible	=	"指南資料不相容，;需要更新"
+		m_lvltracker_treeclear		=	"刪除資料"
+		m_lvltracker_leaguestart		=	"開荒"
+		m_lvltracker_optionals		=	"可選項"		;## refers to optional loot, quests, etc.
+		m_lvltracker_bandit			=	"盜賊"
+		m_lvltracker_bandits		=	"alira"
+		m_lvltracker_bandits		=	"kraityn"
+		m_lvltracker_bandits		=	"oak"
+		m_lvltracker_treehotkey		=	"關閉天賦樹的快捷鍵："		;## optional setting for users who don't close the in-game tree with ESC
+
+
+
+;#####################################################
+;## settings menu: chat macros
+;#####################################################
+
+;## these strings are displayed/required in the "chat macros" section of the settings menu
+		m_macros_fasttravel			=	"快速傳送巨集："
+		m_macros_custom			=	"自訂巨集："
+
+
+
+;#####################################################
+;## settings menu: map-tracker
+;#####################################################
+
+;## these strings are displayed/required in the "map-tracker" section of the settings menu
+		m_maptracker_enable			=	"啟用地圖追蹤器功能"
+		m_maptracker_hide			=	"追蹤器暫停時隱藏面板"
+		m_maptracker_loot			=	"戰利品"
+		m_maptracker_kills			=	"擊殺"
+		m_maptracker_mapinfo		=	"地圖資訊資料"		;## option to include data from the map-info feature
+		m_maptracker_notes			=	"備註"		;## option to add notes to map runs
+		m_maptracker_sidearea		=	"側區域"
+		m_maptracker_rename			=	"標記並重新命名頭目地圖"
+		m_maptracker_character		=	"角色/流派資訊"
+		m_maptracker_league			=	"聯盟資訊"
+		m_maptracker_content		=	"追蹤輿圖機制"
+		m_maptracker_dialogue		=	"–> 對話追蹤："		;## tracking is done via in-game dialogue in the chat-box
+		m_maptracker_screen			=	"–> 螢幕追蹤："		;## tracking is done via screen-reading
+		m_maptracker_portal			=	"使用傳送卷軸時提醒"		;## shows a reminder-tooltip when activating a portal scroll
+		m_maptracker_portal			=	"傳送卷軸快捷鍵："
+
+
+
+;#####################################################
+;## settings menu: map-info
+;#####################################################
+
+;## these strings are displayed/required in the "map-info" section of the settings menu
+		m_mapinfo_enable			=	"啟用地圖資訊面板"
+		m_mapinfo_tab				=	"按住小工具鍵時顯示面板"
+		m_mapinfo_textcolors		=	"文字顏色："
+		m_mapinfo_header			=	"標題"		;## as in line at the top of a section/paragraph
+		m_mapinfo_logbook			=	"探險日誌顏色："
+		m_mapinfo_modsettings		=	"地圖詞綴設定："
+		m_mapinfo_pinned			=	"釘選的詞綴："
+		m_mapinfo_modsearch			=	"詞綴搜尋："
+		m_mapinfo_roll_highlight		=	"高亮地圖數值"
+		m_mapinfo_reset			=	"重置階級"
+
+
+
+;#####################################################
+;## settings menu: news / announcements
+;#####################################################
+
+
+;## these strings are displayed/required in the "announcements" section of the settings menu
+		m_news_recent			=	"最新公告："
+
+;#####################################################
+;## settings menu: minor qol tools
+;#####################################################
+
+;## these strings are displayed/required in the "minor qol tools" section of the settings menu
+		m_qol_alarm			=	"鬧鐘/計時器小工具："
+		m_qol_map_events		=	"地圖事件通知："
+		m_qol_notepad			=	"記事本："
+		m_qol_widget			=	"小工具不透明度："
+		m_qol_widgetcolor		=	"預設小工具顏色："
+		m_qol_lab				=	"迷宮覆蓋層："
+
+
+
+;#####################################################
+;## settings menu: sanctum planner
+;#####################################################
+
+;## these strings are displayed/required in the "sanctum planner" section of the settings menu
+		m_sanctum_enable		=	"啟用聖堂規劃師覆蓋層"
+		m_sanctum_enable		=	"啟用瑟赫瑪規劃師覆蓋層"
+		m_sanctum_cheatsheets	=	"顯示速查表"
+		m_sanctum_relics		=	"啟用聖物管理覆蓋層"
+
+
+
+;#####################################################
+;## settings menu: screen-checks
+;#####################################################
+
+;## these strings are displayed/required in the "screen-checks" section of the settings menu
+		m_screen_pixel			=	"所需像素檢查列表："
+		m_screen_image			=	"所需圖片檢查列表："
+		m_screen_inactive		=	"目前啟用的功能不需要任何額外設定"
+		m_screen_gamescreen		=	"資訊面板"		;## refers to the small panel in the top-right corner that shows area-name, server, league, etc.
+		m_screen_close_button	=	"關閉按鈕"
+		m_screen_instructions	=	"請閱讀 <資訊>;按鈕上的說明！"
+		m_screen_sanctum		=	"聖堂樓層地圖"
+		m_screen_sanctum		=	"瑟赫瑪樓層地圖"
+		m_screen_async1		=	"非同步交易（賣出）"
+		m_screen_async2		=	"非同步交易（買入）"
+
+
+;#####################################################
+;## settings menu: search-strings
+;#####################################################
+
+;## these strings are displayed/required in the "search-strings" section of the settings menu
+		m_search_usecases		=	"目前設定的使用情境："
+		m_search_hideout lilly	=	"藏身處莉莉"		;## as in the Lilly who is in your hideout (she has a different vendor window)
+		m_search_add			=	"新增使用情境："
+
+
+
+;#####################################################
+;## settings menu: stash-ninja
+;#####################################################
+
+;## these strings are displayed/required in the "stash-ninja" section of the settings menu
+		m_stash_enable			=	"啟用倉庫忍者功能"
+		m_stash_blight			=	"blight"
+		m_stash_breach			=	"breach"
+		m_stash_currency1		=	"currency"
+		m_stash_currency2		=	"currency ii"
+		m_stash_delirium		=	"delirium"
+		m_stash_delve			=	"delve"
+		m_stash_essences		=	"essence"
+		m_stash_fragments		=	"fragment"
+		m_stash_betrayal		=	"betrayal"
+		m_stash_scarabs		=	"scarab"
+		m_stash_ultimatum		=	"ultimatum"
+		m_stash_ritual			=	"ritual"
+		m_stash_socketables		=	"socketables"
+		m_stash_leagues		=	"聯盟："
+		m_stash_tabs			=	"倉庫頁籤設定："
+		m_stash_limits			=	"價格範圍設定檔："
+		m_stash_profiles		=	"將交易價值套用到設定檔 1-4"
+		m_stash_history		=	"顯示價格歷史"
+		m_stash_exalt			=	"顯示崇高石匯率"
+		m_stash_mintrade		=	"最低交易價值（混沌石）："
+		m_stash_folder			=	"此頁籤在倉庫資料夾中"
+		m_stash_bulk			=	"啟用大量銷售管理"
+		m_stash_margins		=	"利潤 (%)："
+		m_stash_active			=	"目前頁籤："
+		m_stash_bookmarking		=	"啟用書籤功能"
+		m_stash_grid			=	"微調網格對齊："
+
+
+
+;#####################################################
+;## settings menu: statlas
+;#####################################################
+
+;## these strings are displayed/required in the "statlas" section of the settings menu
+		m_statlas_enable		=	"啟用統計地圖功能"
+		m_statlas_maptracker	=	"顯示地圖追蹤器資料"
+		m_statlas_localknowledge	=	"顯示 <在地知識> 天賦效果"
+
+
+
+;#####################################################
+;## settings menu: tldr-tooltips
+;#####################################################
+
+;## these strings are displayed/required in the "tldr-tooltips" section of the settings menu
+		m_ocr_enable			=	"啟用簡要提示（實驗性）"
+		m_ocr_compatibility		=	"測試相容性"
+		m_ocr_compatibility		=	"從上方圖片中辨識至少 8 個不重複的單字（按 esc 退出）："
+		m_ocr_error			=	"測試需要至少 8 個不重複的單字"
+		m_ocr_error			=	"截圖太大"
+		m_ocr_finish			=	"按 esc 完成設定"
+		m_ocr_hotkey			=	"<切換高亮>（遊戲中）："
+		m_ocr_debug			=	"啟用除錯功能"
+		m_ocr_unsupported		=	"不支援 720p 及更低解析度，因為在低解析度下螢幕讀取的失敗率非常高，使得此功能幾乎無法使用"
+
+
+
+;#####################################################
+;## settings menu: updater
+;#####################################################
+
+;## these strings are displayed/required in the "updater" section of the settings menu
+		m_updater_autocheck		=	"自動檢查更新"
+		m_updater_version		=	"版本資訊："
+		m_updater_version		=	"目前："
+		m_updater_version		=	"最新："
+		m_updater_versions		=	"可用下載："
+		m_updater_recent		=	"近期變更："
+		m_updater_github		=	"github 連結："
+		m_updater_github		=	"主頁"
+		m_updater_github		=	"發行版本"
+		m_updater_changelog		=	"完整更新日誌"
+		m_updater_skip			=	"跳過"
+		m_updater_failed		=	"更新失敗："
+		m_updater_error1		=	"上次更新嘗試因寫入權限錯誤而失敗。請開啟設定中的 <一般> 區段並執行底部的測試。"
+		m_updater_error1		=	"修復這些問題不僅對更新器很關鍵，對許多其他功能也很重要。"
+
+		m_updater_error2		=	"上次更新嘗試因工具無法下載最新版本列表而失敗。"
+		m_updater_error2		=	"這可能是隨機錯誤，下次嘗試時可能會自行修復。"
+		m_updater_error2		=	"如果沒有自行修復，您需要手動更新。"
+
+		m_updater_error3		=	"上次更新嘗試因工具無法驗證目前的版本列表而失敗。這表示安裝已損壞，需要儘快手動修復。"
+		m_updater_error4		=	"上次更新嘗試因某些檔案無法下載而失敗。"
+		m_updater_manual		=	"手動更新"
+		m_updater_manual		=	"github 下載"
+		m_updater_download		=	"下載失敗，請使用;github 按鈕"
