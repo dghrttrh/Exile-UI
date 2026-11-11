@@ -25,6 +25,24 @@
 		settings.stash.autoprofiles := 0 ;!Blank(check := ini.settings["enable trade-value profiles"]) ? check : 0
 		settings.stash.retry := !Blank(check := ini.settings["retry"]) && (check > A_Now) ? check : 0
 		settings.stash.index_stock := !Blank(check := ini.settings["show stock in index"]) ? check : 1
+		settings.stash.use_global := !Blank(check := ini.settings["use global profiles"]) ? check : 0
+		settings.stash.offsets := [[0, 0], [Round(vars.client.h * (173/720)) - Round(vars.client.h / 30), Round(vars.client.h * (13/72)) - Round(vars.client.h * (17/120))]]
+
+		settings.stash.global_profile := dLimits.Clone()
+		If ini["global profiles"].Count()
+			For outer in [1, 2, 3, 4, 5]
+				For index, val in ["bot", "top", "cur"]
+					If !Blank(new := ini["global profiles"]["limit " outer " " val])
+						settings.stash.global_profile[outer][index] := (new = "null" ? "" : new)
+
+		If settings.stash.use_global
+			For index, val in settings.stash.global_profile
+				If !Blank(val.3)
+				{
+					settings.stash.global_profile_active := index
+					Break
+				}
+
 		settings.stash.rate_limits := {"timestamp": ""}
 		settings.stash.colors := [!Blank(check := ini.UI["text color"]) ? check : "000000", !Blank(check1 := ini.UI["background color"]) ? check1 : "00CC00"
 							, !Blank(check2 := ini.UI["text color2"]) ? check2 : "000000", !Blank(check3 := ini.UI["background color2"]) ? check3 : "FF8000"
@@ -48,13 +66,14 @@
 	{
 		If !oCheck
 			If !vars.poe_version
-				vars.stash := {"currency": {}, "tabs": {"delve": [20, Round(height * (1/80))], "essences": [24, 4], "fragments": [24, Round(height * (1/72))], "scarabs": [30, 2], "betrayal": [20, Round(height * (1/80))]
-				, "breach": [20, Round(height * (1/80))], "currency1": [24, Round(height * (1/90))], "currency2": [24, Round(height * (1/90))], "blight": [24, Round(height * (1/60))]
+				vars.stash := {"currency": {}, "tabs": {"delve": [20, Round(height * (1/80))], "essences": [24, 4], "fragments": [24, Round(height * (1/72))], "scarabs": [32, Round(height//160)], "betrayal": [20, Round(height * (1/80))]
+				, "breach": [20, Round(height * (1/80))], "currency1": [24, Round(height * (1/90))], "currency2": [24, Round(height * (1/90))], "currency3": [24, Round(height * (1/90))], "blight": [24, Round(height * (1/60))]
 				, "delirium": [20, Round(height * (1/72))], "ultimatum": [20, Round(height * (1/90))]}
 				, "width": width, "buttons": Round(height * (1/36)), "buttons2": Round(height * (19/720))}
 				, json_data := Json.Load(LLK_FileRead("data\global\[stash-ninja] tabs" vars.poe_version ".json"))
-			Else vars.stash := {"currency": {}, "tabs": {"currency1": [20, Round(height/160)], "delirium": [20, Round(height * (7/480))], "essences": [24, Round(height/120)], "ritual": [20, Round(height/160)]
-				, "socketables": [80/3, Round(height/160)]}, "width": width}
+			Else vars.stash := {"currency": {}, "runes": {}, "tabs": {"abyss": [20, Round(height/90)], "breach": [20, Round(height/80)], "currency1": [20, Round(height/160)], "delirium": [20, Round(height * (7/480))]
+				, "essences": [24, Round(height/120)], "fragments": [20, Round(height/80)], "idols": [20, Round(height/80)], "ritual": [20, Round(height/160)], "runes1": [20, Round(height/180)], "runes2": [20, Round(height/80)]
+				, "expedition": [20, Round(height/80)], "soulcores": [20, Round(height/80)]}, "width": width, "buttons": Round(height / 20)}
 				, json_data := Json.Load(LLK_FileRead("data\global\[stash-ninja] tabs" vars.poe_version ".json"))
 
 		For tab, array in json_data
@@ -87,7 +106,11 @@
 		ini := IniBatchRead("data\global\[stash-ninja] prices" vars.poe_version ".ini",, "65001")
 		For tab in json_data
 			If !InStr("currency2, breach", tab)
-				tab := InStr(tab, "currency") ? "currency" : tab, vars.stash[tab].timestamp := ini[tab].timestamp, vars.stash[tab].league := ini[tab].league
+				tab := (InStr(tab, "currency") ? "currency" : (InStr(tab, "runes") ? "runes" : tab)), vars.stash[tab].timestamp := ini[tab].timestamp, vars.stash[tab].league := ini[tab].league
+		If !vars.poe_version
+			vars.stash.divcards := {"timestamp": ini.divcards.timestamp, "league": ini.divcards.league}
+		Else vars.stash.expedition := {"timestamp": ini.expedition.timestamp, "league": ini.expedition.league}, vars.stash.verisium := {"timestamp": ini.verisium.timestamp, "league": ini.verisium.league}
+			, vars.stash.uncutgems := {"timestamp": ini.uncutgems.timestamp, "league": ini.uncutgems.league}
 	}
 	tabs := vars.stash.tabs
 	For tab, array in json_data
@@ -108,9 +131,9 @@
 			Else name0 := name := array1.3 (tab = "delve" && !InStr(array1.3, "resonator") ? " fossil" : "")
 
 			ID := array1.4, exception1 := LLK_PatternMatch(name, "", ["potent", "powerful", "prime"]) ? 1 : 0, exception2 := LLK_PatternMatch(name, "", ["prime"]) ? 1 : 0
-			xCoord := array1.1 ? Floor(Format("{:.10f}", array1.1 / 1440) * vars.client.h) : xCoord + (exception2 ? vars.client.h * (1/12) : dBox) + gap * (tab = "scarabs" && index > 105 ? 2 : 1)
+			xCoord := array1.1 ? Floor(Format("{:.10f}", array1.1 / 1440) * vars.client.h) : xCoord + (exception2 ? vars.client.h * (1/12) : dBox) + gap
 			yCoord := array1.2 ? Floor(((array1.2 + (in_folder ? 47 : 0)) / 1440) * vars.client.h) : yCoord
-			tab0 := (!vars.poe_version && (check := LLK_HasVal(exceptions, name,,,, 1))) ? check : (tab = "breach") ? "fragments" : InStr(tab, "currency") || (tab = "ultimatum") ? "currency" : tab
+			tab0 := (!vars.poe_version && (check := LLK_HasVal(exceptions, name,,,, 1))) ? check : (tab = "breach") ? "fragments" : InStr(tab, "currency") || (tab = "ultimatum") ? "currency" : (InStr(tab, "runes") ? "runes" : tab)
 			prices := IsObject(vars.stash[tab][name].prices) ? vars.stash[tab][name].prices.Clone() : StrSplit(!Blank(check := ini[tab0][ID]) ? check : "0, 0, 0", ",", A_Space, 3)
 			trend := IsObject(vars.stash[tab][name].trend) ? vars.stash[tab][name].trend.Clone() : StrSplit(!Blank(check := ini[tab0][ID "_trend"]) ? check : "0, 0, 0, 0, 0, 0, 0", ",", A_Space)
 			source := IsObject(vars.stash[tab][name].source) ? vars.stash[tab][name].source.Clone() : ["ninja"]
@@ -133,49 +156,52 @@ Stash(mode, test := 0)
 		If vars.poe_version && (A_Index != 1)
 			Continue
 		tab := (RegExMatch(mode, "i)currency|ultimatum") ? "currency" : (mode = "refresh") ? (RegExMatch(vars.stash.active, "i)currency|ultimatum") ? "currency" : vars.stash.active) : mode)
-		tab := (tab = "breach" || A_Index = 2) ? "fragments" : tab, now := A_NowUTC, timestamp := vars.stash[tab].timestamp, league := vars.stash[tab].league
+		tab := (tab = "breach" || A_Index = 2 ? "fragments" : (InStr(tab, "runes") ? "runes" : tab)), now := A_NowUTC, timestamp := vars.stash[tab].timestamp, league := vars.stash[tab].league
 		league_ID := (vars.poe_version ? vars.leagues[settings.general.league.1].trade[settings.general.league.3] : vars.leagues[settings.general.league.1].trade.normal[settings.general.league.4])
 		EnvSub, now, timestamp, Minutes
 		If (league != league_ID) || Blank(timestamp) || Blank(now) || (now >= 61)
 		{
 			If !tooltip
-				LLK_ToolTip(Lang_Trans("stash_update"), 10000,,, "stashprices", "lime")
+				LLK_ToolTip(Lang_Trans("stash_update"), 0,,, "stashprices", "lime")
 			check := Stash_PriceFetch(tab), tooltip := 1
 			If !check
 			{
 				LLK_ToolTip(Lang_Trans("stash_updateerror", 2), 2,,,, "red"), now := A_NowUTC
+				league := settings.general.league.Clone(), league := (vars.poe_version ? vars.leagues[league.1].trade[league.3] : vars.leagues[league.1].trade.normal[league.4])
 				EnvAdd, now, -50, Minutes
 				IniWrite, % now, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab, timestamp
-				vars.stash[tab].timestamp := now
+				IniWrite, % league, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab, league
+				vars.stash[tab].timestamp := now, vars.stash[tab].league := league
 			}
 		}
 	}
 
 	;vars.stash.currency1["chaos orb"].prices := [1, 1/(vars.poe_version ? vars.stash.currency1["exalted orb"].prices.1 : vars.stash.exalt), 1/(vars.poe_version ? vars.stash.currency1["divine orb"].prices.1 : vars.stash.divine)]
 	If !Blank(check)
-		vars.tooltip[vars.hwnd["tooltipstashprices"]] := A_TickCount
+		LLK_Overlay(vars.hwnd.tooltip_stashprices, "destroy")
 
 	Gui, %GUI_name%: New, % "-Caption -DPIScale +LastFound +AlwaysOnTop +ToolWindow +E0x20 +E0x02000000 +E0x00080000 HWNDhwnd_stash"
 	Gui, %GUI_name%: Font, % "s" settings.stash.fSize2 " cWhite", % vars.system.font
 	Gui, %GUI_name%: Color, Purple
 	WinSet, TransColor, Purple
 	Gui, %GUI_name%: Margin, 0, 0
-	tab := (mode = "refresh") ? vars.stash.active : mode, profile := settings.stash[tab].profile, vars.stash.active := tab, vars.stash.regex := ""
+	tab := (mode = "refresh") ? vars.stash.active : mode, profile := (settings.stash.use_global ? settings.stash.global_profile_active : settings.stash[tab].profile), vars.stash.active := tab, vars.stash.regex := ""
+	array := (settings.stash.use_global ? settings.stash.global_profile : settings.stash[tab].limits)
 
 	If test
 		settings.stash[tab].profile := profile := "test"
-	Else If Blank(settings.stash[tab].limits[settings.stash[tab].profile].3)
+	Else If Blank(array[settings.stash[tab].profile].3)
 		Loop 5
-			If !Blank(settings.stash[tab].limits[A_Index].3)
+			If !Blank(array[A_Index].3)
 			{
 				settings.stash[tab].profile := profile := A_Index
 				Break
 			}
 	hwnd_old := vars.hwnd.stash.main, vars.hwnd.stash := {"main": hwnd_stash, "GUI_name": GUI_name}, dBox := vars.stash[tab].box, dButtons := vars.stash.buttons, dButtons2 := vars.stash.buttons2
-	lBot := settings.stash[tab].limits[profile].1, lTop := settings.stash[tab].limits[profile].2, lType := settings.stash[tab].limits[profile].3
+	lBot := array[profile].1, lTop := array[profile].2, lType := array[profile].3
 	lBot := Blank(lBot) ? (lType = 4) ? -999 : 0 : lBot, lTop := Blank(lTop) ? 999999 : lTop
 	count := added := 0, width := Floor(vars.client.h * (37/60)), height := vars.client.h, currencies := ["chaos", "exalted", "divine", "percent"], vars.stash.wait := 1, vars.stash.enter := 0
-	bookmark_profile := settings.stash[tab].bookmark
+	bookmark_profile := settings.stash[tab].bookmark, offsets := settings.stash.offsets[settings.general.input_method]
 
 	For item, val in vars.stash[tab]
 		If IsObject(val)
@@ -186,17 +212,19 @@ Stash(mode, test := 0)
 			If InStr(item, "tab_")
 			{
 				button := SubStr(item, InStr(item, "_") + 1), wButton := (InStr(item, "currency") ? dButtons * 4.5 : dButtons2 * 4), hButton := (InStr(item, "currency") ? dButtons : dButtons2)
-				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border x" val.coords.1 + 4 " y" val.coords.2 + 4 " w" wButton - 8 " h" hButton - 8 . (hidden ? " Hidden" : "")
+				If vars.poe_version
+					wButton := dButtons, hButton := dButtons
+				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border x" val.coords.1 + 4 + offsets.1 " y" val.coords.2 + 4 + offsets.2 " w" wButton - 8 " h" hButton - 8 . (hidden ? " Hidden" : "")
 				Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp HWNDhwnd BackgroundPurple" . (hidden ? " Hidden" : ""), 0
-				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border x" val.coords.1 " y" val.coords.2 " w" wButton " h" hButton . (hidden ? " Hidden" : "")
+				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border x" val.coords.1 + offsets.1 " y" val.coords.2 + offsets.2 " w" wButton " h" hButton . (hidden ? " Hidden" : "")
 				Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp HWNDhwnd Background" (button = tab ? colors.2 : "Black") . (hidden ? " Hidden" : ""), 0
 			}
 			Else
 			{
 				price := Round(val.prices[lType], (val.prices[lType] > 1000) ? 0 : (val.prices[lType] > 10) ? 1 : 2), trade := val.source.2[lType]
 				cBookmarked := (settings.stash[tab].bookmarking && settings.stash[tab].bookmarks[bookmark_profile][item])
-				exception1 := LLK_PatternMatch(item, "", ["potent", "powerful", "prime"]) ? 1 : 0, exception2 := LLK_PatternMatch(item, "", ["powerful", "prime"]) ? 1 : 0
-				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border Right c" colors[cBookmarked ? 5 : trade ? 3 : 1] " x" val.coords.1 " y" val.coords.2 + (exception1 ? vars.client.h * (1/12) : dBox) - settings.stash.fHeight2
+				exception1 := (!vars.poe_version && LLK_PatternMatch(item, "", ["potent", "powerful", "prime"]) ? 1 : 0), exception2 := (!vars.poe_version && LLK_PatternMatch(item, "", ["powerful", "prime"]) ? 1 : 0)
+				Gui, %GUI_name%: Add, Text, % "BackgroundTrans Border Right c" colors[cBookmarked ? 5 : trade ? 3 : 1] " x" val.coords.1 + offsets.1 " y" val.coords.2 + (exception1 ? vars.client.h * (1/12) : dBox) + offsets.2 - settings.stash.fHeight2
 				. " w" (exception2 ? vars.client.h * (1/12) : dBox) . (hidden ? " Hidden" : ""), % (test ? A_Index : (lType = 4) ? val.trend[val.trend.MaxIndex()] : price) " "
 				Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp HWNDhwnd Border BackgroundBlack c" colors[cBookmarked ? 6 : trade ? 4 : 2] . (hidden ? " Hidden" : ""), 100
 				vars.hwnd.stash[item] := hwnd
@@ -211,7 +239,7 @@ Stash(mode, test := 0)
 	If settings.stash[tab].bookmarking
 	{
 		Gui, %GUI_name%: Font, % "bold s" settings.stash.fSize
-		Gui, %GUI_name%: Add, Text, % "Section BackgroundTrans Center Border x0 y" vars.client.h * 0.8 - width//10 - settings.stash.fHeight " w" width//2, % Lang_Trans("stash_bookmark") " " bookmark_profile
+		Gui, %GUI_name%: Add, Text, % "Section BackgroundTrans Center Border x" 0 + offsets.1 " y" vars.client.h * 0.8 + offsets.2 - width//10 - settings.stash.fHeight " w" width//2, % Lang_Trans("stash_bookmark") " " bookmark_profile
 		Gui, %GUI_name%: Add, Progress, % "xp yp wp hp Disabled BackgroundBlack", 0
 		Gui, %GUI_name%: Font, % "norm s" settings.stash.fSize2
 		price_dimensions := [], price_list := {}, price_total := 0
@@ -254,14 +282,14 @@ Stash(mode, test := 0)
 	}
 
 	For outer in ["", ""]
-		For index, limit in settings.stash[tab].limits
+		For index, limit in array
 		{
 			count += (outer = 1 && !Blank(limit.3)) ? 1 : 0
 			If (outer = 1) || Blank(limit.3)
 				Continue
 			If settings.stash[tab].bookmarking
-				style := !added ? "x" width//2 " y" vars.client.h * 0.8 - width//10 - settings.stash.fHeight : "ys"
-			Else style := !added ? "x" width//2 - (count/2) * width//10 " y" vars.client.h * 0.8 - width//10 - settings.stash.fHeight : "ys"
+				style := !added ? "x" width//2 + offsets.1 " y" vars.client.h * 0.8 + offsets.2 - width//10 - settings.stash.fHeight : "ys"
+			Else style := !added ? "x" width//2 + offsets.1 - (count/2) * width//10 " y" vars.client.h * 0.8 + offsets.2 - width//10 - settings.stash.fHeight : "ys"
 			color1 := (index = profile) ? " c" settings.stash.colors.1 : "", color2 := (index = profile) ? settings.stash.colors.2 : "Black"
 			Gui, %GUI_name%: Font, % "bold s" settings.stash.fSize
 			Gui, %GUI_name%: Add, Text, % "Section " style " Center BackgroundTrans Border w" width//10 . color1, % index
@@ -288,7 +316,7 @@ Stash(mode, test := 0)
 			added += 1
 		}
 
-	xPos := width//2 - (settings.stash[tab].bookmarking ? 0 : (count/2) * width//10)
+	xPos := width//2 - (settings.stash[tab].bookmarking ? 0 : (count/2) * width//10) + offsets.1
 	Gui, %GUI_name%: Font, % "s" settings.stash.fSize
 	string := Lang_Trans("global_league_" settings.general.league.1) " " Lang_Trans("global_league_" settings.general.league[(vars.poe_version ? 3 : 4)])
 	Gui, %GUI_name%: Add, Text, % "x" xPos " y+0 Border BackgroundTrans cLime", % " " Lang_Trans("global_league") . Lang_Trans("global_colon") " " string " "
@@ -337,6 +365,8 @@ Stash_Hotkeys(mode := "")
 	{
 		If settings.stash[tab].bookmarking && (GetKeyState("Shift", "P") || GetKeyState("Control", "P")) && (settings.stash[tab].bookmark != hotkey)
 			settings.stash[tab].bookmark := hotkey, Stash("refresh")
+		Else If settings.stash.use_global && !Blank(settings.stash.global_profile[hotkey].3)
+			settings.stash.global_profile_active := hotkey, Stash("refresh")
 		Else If !Blank(settings.stash[tab].limits[hotkey].3) && !(GetKeyState("Shift", "P") || GetKeyState("Control", "P")) && (hotkey != settings.stash[tab].profile)
 			settings.stash[tab].profile := hotkey, Stash("refresh")
 	}
@@ -366,25 +396,6 @@ Stash_Hotkeys(mode := "")
 		IniWrite, % """" json.dump(settings.stash[tab].bookmarks[bookmark_profile]) """", % "ini" vars.poe_version "\stash-ninja.ini", % tab, % "bookmarks " bookmark_profile
 		Stash("refresh")
 	}
-	Else If InStr(hotkey, "Button") && vars.stash.hover
-	{
-		Clipboard := ""
-		SendInput, ^{c}
-		ClipWait, 0.1
-		If !vars.client.stream && (!Clipboard || InStr(hotkey, "LButton") && (InStr(Clipboard, Lang_Trans("items_stack") " 1/") || !InStr(Clipboard, Lang_Trans("items_stack"))))
-		{
-			KeyWait, % hotkey0
-			Sleep 100
-			in_progress := 0
-			Return
-		}
-		If settings.stash.bulk_trade && InStr(hotkey, "RButton") && vars.stash[vars.stash.active][vars.stash.hover].prices.1
-			Stash_PricePicker()
-		LLK_Overlay(vars.hwnd.stash.main, "hide"), vars.stash.GUI := 0, vars.stash.enter := 1
-		While vars.stash.enter
-			Sleep 1
-		LLK_Overlay(vars.hwnd.stash.main, "show")
-	}
 	KeyWait, % hotkey0
 	Sleep 100
 	in_progress := 0
@@ -397,8 +408,11 @@ Stash_PriceFetch(tab)
 	static types
 
 	If !types
-		types := (vars.poe_version ? {"currency": ["Currency"], "delirium": ["Delirium"], "essences": ["Essences"], "ritual": ["Ritual"], "socketables": ["Runes", "Ultimatum", "Idols"]}
-			: {"fragments": ["Fragment"], "scarabs": ["Scarab"], "currency": ["Currency"], "delve": ["Fossil", "Resonator"], "essences": ["Essence"], "blight": ["Oil"], "delirium": ["DeliriumOrb"], "betrayal": ["AllflameEmber"]})
+		If vars.poe_version
+			types := {"abyss": ["Fragments", "Abyss", "Ritual"], "breach": ["Catalysts", "Fragments"], "currency": ["Currency"], "delirium": ["Delirium", "Fragments", "Ritual"], "essences": ["Essences"], "expedition": ["Expedition", "Verisium"], "fragments": ["Fragments", "Breach", "Ritual"], "idols": ["Idols"]
+			, "ritual": ["Ritual"], "runes": ["Runes"], "soulcores": ["SoulCores"], "verisium": ["Verisium"], "uncutgems": ["UncutGems"]}
+		Else types :=  {"fragments": ["Fragment"], "scarabs": ["Scarab"], "currency": ["Currency", "Astrolabe", "EnshroudingCrystal"], "divcards": ["DivinationCard"]
+			, "delve": ["Fossil", "Resonator"], "essences": ["Essence"], "blight": ["Oil"], "delirium": ["DeliriumOrb"], "betrayal": ["AllflameEmber"]}
 
 	If (tab = "flush") ; when changing leagues, flush prices first to avoid old prices carrying over
 	{
@@ -420,7 +434,7 @@ Stash_PriceFetch(tab)
 	timestamp := A_NowUTC
 	Loop, % (loop_count := types[tab].Count())
 	{
-		tab := InStr(tab, "currency") ? "currency" : tab, type := types[tab][A_Index], outer := A_Index, league := settings.general.league.Clone()
+		tab := (InStr(tab, "currency") ? "currency" : (InStr(tab, "runes") ? "runes" : tab)), type := types[tab][A_Index], outer := A_Index, league := settings.general.league.Clone()
 		league := (vars.poe_version ? vars.leagues[league.1].trade[league.3] : vars.leagues[league.1].trade.normal[league.4]), league := StrReplace(league, " ", "+")
 		If vars.poe_version
 			URL := "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=" league "&type=" type
@@ -433,11 +447,14 @@ Stash_PriceFetch(tab)
 		If !prices.lines.Count()
 			Return 0
 		If (A_Index = 1)
-			ini_dump := "timestamp=" timestamp "`nleague=" StrReplace(league, "+", " ")
+			ini_dump := "timestamp=" timestamp "`nleague=" StrReplace(league, "+", " "), ini_dump2 := ""
 		If !vars.poe_version && !prices.lines.Count() || vars.poe_version && !prices.items.Count()
 			Return 0
 		If (A_Index = 1)
+		{
 			IniDelete, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab
+			IniDelete, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab " names"
+		}
 
 		core := prices.core
 		For index, val in prices.lines
@@ -451,11 +468,16 @@ Stash_PriceFetch(tab)
 
 			For iTrend, vTrend in val.sparkline.data
 				trend .= (Blank(trend) ? "" : ", ") . (IsNumber(vTrend) ? vTrend : 0)
-			If name
-				ini_dump .= "`n" val.id "=""" price """", ini_dump .= !Blank(trend) ? "`n" val.id "_trend=""" trend """" : ""
-			Else Continue
 
-			If check
+			ini_dump .= "`n" val.id "=""" price """", ini_dump .= !Blank(trend) ? "`n" val.id "_trend=""" trend """" : ""
+			For iNames, oNames in prices.items
+				If (oNames.id = val.id)
+				{
+					ini_dump2 .= (ini_dump2 ? "`n" : "") val.id "=""" oNames.name """"
+					Break
+				}
+
+			If check && name
 				vars.stash[check][name].prices := StrSplit(price, ",", A_Space, 3), vars.stash[check][name].source := ["ninja", []]
 				, vars.stash[check][name].trend := Blank(trend) ? [0, 0, 0, 0, 0, 0, 0] : StrSplit(trend, ",", A_Space, 7)
 		}
@@ -463,6 +485,7 @@ Stash_PriceFetch(tab)
 		If (A_Index = loop_count)
 		{
 			IniWrite, % ini_dump, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab
+			IniWrite, % ini_dump2, % "data\global\[stash-ninja] prices" vars.poe_version ".ini", % tab " names"
 			vars.stash[tab].timestamp := timestamp, vars.stash[tab].league := StrReplace(league, "+", " ")
 		}
 	}

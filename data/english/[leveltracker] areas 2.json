@@ -19,7 +19,7 @@
     },
     {
       "id": "g1_4",
-      "name": "the grelwood",
+      "name": "grelwood",
       "recommendation": "2 | 2"
     },
     {
@@ -59,12 +59,12 @@
     {
       "id": "g1_12",
       "name": "freythorn",
-      "recommendation": "8 | 9"
+      "recommendation": "9 | 10"
     },
     {
       "id": "g1_13_1",
       "name": "ogham farmlands",
-      "recommendation": "9 | 10"
+      "recommendation": "8 | 9"
     },
     {
       "id": "g1_13_2",
@@ -79,14 +79,14 @@
     {
       "id": "g1_15",
       "name": "ogham manor",
-      "recommendation": "12 | 13"
+      "recommendation": "12 | 13+"
     }
   ],
   [
     {
       "id": "g2_1",
       "name": "vastiri outskirts",
-      "recommendation": "13 | 14"
+      "recommendation": "13+ | 14"
     },
     {
       "id": "g2_town",
@@ -149,12 +149,12 @@
     {
       "id": "g2_9_1",
       "name": "path of mourning",
-      "recommendation": "25 | 25"
+      "recommendation": "25 | 26"
     },
     {
       "id": "g2_9_2",
       "name": "spires of deshar",
-      "recommendation": "25 | 26"
+      "recommendation": "26 | 27"
     },
     {
       "id": "g2_10_1",
@@ -167,18 +167,17 @@
       "recommendation": "15.5 | 16.5"
     },
     {
-      "id": "g2_12_1",
+      "id": "g2_12",
       "name": "the dreadnought",
-      "recommendation": "26 | 27"
-    },
-    {
-      "id": "g2_12_2",
-      "name": "dreadnought vanguard",
       "recommendation": "27 | 28.5"
     },
     {
       "id": "g2_13",
       "name": "trial of sekhemas"
+    },
+    {
+      "id": "ExpeditionSubArea_Kalguur_Act2",
+      "name": "skull of the titan"
     }
   ],
   [
@@ -194,7 +193,7 @@
     {
       "id": "g3_2_1",
       "name": "infested barrens",
-      "recommendation": "30 | 31"
+      "recommendation": "31 | 32"
     },
     {
       "id": "g3_2_2",
@@ -204,7 +203,7 @@
     {
       "id": "g3_4",
       "name": "venom crypts",
-      "recommendation": "31 | 31"
+      "recommendation": "30 | 31"
     },
     {
       "id": "g3_3",
@@ -229,12 +228,12 @@
     {
       "id": "g3_7",
       "name": "azak bog",
-      "recommendation": "31 | 32"
+      "recommendation": "35 | 36"
     },
     {
       "id": "g3_8",
       "name": "drowned city",
-      "recommendation": "35 | 36"
+      "recommendation": "36 | 36"
     },
     {
       "id": "g3_9",
@@ -269,6 +268,10 @@
       "id": "g3_17",
       "name": "black chambers",
       "recommendation": "40 | 41"
+    },
+    {
+      "id": "ExpeditionSubArea_Kalguur_Act3",
+      "name": "mystic refuge"
     }
   ],
   [
@@ -279,42 +282,42 @@
     {
       "id": "g4_1_1",
       "name": "isle of kin",
-      "recommendation": "43 | 44"
+      "recommendation": "41 | 41.5"
     },
     {
       "id": "g4_1_2",
       "name": "volcanic warrens",
-      "recommendation": "44 | 44"
+      "recommendation": "41.5 | 42"
     },
     {
       "id": "g4_2_1",
       "name": "kedge bay",
-      "recommendation": "41 | 41"
+      "recommendation": "42 | 42.5"
     },
     {
       "id": "g4_2_2",
       "name": "journey's end",
-      "recommendation": "41 | 42"
+      "recommendation": "42.5 | 43"
     },
     {
       "id": "g4_3_1",
       "name": "whakapanu island",
-      "recommendation": "42 | 42"
+      "recommendation": "43 | 43"
     },
     {
       "id": "g4_3_2",
       "name": "singing caverns",
-      "recommendation": "42 | 42"
+      "recommendation": "43 | 43"
     },
     {
       "id": "g4_4_1",
       "name": "eye of hinekora",
-      "recommendation": "45 | 45"
+      "recommendation": "45 | 46"
     },
     {
       "id": "g4_4_2",
       "name": "halls of the dead",
-      "recommendation": "45 | 46"
+      "recommendation": "46 | 47"
     },
     {
       "id": "g4_4_3",
@@ -323,12 +326,12 @@
     {
       "id": "g4_5_1",
       "name": "abandoned prison",
-      "recommendation": "42 | 43"
+      "recommendation": "43 | 44"
     },
     {
       "id": "g4_5_2",
       "name": "solitary confinement",
-      "recommendation": "43 | 43"
+      "recommendation": "44 | 44"
     },
     {
       "id": "g4_7",
@@ -342,12 +345,12 @@
     {
       "id": "g4_8b",
       "name": "arastas (hostile)",
-      "recommendation": "46 | 46"
+      "recommendation": "47 | 47"
     },
     {
       "id": "g4_10",
       "name": "the excavation",
-      "recommendation": "46 | 47"
+      "recommendation": "47 | 48"
     },
     {
       "id": "g4_11_1a",
@@ -356,12 +359,12 @@
     {
       "id": "g4_11_1b",
       "name": "ngakanu (hostile)",
-      "recommendation": "47 | 47"
+      "recommendation": "48 | 48"
     },
     {
       "id": "g4_11_2",
       "name": "heart of the tribe",
-      "recommendation": "47 | 48"
+      "recommendation": "49 | 49"
     },
     {
       "id": "g4_13",

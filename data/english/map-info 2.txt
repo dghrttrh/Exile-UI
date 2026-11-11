@@ -195,7 +195,7 @@ type	=	monsters
 text	=	speed: +%
 ID	=	030
 
-[Monsters have # increased Critical Hit Chance|# to Monster Critical Damage Bonus]
+[Monsters have # increased Critical Hit Chance|Monsters have # Critical Damage Bonus]
 type	=	monsters
 text	=	crit/multi: +%
 ID	=	031
@@ -260,9 +260,9 @@ type	=	monsters
 text	=	inc stun: +%
 ID	=	043
 
-[Monsters have # increased Freeze Buildup|Monsters inflict # increased Flammability Magnitude|Monsters have # increased Shock Chance]
+[Monsters have # increased Elemental Ailment Application]
 type	=	monsters
-text	=	freeze/ignite/shock: +%
+text	=	ele ailments: +%
 ID	=	044
 
 [Monsters fire # additional Projectiles]

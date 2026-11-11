@@ -10,10 +10,6 @@
 		vars.hotkeys := {"scan_codes": {"00A": 9, "00B": 0}}
 
 	settings.hotkeys := {}, ini := IniBatchRead("ini" vars.poe_version "\hotkeys.ini")
-	settings.hotkeys.rebound_alt := !Blank(check := ini.settings["advanced item-info rebound"]) ? check : 0
-	settings.hotkeys.item_descriptions := !Blank(check := ini.hotkeys["item-descriptions key"]) ? check : ""
-	If !settings.hotkeys.item_descriptions
-		settings.hotkeys.rebound_alt := 0
 	settings.hotkeys.rebound_c := !Blank(check := ini.settings["c-key rebound"]) ? check : 0
 	settings.hotkeys.movekey := !Blank(check := ini.hotkeys["move-key"]) ? check : "lbutton"
 	settings.hotkeys.omnikey := vars.omnikey.hotkey := !Blank(check := ini.hotkeys["omni-hotkey"]) ? check : "capslock"
@@ -24,7 +20,7 @@
 	settings.hotkeys.emergencykey := !Blank(check := ini.hotkeys["emergency hotkey"]) ? check : "space"
 	settings.hotkeys.emergencykey_ctrl := !Blank(check := ini.hotkeys["emergency key ctrl"]) ? check : 1
 	settings.hotkeys.emergencykey_alt := !Blank(check := ini.hotkeys["emergency key alt"]) ? check : 1
-	settings.hotkeys.menuwidget := !Blank(check := ini.hotkeys["menu-widget alternative"]) ? (check = "blank" ? "" : check) : "" 
+	settings.hotkeys.menuwidget := !Blank(check := ini.hotkeys["menu-widget alternative"]) ? (check = "blank" ? "" : check) : ""
 
 	Hotkey, If,
 	Hotkey, % (settings.hotkeys.emergencykey_ctrl ? "^" : "") . (settings.hotkeys.emergencykey_alt ? "!" : "") . Hotkeys_Convert(settings.hotkeys.emergencykey), LLK_Restart, On
@@ -63,10 +59,6 @@
 
 	Hotkey, IfWinActive, ahk_group poe_ahk_window
 	Hotkey, % Hotkeys_Convert(settings.hotkeys.tab), Hotkeys_Tab, On
-
-	Hotkey, If, WinExist("ahk_id "vars.hwnd.horizons.main)
-	Loop, Parse, % "abcdefghijklmnopqrstuvwxyz"
-		Hotkey, % "*" Hotkeys_Convert(A_LoopField), HorizonsTooltip, On
 
 	If vars.client.stream
 		Return
@@ -113,10 +105,28 @@ Hotkeys_ESC()
 
 	If WinExist("LLK-UI: Clone-Frames Borders")
 		Cloneframes_SettingsRefresh(), vars.hwnd.cloneframe_borders.main := ""
+	Else If WinExist("OCR debug")
+		WinClose, OCR debug
+	Else If vars.quickpob.pending
+		vars.quickpob.error := 2
+	Else If (vars.hwnd.quickpob.Count() = 2)
+	{
+		For index, val in vars.hwnd.quickpob
+			If index
+			{
+				For iHBM, HBM in vars.hwnd.quickpob[index].data.HBMs
+					DeleteObject(HBM)
+				LLK_Overlay(vars.hwnd.quickpob[index].main, "destroy"), vars.hwnd.quickpob.Delete(index)
+			}
+	}
+	Else If WinExist("Exile UI: Drop-Down List")
+		Gui, DDL: Hide
 	Else If WinExist("Exile UI: RGB-Picker")
 		vars.RGB_picker.cancel := 1
 	Else If vars.hwnd.async.main && !vars.hwnd.async_pricing.main && WinExist("ahk_id " vars.hwnd.async.main)
 		AsyncTrade("close")
+	Else If vars.hwnd.async_logs.main && WinExist("ahk_id " vars.hwnd.async_logs.main)
+		AsyncTradeLogs("close")
 	Else If vars.snipping_tool.GUI
 		vars.snipping_tool := {"GUI": 0}
 	Else If WinExist("LLK-UI: notepad reminder")
@@ -136,7 +146,7 @@ Hotkeys_ESC()
 	Else If vars.leveltracker.skilltree_schematics.GUI
 		Leveltracker_PobSkilltree("close")
 	Else If WinExist("ahk_id " vars.hwnd.lootfilter.main)
-		Lootfilter_GUI("close")
+		Lootfilter_Editor("close")
 	Else If WinExist("ahk_id " vars.hwnd.recombination.main)
 	{
 		LLK_Overlay(vars.hwnd.recombination.main, "destroy"), vars.hwnd.recombination.main := ""
@@ -155,29 +165,10 @@ Hotkeys_ESC()
 		If !vars.sanctum.scanning
 			Sanctum("close")
 	}
-	Else If WinExist("ahk_id " vars.hwnd.stash_index.main)
-		Stash_PriceIndex("destroy")
 	Else If WinExist("ahk_id " vars.hwnd.stash.main)
 		Stash_Close()
-	Else If WinExist("ahk_id " vars.hwnd.stash_picker.main) || vars.stash.enter
-	{
-		Stash_PricePicker("destroy"), vars.stash.enter := 0
-		SendInput, {ESC}
-	}
-	Else If WinExist("ahk_id " vars.hwnd.compat_test)
-	{
-		Gui, compat_test: Destroy
-		If vars.OCR.debug
-		{
-			vars.OCR.debug := 0
-			SendInput, % "{" settings.OCR.z_hotkey "}"
-		}
-		Else If settings.OCR.allow
-			Settings_menu(vars.settings.active)
-		Else LLK_Overlay(vars.hwnd.settings.main, "show", 0)
-	}
-	Else If WinExist("ahk_id " vars.hwnd.ocr_tooltip.main)
-		OCR_Close()
+	Else If WinExist("ahk_id " vars.hwnd.TLDR.main)
+		TLDR_Close("ESC")
 	Else If WinExist("ahk_id " vars.hwnd.maptracker_logs.sum_tooltip)
 		Gui, maptracker_tooltip: Destroy
 	Else If WinExist("ahk_id "vars.hwnd.legion.main)
@@ -222,7 +213,7 @@ Hotkeys_ESC()
 	Else
 	{
 		If vars.hwnd.async_pricing.main && WinExist("ahk_id " vars.hwnd.async_pricing.main)
-			AsyncTrade2("close")
+			AsyncTradeReprice("close")
 		SendInput, {ESC down}
 		KeyWait, ESC
 		SendInput, {ESC up}
@@ -270,7 +261,7 @@ Hotkeys_Tab()
 			Break
 		}
 
-	While settings.features.actdecoder && Blank(settings.actdecoder.hotkey) && !(settings.qol.lab && InStr(vars.log.areaID, "labyrinth") && !InStr(vars.log.areaID, "_trials_")) && GetKeyState(vars.hotkeys.tab, "P")
+	While settings.features.actdecoder && (Blank(settings.actdecoder.hotkey) || InStr(vars.log.areaid, "_town")) && !(settings.qol.lab && InStr(vars.log.areaID, "labyrinth") && !InStr(vars.log.areaID, "_trials_")) && GetKeyState(vars.hotkeys.tab, "P")
 		If (A_TickCount >= start + 200)
 		{
 			vars.actdecoder.tab := 1
@@ -288,9 +279,16 @@ Hotkeys_Tab()
 			Break
 		}
 
+	While settings.features.leveltracker && settings.leveltracker.fade && LLK_Overlay(vars.hwnd.leveltracker.main, "check") && GetKeyState(vars.hotkeys.tab, "P")
+		If (A_TickCount >= start + 200)
+		{
+			active .= " leveltrackerfade", vars.leveltracker.tabfade := 1, Leveltracker_Toggle("show")
+			Break
+		}
+
 	map := vars.mapinfo.active_map
 	While settings.features.mapinfo && settings.mapinfo.tabtoggle && map.name && GetKeyState(vars.hotkeys.tab, "P")
-	&& (LLK_HasVal(vars.mapinfo.categories, vars.log.areaname, 1) || (InStr(map.name, vars.log.areaname) || vars.poe_version && LLK_StringCompare(vars.log.areaID, ["map"])) || LLK_StringCompare(vars.log.areaID, ["hideout"]) || InStr(vars.log.areaID, "heisthub") || InStr(map.english, "invitation") && LLK_PatternMatch(vars.log.areaID, "", ["MavenHub", "PrimordialBoss"]))
+	&& (LLK_HasVal(vars.mapinfo.categories, vars.log.areaname, 1) || LLK_StringCompare(vars.log.areaID, ["map"]) || LLK_StringCompare(vars.log.areaID, ["hideout"]) || InStr(vars.log.areaID, "heisthub") || InStr(map.english, "invitation") && LLK_PatternMatch(vars.log.areaID, "", ["MavenHub", "PrimordialBoss"]))
 		If (A_TickCount >= start + 200)
 		{
 			active .= " mapinfo", vars.mapinfo.toggle := 1, Mapinfo_GUI(2)
@@ -330,7 +328,7 @@ Hotkeys_Tab()
 			If IsNumber(StrReplace(timestamp, "|")) && (timestamp <= A_Now)
 				expired := "expired"
 		If !expired
-			LLK_Overlay(vars.hwnd.alarm.main, "destroy")
+			SetTimer, Alarm_Close, 100
 		Else Alarm("", "", "expired")
 	}
 	If InStr(active, "notepad")
@@ -367,6 +365,8 @@ Hotkeys_Tab()
 	}
 	If InStr(active, "leveltracker")
 		vars.leveltracker.overlays := 0
+	If InStr(active, "leveltrackerfade")
+		Leveltracker_Toggle("hide"), vars.leveltracker.tabfade := 0
 	If InStr(active, "mapinfo")
 		LLK_Overlay(vars.hwnd.mapinfo.main, "destroy"), vars.mapinfo.toggle := 0
 	If InStr(active, "maptracker")
@@ -376,7 +376,7 @@ Hotkeys_Tab()
 
 	If active && !settings.general.dev
 		WinActivate, ahk_group poe_window
-	Sleep 200
+	Sleep 100
 }
 
 ;pre-defined contexts for hotkey command
@@ -387,6 +387,21 @@ Hotkeys_Tab()
 #If (vars.log.areaID = vars.maptracker.map.id) && settings.features.maptracker && settings.maptracker.mechanics && settings.maptracker.portal_reminder && vars.maptracker.map.content.Count() && WinActive("ahk_id " vars.hwnd.poe_client)
 #If vars.leveltracker.skilltree_schematics.GUI && WinActive("ahk_group poe_ahk_window")
 #If vars.actdecoder.zones[vars.log.areaID] && WinActive("ahk_group poe_ahk_window")
+#If WinActive("ahk_id " vars.hwnd.poe_client) || WinActive("ahk_id " vars.hwnd.TLDR.main)
+
+#If vars.lootfilter.update_pending.1 && (vars.general.wMouse = vars.hwnd.lootfilter.main)
+LButton::
+RButton::LLK_ToolTip(Lang_Trans("global_updateinprogress"), 2,,,, "FF8000")
+
+#If vars.lootfilter.update_applied && (vars.general.wMouse && vars.general.wMouse = vars.hwnd.lootfilter.main)
+&& vars.general.cMouse && !InStr(vars.hwnd.lootfilter.update_check "," vars.hwnd.lootfilter.filter_apply "," vars.hwnd.lootfilter.filter_apply_bar, vars.general.cMouse)
+LButton::
+RButton::LLK_ToolTip(Lang_Trans("global_updateinprogress", 2), 2,,,, "FF8000")
+
+#If vars.hwnd.lootfilter.main && (vars.general.wMouse && vars.general.wMouse = vars.hwnd.lootfilter.main)
+WheelUp::Lootfilter_Editor("searchhistory_minus")
+WheelDown::Lootfilter_Editor("searchhistory_plus")
+MButton::Lootfilter_Editor("home")
 
 #If vars.actdecoder.tab
 *SC002::
@@ -504,33 +519,28 @@ MButton::Stash_PricePicker("reset")
 *SC004::Stash_Hotkeys(3)
 *SC005::Stash_Hotkeys(4)
 *SC006::Stash_Hotkeys(5)
-~+LButton::Stash_Hotkeys("LButton")
-~RButton::Stash_Hotkeys("RButton")
 
 #If vars.hwnd.stash.main && vars.stash.hover && !InStr(vars.stash.hover, "tab_") && WinActive("ahk_id " vars.hwnd.poe_client) && WinExist("ahk_id " vars.hwnd.stash.main)
 SC039::Stash_Hotkeys("Space")
 SC038::Stash_Hotkeys("LAlt")
-
-#If WinActive("ahk_id " vars.hwnd.poe_client) && vars.stash.enter
-~*SC01C::vars.stash.enter := 0, Stash_PricePicker("destroy")
 
 #If vars.general.wMouse && (vars.general.wMouse = vars.hwnd.ClientFiller) ;prevent clicking and activating the filler GUI
 *MButton::
 *LButton::
 *RButton::Return
 
-#If vars.OCR.GUI ;sending inputs for screen-reading
-*WheelUp::vars.OCR.wGUI += ((vars.OCR.wGUI + 30) * 2 >= vars.client.w || (vars.OCR.hGUI + 15) * 2 >= vars.client.h) ? 0 : 30, vars.OCR.hGUI += ((vars.OCR.wGUI + 30) * 2 >= vars.client.w || (vars.OCR.hGUI + 15) * 2 >= vars.client.h) ? 0 : 15
-*WheelDown::vars.OCR.wGUI -= (vars.OCR.wGUI - 30 >= vars.client.h / 10 + 30 && vars.OCR.hGUI - 15 >= vars.client.h / 10 + 15) ? 30 : 0, vars.OCR.hGUI -= (vars.OCR.wGUI - 30 >= vars.client.h / 10 + 30 && vars.OCR.hGUI - 15 >= vars.client.h / 10 + 15) ? 15 : 0
+#If vars.TLDR.GUI ;sending inputs for screen-reading
+*WheelUp::vars.TLDR.wGUI += ((vars.TLDR.wGUI + 30) * 2 >= vars.client.w || (vars.TLDR.hGUI + 15) * 2 >= vars.client.h) ? 0 : 30, vars.TLDR.hGUI += ((vars.TLDR.wGUI + 30) * 2 >= vars.client.w || (vars.TLDR.hGUI + 15) * 2 >= vars.client.h) ? 0 : 15
+*WheelDown::vars.TLDR.wGUI -= (vars.TLDR.wGUI - 30 >= vars.client.h / 10 + 30 && vars.TLDR.hGUI - 15 >= vars.client.h / 10 + 15) ? 30 : 0, vars.TLDR.hGUI -= (vars.TLDR.wGUI - 30 >= vars.client.h / 10 + 30 && vars.TLDR.hGUI - 15 >= vars.client.h / 10 + 15) ? 15 : 0
 
-#If vars.hwnd.ocr_tooltip.main && vars.general.wMouse && (vars.general.wMouse = vars.hwnd.ocr_tooltip.main) ;hovering over the ocr tooltip
-*LButton::OCR_Close()
-*SC039::OCR_Highlight("space")
-*SC002::OCR_Highlight(1)
-*SC003::OCR_Highlight(2)
-*SC004::OCR_Highlight(3)
-*SC005::OCR_Highlight(4)
-*SC006::OCR_Highlight(5)
+#If vars.hwnd.TLDR.main && vars.general.wMouse && (vars.general.wMouse = vars.hwnd.TLDR.main) ;hovering over the TLDR tooltip
+*LButton::Return
+*SC039::TLDR_Highlight("space")
+*SC002::TLDR_Highlight(1)
+*SC003::TLDR_Highlight(2)
+*SC004::TLDR_Highlight(3)
+*SC005::TLDR_Highlight(4)
+*SC006::TLDR_Highlight(5)
 
 #If vars.snipping_tool.GUI && WinActive("ahk_id " vars.hwnd.snipping_tool.main)
 *SC011::Screenchecks_ImageRecalibrate("w")
@@ -541,10 +551,10 @@ SC039::Screenchecks_ImageRecalibrate("space")
 LButton::Screenchecks_ImageRecalibrate("LButton")
 RButton::Screenchecks_ImageRecalibrate("RButton")
 
-#If vars.hwnd.ocr_tooltip.main && WinExist("ahk_id " vars.hwnd.ocr_tooltip.main)
+#If vars.hwnd.TLDR.main && WinExist("ahk_id " vars.hwnd.TLDR.main)
 ~SC02A::
 ~SC02A UP::
-WinSet, TransColor, % "Purple " (InStr(A_ThisHotkey, "UP") ? "255" : 0), % "ahk_id " vars.hwnd.ocr_tooltip.main
+WinSet, TransColor, % "Purple " (InStr(A_ThisHotkey, "UP") ? "255" : 0), % "ahk_id " vars.hwnd.TLDR.main
 Return
 
 #If !vars.mapinfo.toggle && (vars.system.timeout = 0) && (vars.general.wMouse = vars.hwnd.poe_client) && WinExist("ahk_id "vars.hwnd.mapinfo.main) ;clicking the client to hide the map-info tooltip

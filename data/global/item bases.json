@@ -26,6 +26,7 @@
     "Antique Gauntlets": "16",
     "Antique Greaves": "7",
     "Antique Rapier": "32",
+    "Ape Talisman": "2",
     "Apex Cleaver": "4",
     "Apex Rapier": "32",
     "Apothecary's Gloves": "16",
@@ -75,6 +76,7 @@
     "Behemoth Mace": "23",
     "Bismuth Flask": "15",
     "Black Maw Talisman": "2",
+    "Black Widow Talisman": "2",
     "Bladed Mace": "23",
     "Blasting Blade": "33",
     "Blasting Wand": "35",
@@ -84,6 +86,7 @@
     "Blood Raiment": "6",
     "Blood Sap Tincture": "34",
     "Blood Sceptre": "24",
+    "Blood Viper Talisman": "2",
     "Blue Pearl Amulet": "1",
     "Blunt Arrow Quiver": "26",
     "Blunt Force Condenser": "25",
@@ -131,6 +134,7 @@
     "Carnal Boots": "7",
     "Carnal Mitts": "16",
     "Carnal Sceptre": "24",
+    "Carrion Queen Talisman": "2",
     "Carved Wand": "35",
     "Carving Knife": "11",
     "Cat's Paw": "9",
@@ -150,6 +154,8 @@
     "Charan's Sword": "31",
     "Chest Splitter": "3",
     "Chestplate": "6",
+    "Chieftain Talisman": "2",
+    "Chimeral Talisman": "2",
     "Chimerascale Boots": "7",
     "Chimerascale Gauntlets": "16",
     "Chiming Spirit Shield": "28",
@@ -164,6 +170,7 @@
     "Cloudwhisper Boots": "7",
     "Clutching Talisman": "2",
     "Cobalt Jewel": "19",
+    "Cobra Talisman": "2",
     "Cogwork Ring": "27",
     "Coiled Staff": "30",
     "Coiled Wand": "35",
@@ -196,6 +203,7 @@
     "Copper Tower Shield": "28",
     "Coral Amulet": "1",
     "Coral Ring": "27",
+    "Cord Belt": "5",
     "Coronal Leather": "6",
     "Coronal Maul": "25",
     "Corroded Blade": "33",
@@ -206,11 +214,13 @@
     "Corvine Charm": "22",
     "Courtesan Sword": "32",
     "Crack Mace": "23",
+    "Craicic Talisman": "2",
     "Crescent Staff": "29",
     "Crested Tower Shield": "28",
     "Crimson Jewel": "19",
     "Crimson Raiment": "6",
     "Crimson Round Shield": "28",
+    "Croaker Talisman": "2",
     "Crude Bow": "8",
     "Crusader Boots": "7",
     "Crusader Buckler": "28",
@@ -246,6 +256,7 @@
     "Despot Axe": "4",
     "Destiny Leather": "6",
     "Destroyer Regalia": "6",
+    "Devourer Talisman": "2",
     "Devout Chainmail": "6",
     "Diamond Flask": "15",
     "Diamond Ring": "27",
@@ -319,9 +330,11 @@
     "Faithful Helmet": "18",
     "Fancy Foil": "32",
     "Fangjaw Talisman": "2",
+    "Farric Talisman": "2",
     "Faun's Horn": "35",
     "Feathered Arrow Quiver": "26",
     "Fencer Helm": "18",
+    "Fenumal Talisman": "2",
     "Festival Mask": "18",
     "Fickle Spiritblade": "31",
     "Field Lamellar": "6",
@@ -330,6 +343,7 @@
     "Fir Round Shield": "28",
     "Fire Arrow Quiver": "26",
     "Fishscale Gauntlets": "16",
+    "Flame Hellion Talisman": "2",
     "Flamecaller Xophgraft": "17",
     "Flanged Mace": "23",
     "Flare Mace": "23",
@@ -348,6 +362,7 @@
     "Fright Claw": "9",
     "Fright Maul": "25",
     "Frontier Leather": "6",
+    "Frost Hellion Talisman": "2",
     "Fugitive Boots": "7",
     "Fugitive Ring": "27",
     "Fulgurite Tincture": "34",
@@ -360,6 +375,7 @@
     "Full Wyrmscale": "6",
     "Full Wyvernscale": "6",
     "Gale Crown": "18",
+    "Gargantuan Talisman": "2",
     "Gavel": "23",
     "Gemini Claw": "9",
     "Gemstone Sword": "31",
@@ -367,6 +383,7 @@
     "General's Helmet": "18",
     "Geodesic Ring": "27",
     "Ghastly Eye Jewel": "20",
+    "Ghostflame Blade": "31",
     "Giant Life Flask": "12",
     "Giant Mana Flask": "13",
     "Giantslayer Helmet": "18",
@@ -386,6 +403,7 @@
     "Goathide Boots": "7",
     "Goathide Buckler": "28",
     "Goathide Gloves": "16",
+    "Goatman Talisman": "2",
     "Gold Amulet": "1",
     "Gold Flask": "15",
     "Gold Ring": "27",
@@ -395,6 +413,7 @@
     "Golden Plate": "6",
     "Goliath Gauntlets": "16",
     "Goliath Greaves": "7",
+    "Goliath Talisman": "2",
     "Gouger": "9",
     "Graceful Sword": "31",
     "Grand Life Flask": "12",
@@ -406,6 +425,7 @@
     "Great Crown": "18",
     "Great Helmet": "18",
     "Great Mallet": "25",
+    "Great Maw Talisman": "2",
     "Great White Claw": "9",
     "Greater Life Flask": "12",
     "Greater Mana Flask": "13",
@@ -451,6 +471,7 @@
     "Hubris Circlet": "18",
     "Hunter Hood": "18",
     "Hussar Brigandine": "6",
+    "Hybrid Arachnid Talisman": "2",
     "Hydrascale Boots": "7",
     "Hydrascale Gauntlets": "16",
     "Hypnotic Eye Jewel": "20",
@@ -549,9 +570,11 @@
     "Loricated Ringmail": "6",
     "Lunaris Circlet": "18",
     "Lupine Charm": "22",
+    "Lynx Talisman": "2",
     "Maelstrom Staff": "30",
     "Mage's Vestment": "6",
     "Magistrate Crown": "18",
+    "Magma Hound Talisman": "2",
     "Magmatic Tower Shield": "28",
     "Mahogany Tower Shield": "28",
     "Majestic Pelt": "18",
@@ -611,6 +634,7 @@
     "Oakbranch Tincture": "34",
     "Occultist's Vestment": "6",
     "Ochre Sceptre": "24",
+    "Octopus Talisman": "2",
     "Oiled Coat": "6",
     "Oiled Vest": "6",
     "Omen Wand": "35",
@@ -636,6 +660,7 @@
     "Paladin's Hauberk": "6",
     "Paua Amulet": "1",
     "Paua Ring": "27",
+    "Pearlescent Amulet": "1",
     "Pecoraro": "32",
     "Penetrating Arrow Quiver": "26",
     "Penitent Mask": "18",
@@ -649,7 +674,9 @@
     "Piledriver": "25",
     "Pine Buckler": "28",
     "Pinnacle Tower Shield": "28",
+    "Pitbull Talisman": "2",
     "Plague Mask": "18",
+    "Plagued Arachnid Talisman": "2",
     "Plank Kite Shield": "28",
     "Plate Vest": "6",
     "Plated Gauntlets": "16",
@@ -709,6 +736,9 @@
     "Reinforced Kite Shield": "28",
     "Reinforced Tower Shield": "28",
     "Replicating Eshgraft": "17",
+    "Retch Talisman": "2",
+    "Rhex Talisman": "2",
+    "Rhoa Talisman": "2",
     "Ringmail Boots": "7",
     "Ringmail Coat": "6",
     "Ringmail Gloves": "16",
@@ -766,11 +796,14 @@
     "Samnite Helmet": "18",
     "Sanctified Life Flask": "12",
     "Sanctified Mana Flask": "13",
+    "Sand Spitter Talisman": "2",
     "Sanguine Raiment": "6",
     "Sapphire Flask": "15",
     "Sapphire Ring": "27",
+    "Saqawine Talisman": "2",
     "Satin Gloves": "16",
     "Satin Slippers": "7",
+    "Savage Crab Talisman": "2",
     "Savant's Robe": "6",
     "Scale Doublet": "6",
     "Scale Vest": "6",
@@ -779,6 +812,8 @@
     "Scarlet Round Shield": "28",
     "Scholar Boots": "7",
     "Scholar's Robe": "6",
+    "Scorpion Talisman": "2",
+    "Scrabbler Talisman": "2",
     "Seaglass Amulet": "1",
     "Searching Eye Jewel": "20",
     "Secutor Helm": "18",
@@ -803,6 +838,7 @@
     "Sharkskin Tunic": "6",
     "Sharktooth Arrow Quiver": "26",
     "Sharktooth Claw": "9",
+    "Shield Crab Talisman": "2",
     "Short Bow": "8",
     "Siege Axe": "3",
     "Siege Helmet": "18",
@@ -845,6 +881,7 @@
     "Sparkling Claw": "9",
     "Spectral Axe": "3",
     "Spectral Sword": "33",
+    "Spider Crab Talisman": "2",
     "Spidersilk Robe": "6",
     "Spike-Point Arrow Quiver": "26",
     "Spiked Bundle": "28",
@@ -863,6 +900,7 @@
     "Splitnewt Talisman": "2",
     "Sporebloom Tincture": "34",
     "Squalling Tulgraft": "17",
+    "Squid Talisman": "2",
     "Stabilising Sceptre": "24",
     "Stag Sceptre": "24",
     "Stealth Boots": "7",
@@ -902,6 +940,7 @@
     "Syndicate's Garb": "6",
     "Talon Axe": "4",
     "Tarnished Spirit Shield": "28",
+    "Taurus Talisman": "2",
     "Teak Round Shield": "28",
     "Tempered Foil": "32",
     "Tenderizer": "23",
@@ -919,6 +958,7 @@
     "Thwarting Gauntlets": "16",
     "Tiger Hook": "31",
     "Tiger Sword": "33",
+    "Tiger Talisman": "2",
     "Tiger's Paw": "9",
     "Timber Axe": "4",
     "Timeworn Claw": "9",
@@ -959,6 +999,7 @@
     "Undying Flesh Talisman": "2",
     "Unset Amulet": "1",
     "Unset Ring": "27",
+    "Ursa Talisman": "2",
     "Ursine Charm": "22",
     "Ursine Pelt": "18",
     "Vaal Axe": "4",
@@ -990,6 +1031,7 @@
     "Void Axe": "4",
     "Void Fangs": "9",
     "Void Sceptre": "24",
+    "Vulture Talisman": "2",
     "Walnut Spirit Shield": "28",
     "War Axe": "3",
     "War Buckler": "28",
@@ -998,6 +1040,7 @@
     "War Sword": "31",
     "Warlock Boots": "7",
     "Warlock Gloves": "16",
+    "Watcher Talisman": "2",
     "Waxed Garb": "6",
     "Wereclaw Talisman": "2",
     "Whalebone Rapier": "32",
@@ -1005,6 +1048,7 @@
     "Wild Leather": "6",
     "Windbreak Boots": "7",
     "Winter Crown": "18",
+    "Wolf Alpha Talisman": "2",
     "Wolf Pelt": "18",
     "Woodful Staff": "29",
     "Woodsplitter": "4",
@@ -1193,6 +1237,13 @@
         "default"
       ]
     },
+    "Pearlescent Amulet": {
+      "_tags": [
+        "amulet",
+        "default",
+        "not_for_sale"
+      ]
+    },
     "Ruby Amulet": {
       "_tags": [
         "amulet",
@@ -1242,6 +1293,13 @@
       "_tags": [
         "belt",
         "default"
+      ]
+    },
+    "Cord Belt": {
+      "_tags": [
+        "belt",
+        "default",
+        "not_for_sale"
       ]
     },
     "Crystal Belt": {
@@ -5235,6 +5293,7 @@
   "Grafts": {
     "Aegis Tulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_tul",
         "graft_tul_aegis"
@@ -5242,6 +5301,7 @@
     },
     "Battering Uulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_uulnetol",
@@ -5250,6 +5310,7 @@
     },
     "Draining Eshgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_esh",
@@ -5258,6 +5319,7 @@
     },
     "Erupting Xophgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_xoph",
@@ -5266,6 +5328,7 @@
     },
     "Flamecaller Xophgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_xoph",
@@ -5274,6 +5337,7 @@
     },
     "Freezing Tulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_tul",
@@ -5282,6 +5346,7 @@
     },
     "Hardening Uulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_uulnetol",
         "graft_uulnetol_low_life_buff"
@@ -5289,6 +5354,7 @@
     },
     "Impaling Uulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_uulnetol",
         "graft_uulnetol_impale_buff"
@@ -5296,6 +5362,7 @@
     },
     "Jolting Eshgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_esh",
         "graft_esh_jolt_buff"
@@ -5303,6 +5370,7 @@
     },
     "Molten Xophgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_xoph",
@@ -5311,6 +5379,7 @@
     },
     "Replicating Eshgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_esh",
@@ -5319,6 +5388,7 @@
     },
     "Spiking Uulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_uulnetol",
@@ -5327,6 +5397,7 @@
     },
     "Squalling Tulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_tul",
@@ -5335,6 +5406,7 @@
     },
     "Stoking Xophgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_xoph",
         "graft_xoph_ailment_buff"
@@ -5342,6 +5414,7 @@
     },
     "Storming Eshgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_damaging_skill",
         "graft_esh",
@@ -5350,6 +5423,7 @@
     },
     "Summoning Tulgraft": {
       "_tags": [
+        "default",
         "graft",
         "graft_tul",
         "graft_tul_summon"
@@ -7540,6 +7614,19 @@
       "crit": "5",
       "phys": "61.0",
       "speed": "1.3"
+    },
+    "Ghostflame Blade": {
+      "_tags": [
+        "default",
+        "not_for_sale",
+        "one_hand_weapon",
+        "onehand",
+        "sword",
+        "weapon"
+      ],
+      "crit": "6.5",
+      "phys": "51.5",
+      "speed": "1.55"
     },
     "Gladius": {
       "_tags": [
@@ -10073,6 +10160,13 @@
     }
   },
   "Talismans": {
+    "Ape Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Ashscale Talisman": {
       "_tags": [
         "amulet",
@@ -10129,6 +10223,20 @@
         "talisman"
       ]
     },
+    "Black Widow Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Blood Viper Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Bonespire Talisman": {
       "_tags": [
         "amulet",
@@ -10137,6 +10245,27 @@
       ]
     },
     "Breakrib Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Carrion Queen Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Chieftain Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Chimeral Talisman": {
       "_tags": [
         "amulet",
         "default",
@@ -10157,6 +10286,27 @@
         "talisman"
       ]
     },
+    "Cobra Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Craicic Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Croaker Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Deadhand Talisman": {
       "_tags": [
         "amulet",
@@ -10171,7 +10321,70 @@
         "talisman"
       ]
     },
+    "Devourer Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Fangjaw Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Farric Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Fenumal Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Flame Hellion Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Frost Hellion Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Gargantuan Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Goatman Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Goliath Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Great Maw Talisman": {
       "_tags": [
         "amulet",
         "default",
@@ -10181,7 +10394,8 @@
     "Greatwolf Talisman": {
       "_tags": [
         "amulet",
-        "default"
+        "default",
+        "talisman"
       ]
     },
     "Hexclaw Talisman": {
@@ -10198,6 +10412,13 @@
         "talisman"
       ]
     },
+    "Hybrid Arachnid Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Lone Antler Talisman": {
       "_tags": [
         "amulet",
@@ -10206,6 +10427,20 @@
       ]
     },
     "Longtooth Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Lynx Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Magma Hound Talisman": {
       "_tags": [
         "amulet",
         "default",
@@ -10247,7 +10482,49 @@
         "talisman"
       ]
     },
+    "Octopus Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Pitbull Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Plagued Arachnid Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Primal Skull Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Retch Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Rhex Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Rhoa Talisman": {
       "_tags": [
         "amulet",
         "default",
@@ -10268,6 +10545,55 @@
         "talisman"
       ]
     },
+    "Sand Spitter Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Saqawine Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Savage Crab Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Scorpion Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Scrabbler Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Shield Crab Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Spider Crab Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Spinefuse Talisman": {
       "_tags": [
         "amulet",
@@ -10276,6 +10602,20 @@
       ]
     },
     "Splitnewt Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Squid Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Taurus Talisman": {
       "_tags": [
         "amulet",
         "default",
@@ -10296,6 +10636,13 @@
         "talisman"
       ]
     },
+    "Tiger Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Undying Flesh Talisman": {
       "_tags": [
         "amulet",
@@ -10303,7 +10650,35 @@
         "talisman"
       ]
     },
+    "Ursa Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Vulture Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Watcher Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
     "Wereclaw Talisman": {
+      "_tags": [
+        "amulet",
+        "default",
+        "talisman"
+      ]
+    },
+    "Wolf Alpha Talisman": {
       "_tags": [
         "amulet",
         "default",

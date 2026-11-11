@@ -8,6 +8,7 @@
 #Include data\External Functions.ahk
 #Include data\JSON.ahk
 #Persistent
+ListLines, Off
 
 vars := {"general": {}, "hwnd": {}, "log": {}, "pixels": {}, "sanctum": {}, "settings": {}, "exchange": {}}
 settings := {"features": {}, "general": {}, "iteminfo": {}}
@@ -56,10 +57,10 @@ Return
 #Include modules\macros.ahk
 #Include modules\map-info.ahk
 #Include modules\map tracker.ahk
-#Include modules\ocr.ahk
 #Include modules\omni-key.ahk
 #Include modules\qol tools.ahk
 #Include modules\recombination.ahk
+#Include modules\rune-ninja.ahk
 #Include modules\sanctum.ahk
 #Include modules\screen-checks.ahk
 #Include modules\search-strings.ahk
@@ -67,6 +68,7 @@ Return
 #Include modules\settings menu.ahk
 #Include modules\stash-ninja.ahk
 #Include modules\statlas.ahk
+#Include modules\TLDR tooltips.ahk
 
 Cloneframes_Thread2(wParam, lParam)
 {
@@ -213,12 +215,11 @@ StringReceive(wParam, string) ;based on example #4 on https://www.autohotkey.com
 #If settings.features.sanctum && vars.sanctum.active && WinExist("ahk_id " vars.hwnd.sanctum.main) && (vars.general.wMouse = vars.hwnd.sanctum.main) && vars.general.cMouse && (check := LLK_HasVal(vars.hwnd.sanctum, vars.general.cMouse))
 #If vars.hwnd.stash_picker.main && vars.general.cMouse && WinExist("ahk_id " vars.hwnd.stash_picker.main) && LLK_PatternMatch(LLK_HasVal(vars.hwnd.stash_picker, vars.general.cMouse), "", ["confirm_", "bulk"])
 #If vars.hwnd.stash.main && WinActive("ahk_id " vars.hwnd.poe_client) && WinExist("ahk_id " vars.hwnd.stash.main)
-#If WinActive("ahk_id " vars.hwnd.poe_client) && vars.stash.enter
 #If vars.general.wMouse && (vars.general.wMouse = vars.hwnd.ClientFiller) ;prevent clicking and activating the filler GUI
-#If vars.OCR.GUI ;sending inputs for screen-reading
-#If vars.hwnd.ocr_tooltip.main && vars.general.wMouse && (vars.general.wMouse = vars.hwnd.ocr_tooltip.main) ;hovering over the ocr tooltip
+#If vars.TLDR.GUI ;sending inputs for screen-reading
+#If vars.hwnd.TLDR.main && vars.general.wMouse && (vars.general.wMouse = vars.hwnd.TLDR.main) ;hovering over the TLDR tooltip
 #If vars.snipping_tool.GUI && WinActive("ahk_id " vars.hwnd.snipping_tool.main)
-#If vars.hwnd.ocr_tooltip.main && WinExist("ahk_id " vars.hwnd.ocr_tooltip.main)
+#If vars.hwnd.TLDR.main && WinExist("ahk_id " vars.hwnd.TLDR.main)
 #If !vars.mapinfo.toggle && (vars.system.timeout = 0) && (vars.general.wMouse = vars.hwnd.poe_client) && WinExist("ahk_id "vars.hwnd.mapinfo.main) ;clicking the client to hide the map-info tooltip
 #If (vars.system.timeout = 0) && vars.general.wMouse && !Blank(LLK_HasVal(vars.hwnd.lab, vars.general.wMouse)) && vars.general.cMouse && !Blank(LLK_HasVal(vars.hwnd.lab, vars.general.cMouse)) ;hovering the lab-layout button and clicking a room
 #If (vars.system.timeout = 0) && vars.general.wMouse && (LLK_HasVal(vars.hwnd.lab, vars.general.wMouse) = "button") ;hovering the lab-layout button and clicking it
@@ -251,6 +252,7 @@ StringReceive(wParam, string) ;based on example #4 on https://www.autohotkey.com
 #If vars.general.wMouse && vars.hwnd.cheatsheet.main && (vars.general.wMouse = vars.hwnd.cheatsheet.main) && (vars.cheatsheets.active.type = "advanced") ;ranking things in advanced cheatsheets
 #If vars.general.wMouse && vars.hwnd.betrayal_info.main && (vars.general.wMouse = vars.hwnd.betrayal_info.main) ;ranking betrayal rewards
 #If (vars.cheatsheets.active.type = "image") && vars.hwnd.cheatsheet.main && !vars.cheatsheets.tab && WinExist("ahk_id " vars.hwnd.cheatsheet.main) ;image-cheatsheet hotkeys
+#If WinActive("ahk_id " vars.hwnd.poe_client) || WinActive("ahk_id " vars.hwnd.TLDR.main)
 #IfWinActive ahk_group poe_window
 #IfWinActive ahk_group poe_ahk_window
 #If
@@ -277,6 +279,11 @@ Init_hotkeys(a := "", b := "", c := "", d := "")
 }
 
 News(mode := "")
+{
+	Return
+}
+
+Economy_Update(type := "", force := "")
 {
 	Return
 }

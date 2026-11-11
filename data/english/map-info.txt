@@ -89,14 +89,14 @@ type	=	area
 text	=	unknown mods:
 ID	=	000
 
-[monsters reflect # of elemental damage]
+[Rare Monsters have Elemental Thorns reflecting Elemental Damage]
 type	=	monsters
-text	=	ele reflect: %
+text	=	rares reflect ele:
 ID	=	001
 
-[monsters reflect # of physical damage]
+[Rare Monsters have Physical Thorns reflecting Physical Damage]
 type	=	monsters
-text	=	phys reflect: %
+text	=	rares reflect phys:
 ID	=	002
 
 [players cannot regenerate life, mana or energy shield]
@@ -549,6 +549,31 @@ type	=	player
 text	=	reduced leech: %
 ID	=	090
 
+[Rare monsters in area Temporarily Revive on death]
+type	=	monsters
+text	=	rares temp revive
+ID	=	153
+
+[Players have # less effect of Flasks applied to them]
+type	=	player
+text	=	flask effect: -%
+ID	=	154
+
+[Auras from Player Skills which affect Allies also affect Enemies]
+type	=	player
+text	=	hostile auras
+ID	=	155
+
+[Area contains patches of moving Marked Ground, inflicting random Marks]
+type	=	area
+text	=	marked ground
+ID	=	156
+
+[area contains labyrinth hazards]
+type	=	area
+text	=	lab hazards
+ID	=	157
+
 [players are cursed with vulnerability|players are cursed with temporal chains|players are cursed with elemental weakness]
 type	=	player
 text	=	vuln | chains | ele weak
@@ -725,6 +750,11 @@ text	=	uniques are shrined
 ID	=	191
 
 [monsters inflict # grasping vines on hit]
+type	=	monsters
+text	=	grasping vines
+ID	=	192
+
+[monsters inflict # grasping vine on hit]
 type	=	monsters
 text	=	grasping vines
 ID	=	192
@@ -1008,3 +1038,13 @@ ID	=	318
 type	=	expedition
 text	=	olroth (boss)
 ID	=	319
+
+[# increased Dead Man's Sulphur found in this Area]
+type	=	area
+text	=	sulphur: +%
+ID	=	400
+
+[# Monster Elemental Resistances]
+type	=	monsters
+text	=	ele res: +%
+ID	=	401

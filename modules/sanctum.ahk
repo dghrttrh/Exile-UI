@@ -148,6 +148,7 @@ Sanctum(cHWND := "", hotkey := 0)
 					GuiControl, +Hidden, % vars.hwnd.sanctum.scanned_img
 				}
 				Else KeyWait, RButton
+				WinActivate, % "ahk_id " vars.hwnd.poe_client
 				Return
 			}
 		}
@@ -578,7 +579,11 @@ Sanctum_Relics(cHWND := "")
 	{
 		mod2 := db.relics[mod].1, val := (RegExMatch(val, "i)(\.|,)[0-9]") ? RTrim(val, ",.0") : val)
 		If Blank(mod2)
+		{
 			mods2.unknown := !mods2.unknown ? [1] : [mods2.unknown + 1]
+			If settings.general.dev
+				LLK_ToolTip("unknown mod: " mod, 2)
+		}
 		Else mods2[mod2] := [val . (db.relics[mod].2 ? "%" : ""), mod], dimensions.Push(val . (db.relics[mod].2 ? "%" : ""))
 	}
 
@@ -628,15 +633,8 @@ Sanctum_RelicsClick()
 		Return
 
 	Clipboard := ""
-	If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-		SendInput, % "{" settings.hotkeys.item_descriptions " down}^{c}{" settings.hotkeys.item_descriptions " up}"
-	Else SendInput, !^{c}
-
+	SendInput, % "^{c}"
 	ClipWait, 0.1
-	If vars.poe_version && !settings.general.dev
-		If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-			SendInput, % "{" settings.hotkeys.item_descriptions " up}"
-		Else SendInput, {ALT up}
 
 	For key, val in items
 		If InStr(Clipboard, key)

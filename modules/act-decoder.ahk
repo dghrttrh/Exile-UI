@@ -1,4 +1,4 @@
-﻿Init_actdecoder()
+﻿Init_actdecoder(refresh := 0)
 {
 	local
 	global vars, settings, json
@@ -6,30 +6,42 @@
 	If !FileExist("ini" vars.poe_version "\act-decoder.ini")
 		IniWrite, % "", % "ini" vars.poe_version "\act-decoder.ini", settings
 
-	If !IsObject(vars.actdecoder)
+	If refresh || !IsObject(vars.actdecoder)
 	{
-		vars.actdecoder := {}
+		vars.actdecoder := {"updater": {}}
+		Try tool_version := json.Load(LLK_FileRead("data\versions.json"))
+		If tool_version._release
+			vars.actdecoder.tool_version := tool_version._release.1 . (tool_version.hotfix ? "." (tool_version.hotfix < 10 ? 0 : "") . tool_version.hotfix : "")
+		Try current := json.Load(LLK_FileRead("img\GUI\act-decoder\version" vars.poe_version ".json"))
 		Try vars.actdecoder.file_list := json.Load(LLK_FileRead("img\GUI\act-decoder\file-list" vars.poe_version ".json"))
+		If current.version
+			vars.actdecoder.version := current.version
+		Else vars.actdecoder.version := 1
+		If (refresh = 1)
+			vars.actdecoder.updater.check := {"version": current.version}
+		Else If (refresh = 2)
+			vars.actdecoder.updater.check := "failed"
 	}
 	vars.actdecoder.zone_layouts := {}, vars.actdecoder.files := {}
 
 	If vars.actdecoder.file_list.Count()
-		Loop, Files, % "img\GUI\act-decoder\zones" vars.poe_version "\*"
-			If !vars.actdecoder.file_list[A_LoopFileName]
-				If settings.general.dev
-					outdated := 1
-				Else FileDelete, % A_LoopFilePath
+		For outer in [1, 2]
+			Loop, Files, % "img\GUI\act-decoder\zones" vars.poe_version "\*"
+				If (outer = 1) && !vars.actdecoder.file_list[A_LoopFileName]
+				{
+					If settings.general.dev
+						outdated := 1
+					Else FileDelete, % A_LoopFilePath
+				}
+				Else If (outer = 2) && (check := InStr(A_LoopFileName, " "))
+				{
+					vars.actdecoder.files[StrReplace(A_LoopFileName, "." A_LoopFileExt)] := 1
+					vars.actdecoder.zones[SubStr(StrReplace(A_LoopFileName, "." A_LoopFileExt), 1, InStr(A_LoopFileName, " ") - 1)] := 1
+					vars.actdecoder.zone_layouts[SubStr(A_LoopFileName, 1, check - 1)] := {}
+				}
 
 	If outdated
-		MsgBox, % "file-list outdated"
-
-	Loop, Files, % "img\GUI\act-decoder\zones" vars.poe_version "\*"
-		If (check := InStr(A_LoopFileName, " "))
-		{
-			vars.actdecoder.files[StrReplace(A_LoopFileName, "." A_LoopFileExt)] := 1
-			vars.actdecoder.zones[SubStr(StrReplace(A_LoopFileName, "." A_LoopFileExt), 1, InStr(A_LoopFileName, " ") - 1)] := 1
-			vars.actdecoder.zone_layouts[SubStr(A_LoopFileName, 1, check - 1)] := {}
-		}
+		Gui_MsgBox("layouts", "act-decoder", ["layouts outdated: rebuild file-list.json"],,, "Center")
 
 	settings.actdecoder := {}, ini := IniBatchRead("ini" vars.poe_version "\act-decoder.ini")
 	settings.actdecoder.xLayouts := !Blank(check := ini.settings["zone-layouts x"]) ? check : ""
@@ -40,6 +52,8 @@
 	settings.actdecoder.trans_zones := !Blank(check := ini.settings["zone transparency"]) ? check : 10
 	settings.actdecoder.hotkey := hotkey := !Blank(check := ini.settings["alternative hotkey"]) ? check : ""
 
+	If refresh
+		Return
 	Hotkey, If, vars.actdecoder.zones[vars.log.areaID] && WinActive("ahk_group poe_ahk_window")
 	If !GetKeyVK(hotkey)
 		settings.actdecoder.hotkey := ""
@@ -61,11 +75,6 @@ Actdecoder_Hotkey()
 	vars.actdecoder.tab := 1
 	If Actdecoder_ZoneLayouts()
 		active := 1
-	Else 
-	{
-		vars.actdecoder.tab := 0
-		LLK_ToolTip(Lang_Trans("m_actdecoder_missing"),,,,, "Red")
-	}
 
 	KeyWait, % settings.actdecoder.hotkey
 	If !active
@@ -105,6 +114,30 @@ Actdecoder_ImageSelect(pic)
 	}
 }
 
+Actdecoder_UpdateCheck()
+{
+	local
+	global vars, settings, json
+
+	Try update_check := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Exile-UI/refs/heads/layouts" StrReplace(vars.poe_version, " ", "_") "/version" StrReplace(vars.poe_version, " ", "%20") ".json")
+	If update_check
+		Try live := json.Load(update_check)
+
+	If live.version
+		vars.actdecoder.updater.check := live.Clone()
+	Else vars.actdecoder.updater.check := "failed"
+
+	vars.actdecoder.updater.last := A_NowUTC
+	If !(live.version > vars.actdecoder.version)
+		Return
+	vars.actdecoder.updater.available := 1
+	If vars.actdecoder.tab && WinExist("ahk_id " vars.hwnd.actdecoder.main)
+	{
+		vars.hwnd.help_tooltips.Delete("actdecoder_help panel"), vars.hwnd.help_tooltips.actdecoder_update := vars.hwnd.actdecoder.helppanel_bar
+		GuiControl, % "+BackgroundLime", % vars.hwnd.actdecoder.helppanel_bar
+	}
+}
+
 Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 {
 	local
@@ -113,6 +146,9 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 
 	If !settings.features.actdecoder
 		Return
+
+	If Blank(vars.actdecoder.updater.last)
+		SetTimer, Actdecoder_UpdateCheck, -100
 
 	If InStr(mode, "SC00")
 	{
@@ -167,7 +203,7 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 			If (click = 2)
 				Return
 			IniWrite, % (settings.actdecoder.aLayouts := (settings.actdecoder.aLayouts = "vertical") ? "horizontal" : "vertical"), % "ini" vars.poe_version "\act-decoder.ini", settings, zone-layouts arrangement
-			x := (settings.actdecoder.aLayouts = "vertical") ? 0 : "", y := (settings.actdecoder.aLayouts = "vertical") ? "" : 0
+			x := (settings.actdecoder.aLayouts = "vertical") ? vars.monitor.x : "", y := (settings.actdecoder.aLayouts = "vertical") ? "" : vars.monitor.y
 			KeyWait, LButton
 			KeyWait, RButton
 		}
@@ -175,6 +211,12 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 		{
 			KeyWait, LButton
 			vars.actdecoder.zone_layouts[vars.log.areaID] := {}
+		}
+		Else If (check = "reset_all_bar")
+		{
+			KeyWait, LButton
+			For key, val in vars.actdecoder.zone_layouts
+				vars.actdecoder.zone_layouts[key] := {}
 		}
 		Else If (check = "drag")
 		{
@@ -187,12 +229,12 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 					{
 						longpress := 1
 						LLK_Drag(width, height, x, y,, "actdecoder_zones" toggle, 1,,, 1)
-						Sleep 1
+						Sleep 10
 					}
 				If longpress
 					vars.general.drag := 0
 			}
-			Else x := (settings.actdecoder.aLayouts = "horizontal") ? "" : 0, y := (settings.actdecoder.aLayouts = "horizontal") ? 0 : ""
+			Else x := (settings.actdecoder.aLayouts = "horizontal") ? "" : vars.monitor.x, y := (settings.actdecoder.aLayouts = "horizontal") ? vars.monitor.y : ""
 			KeyWait, LButton
 			KeyWait, RButton
 		}
@@ -243,8 +285,8 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 
 	If !Blank(x) || !Blank(y)
 	{
-		IniWrite, % (settings.actdecoder.xLayouts := x), % "ini" vars.poe_version "\act-decoder.ini", settings, zone-layouts x
-		IniWrite, % (settings.actdecoder.yLayouts := y), % "ini" vars.poe_version "\act-decoder.ini", settings, zone-layouts y
+		IniWrite, % (settings.actdecoder.xLayouts := x - vars.monitor.x), % "ini" vars.poe_version "\act-decoder.ini", settings, zone-layouts x
+		IniWrite, % (settings.actdecoder.yLayouts := y - vars.monitor.y), % "ini" vars.poe_version "\act-decoder.ini", settings, zone-layouts y
 	}
 	If (click = 1) && (check = "drag")
 		Return
@@ -272,8 +314,8 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 	hwnd_old := vars.hwnd.actdecoder.main, vars.hwnd.actdecoder := {"main": actdecoder_zones}
 
 	Gui, %GUI_name%: Add, Pic, % "Section Border BackgroundTrans HWNDhwnd h" settings.general.fHeight " w-1" (vars.actdecoder.tab ? "" : " Hidden"), % "HBitmap:*" vars.pics.global.help
-	Gui, %GUI_name%: Add, Progress, % "Disabled HWNDhwnd1 xp yp wp hp BackgroundBlack" (vars.actdecoder.tab ? "" : " Hidden"), 0
-	vars.hwnd.actdecoder.helppanel := hwnd, vars.hwnd.actdecoder.helppanel_bar := vars.hwnd.help_tooltips["actdecoder_help panel"] := hwnd1
+	Gui, %GUI_name%: Add, Progress, % "Disabled HWNDhwnd1 xp yp wp hp Border Background" (vars.actdecoder.updater.available ? "Lime" : "Black") . (vars.actdecoder.tab ? "" : " Hidden"), 0
+	vars.hwnd.actdecoder.helppanel := hwnd, vars.hwnd.actdecoder.helppanel_bar := vars.hwnd.help_tooltips["actdecoder_" (vars.actdecoder.updater.available ? "update" : "help panel")] := hwnd1
 
 	If !vars.pics.zone_layouts.drag
 		vars.pics.zone_layouts.drag := LLK_ImageCache("img\GUI\drag.png")
@@ -286,15 +328,22 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 		, % "HBitmap:*" vars.pics.zone_layouts[(alignment = "vertical" ? "horizontal" : "vertical")]
 	vars.hwnd.actdecoder.alignment := vars.hwnd.help_tooltips["actdecoder_alignment"] := hwnd
 
-	For key, val in vars.actdecoder.zone_layouts[vars.log.areaID]
-		If IsObject(val) && (val.1 || val.Count() > 1) || !IsObject(val) && !Blank(val)
-			reset_check := 1
+	For key, val in vars.actdecoder.zone_layouts
+		For key1, val in vars.actdecoder.zone_layouts[key]
+			If IsObject(val) && (val.1 || val.Count() > 1) || !IsObject(val) && !Blank(val)
+				reset_check := (key = vars.log.areaID ? 1 : reset_check), reset_all_check := 1
 
 	If reset_check
 	{
 		Gui, %GUI_name%: Add, Pic, % (alignment = "vertical" ? "ys" : "xs") " Border HWNDhwnd BackgroundTrans h" settings.general.fHeight " w-1" (vars.actdecoder.tab ? "" : " Hidden"), % "HBitmap:*" vars.pics.global.revert
 		Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp HWNDhwnd1 BackgroundBlack" (vars.actdecoder.tab ? "" : " Hidden"), 0
 		vars.hwnd.actdecoder.reset := hwnd, vars.hwnd.actdecoder.reset_bar := vars.hwnd.help_tooltips["actdecoder_reset"] := hwnd1
+	}
+	If reset_all_check
+	{
+		Gui, %GUI_name%: Add, Pic, % (alignment = "vertical" ? "ys" : "xs") " Border HWNDhwnd BackgroundTrans h" settings.general.fHeight " w-1" (vars.actdecoder.tab ? "" : " Hidden"), % "HBitmap:*" vars.pics.global.revert_all
+		Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp HWNDhwnd1 BackgroundBlack" (vars.actdecoder.tab ? "" : " Hidden"), 0
+		vars.hwnd.actdecoder.reset_all := hwnd, vars.hwnd.actdecoder.reset_all_bar := vars.hwnd.help_tooltips["actdecoder_reset all"] := hwnd1
 	}
 
 	subzone := vars.actdecoder.zone_layouts[vars.log.areaID].subzone, pic_count := ypic_count := pic_count0 := 0, vars.actdecoder.loaded := [], deep := selection := 0
@@ -307,7 +356,7 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 		exclude := vars.actdecoder.zone_layouts[vars.log.areaID].exclude
 		Loop, Files, % "img\GUI\act-decoder\zones" vars.poe_version "\" vars.log.areaID " *"
 		{
-			file := StrReplace(A_LoopFileName, "." A_LoopFileExt), file := SubStr(file, InStr(file, " ") + 1)
+			file := StrReplace(A_LoopFileName, "." A_LoopFileExt), file := SubStr(file, InStr(file, " ") + 1), xFile := InStr(file, "x")
 			If !RegExMatch(A_LoopFileName, "i)" (subzone ? "\s(" subzone "|x(_x){" deep "})_." : "\s(\d|x)") "\.(jpg|png)$") && !(pic_count0 = 0 && InStr(A_LoopFileName, " y"))
 			|| exclude && RegExMatch(A_LoopFileName, "i)" vars.log.areaID . exclude "\.") || !pic_count0 && InStr(A_LoopFileName, " x")
 			;|| selection && (count > 3) && !RegExMatch(A_LoopFileName, "i)\s(x|y)")
@@ -315,14 +364,14 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 				Continue
 
 			selection += (vars.actdecoder.files[vars.log.areaID " " file "_1"] ? 1 : 0)
-			count += 1, pic_count += (outer = 1 ? (selection && (count = 3) && !InStr(file, "x") ? 0.2 : (count < 4 || InStr(file, "x") ? 1 : 0)) : 0), pic_count0 += (outer = 1) && !RegExMatch(A_LoopFileName, "i)\s(x|y)") ? 1 : 0
+			count += 1, pic_count += (outer = 1 ? (selection && (count = 3) && !xFile ? 0.2 : (count < 4 || xFile ? 1 : 0)) : 0), pic_count0 += (outer = 1) && !RegExMatch(A_LoopFileName, "i)\s(x|y)") ? 1 : 0
 			ypic_count += InStr(A_LoopFileName, " y") ? 1 : 0
 
 			If (outer = 1)
 				Continue
 			If (alignment = "vertical")
-				style := (!selection || (selection && count < 4) || InStr(file, "x") ? " Section xs" : " ys")
-			Else style := (!selection || (selection && count < 4) || InStr(file, "x") ? " Section ys" : " xs") ;" Section ys"
+				style := (!selection || (selection && count < 4) || xFile ? " Section xs" : " ys")
+			Else style := (!selection || (selection && count < 4) || xFile ? " Section ys" : " xs") ;" Section ys"
 
 			pBitmap := Gdip_CreateBitmapFromFile(A_LoopFilePath), Gdip_GetImageDimension(pBitmap, width, height)
 			For index, operation in vars.actdecoder.zone_layouts[vars.log.areaID][file]
@@ -351,21 +400,23 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 			new_width := (new_width * pic_count + margin * (pic_count + 2) + settings.general.fHeight >= (axis := vars.monitor[(settings.actdecoder.aLayouts = "vertical" ? "h" : "w")])) ? Round(axis / (pic_count + 0.33)) : new_width
 			While Mod(new_width, 8)
 				new_width -= 1
-			new_width := (selection && (count > 2) && !InStr(file, "x") ? new_width/8 : new_width)
+			new_width := (selection && (count > 2) && !xFile ? new_width/8 - 2 : new_width)
 			pBitmap_resized := Gdip_ResizeBitmap(pBitmap, new_width * (InStr(A_LoopFileName, "x") ? 0.66 : 1), 10000, 1, 7, 1)
 			Gdip_DisposeBitmap(pBitmap)
 			hbmBitmap := Gdip_CreateHBITMAPFromBitmap(pBitmap_resized, 0), Gdip_DisposeBitmap(pBitmap_resized)
 
-			hidden := (mode = 2 || pic_count = 1 && (!vars.actdecoder.files[StrReplace(A_LoopFileName, "." A_LoopFileExt) "_1"] || subzone || InStr(file, "y")) || selection && (InStr(file, "x") || count > 3) ? "Hidden " : "")
-			Gui, %GUI_name%: Add, Text, % hidden "BackgroundTrans Center w" settings.general.fHeight . style, % (selection && count > 2 && !InStr(file, "x") ? 3 : count)
-			Gui, %GUI_name%: Add, Picture, % "Border HWNDhwnd xp yp", % "HBitmap:" hbmBitmap
+			hidden := (mode = 2 || pic_count = 1 && (!vars.actdecoder.files[StrReplace(A_LoopFileName, "." A_LoopFileExt) "_1"] || subzone || InStr(file, "y")) || selection && (xFile || count > 3) ? "Hidden " : "")
+			Gui, %GUI_name%: Add, Text, % hidden "BackgroundTrans Center w" settings.general.fHeight . style, % (selection && count > 2 && !xFile ? 3 : count)
+			Gui, %GUI_name%: Add, Picture, % "Border HWNDhwnd xp+" (selection && count > 2 && !xFile ? 1 : 0) " yp+" (selection && count > 2 && !xFile ? 1 : 0), % "HBitmap:" hbmBitmap
+			If (selection && count > 2 && !xFile)
+				Gui, %GUI_name%: Add, Progress, % "Disabled BackgroundFuchsia xp-1 yp-1 wp+2 hp+2", 0
 			vars.hwnd.actdecoder[vars.log.areaID " " file] := hwnd, DeleteObject(hbmBitmap)
-			vars.actdecoder.loaded.Push(selection && count > 2 && !InStr(file, "x") ? "" : file)
+			vars.actdecoder.loaded.Push(selection && count > 2 && !xFile ? "" : file)
 
 			If (count = 1)
 				ControlGetPos, xFirst, yFirst,,,, ahk_id %hwnd%
 
-			If (vars.poe_version || rota_whitelist[vars.log.areaID]) && vars.actdecoder.tab && (mode != 2) && !(rota_block[vars.log.areaID] || rota_block[vars.log.areaID " " file]) && !InStr(file, "x") && !(selection && count > 2)
+			If (vars.poe_version || rota_whitelist[vars.log.areaID]) && vars.actdecoder.tab && (mode != 2) && !(rota_block[vars.log.areaID] || rota_block[vars.log.areaID " " file]) && !xFile && !(selection && count > 2)
 			{
 				If !vars.pics.zone_layouts.rotate
 					vars.pics.zone_layouts.rotate := LLK_ImageCache("img\GUI\rotate.png")
@@ -381,7 +432,7 @@ Actdecoder_ZoneLayouts(mode := 0, click := 0, cHWND := "")
 				Else style0 := (alignment = "horizontal" ? "xs" : "ys")
 
 				Gui, %GUI_name%: Add, Pic, % "Border HWNDhwnd " style0 " h" settings.general.fHeight " w-1", % "HBitmap:*" vars.pics.zone_layouts.rotate
-				vars.hwnd.actdecoder[vars.log.areaID " " file "_rotate"] := vars.hwnd.help_tooltips["actdecoder_rotate" vars.poe_version . handle0] := hwnd, handle0 .= "|"
+				vars.hwnd.actdecoder[vars.log.areaID " " file "_rotate"] := vars.hwnd.help_tooltips["actdecoder_rotate" handle0] := hwnd, handle0 .= "|"
 				If (vars.actdecoder.zone_layouts[vars.log.areaID][file].Count() > 1) || vars.actdecoder.zone_layouts[vars.log.areaID][file].1
 				{
 					Gui, %GUI_name%: Add, Pic, % "Border HWNDhwnd0 BackgroundTrans " (alignment = "horizontal" ? "x+" settings.general.fWidth//2 " yp" : "y+" settings.general.fWidth//2 " xp") " h" settings.general.fHeight " w-1", % "HBitmap:*" vars.pics.global.revert
@@ -441,7 +492,7 @@ Actdecoder_ZoneLayoutsSize(hotkey)
 	global vars, settings
 	static resizing
 
-	If (hotkey = "hide") 
+	If (hotkey = "hide")
 	{
 		LLK_Overlay(vars.hwnd.actdecoder.main, "hide")
 		KeyWait, SC038

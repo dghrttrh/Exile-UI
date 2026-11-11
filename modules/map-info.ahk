@@ -44,9 +44,11 @@
 	settings.mapinfo.trigger := !Blank(check := ini.settings["enable shift-clicking"]) ? check : 0
 	settings.mapinfo.tabtoggle := !Blank(check := ini.settings["show panel while holding tab"]) ? check : 0
 	settings.mapinfo.activation := !Blank(check := ini.settings.activation) ? check : "toggle"
+	settings.mapinfo.position := !Blank(check := ini.settings.position) ? check : 2
 	settings.mapinfo.roll_highlight := !Blank(check := ini.settings["highlight map rolls"]) ? check : 0, settings.mapinfo.roll_requirements := {}
-	settings.mapinfo.roll_colors := [!Blank(check := ini.UI["map rolls text color"]) ? check : "00FF00", !Blank(check1 := ini.UI["map rolls back color"]) ? check1 : "000000"]
-	For index, val in ["quantity", "rarity", "pack size", "maps", "scarabs", "currency", "waystones"]
+	settings.mapinfo.roll_colors := [!Blank(check := ini.UI["map rolls text color"]) ? check : "000000", !Blank(check1 := ini.UI["map rolls back color"]) ? check1 : "FFFF00"]
+	settings.mapinfo.roll_types := (!vars.poe_version ? ["quantity", "rarity", "pack size", "maps", "scarabs", "currency"] : ["rarity", "pack size", "monster rarity", "effectiveness", "waystones"])
+	For index, val in settings.mapinfo.roll_types
 		settings.mapinfo.roll_requirements[val] := !Blank(check := ini.UI[val " requirement"]) ? check : ""
 }
 
@@ -65,16 +67,15 @@ Mapinfo_GUI(mode := 1)
 	Gui, %GUI_name%: Margin, 0, 0 ;% settings.mapinfo.fWidth/2, % settings.mapinfo.fWidth/2
 	Gui, %GUI_name%: Font, % "s"settings.mapinfo.fSize " cWhite", % vars.system.font
 	hwnd_old := vars.hwnd.mapinfo.main, vars.hwnd.mapinfo := {"main": mapinfo}, mod_count := 0
-	summary := summary0 := map.mods . Lang_Trans("maps_stats", 1) " | " map.quantity . Lang_Trans("maps_stats", 2) " | " map.rarity . Lang_Trans("maps_stats", 3) . (!Blank(map.packsize) ? " | " map.packsize . Lang_Trans("maps_stats", 4) : "")
-	If vars.poe_version
-		summary1 := map.waystones Lang_Trans("maps_stats", 8) " | " map.revives " " Lang_Trans("mapinfo_rip")
 
-	If StrLen(map.maps . map.scarabs . map.currency)
-	{
+	If !vars.poe_version
+		summary := summary0 := map.mods . Lang_Trans("maps_stats", 1) " | " map.quantity . Lang_Trans("maps_stats", 2) " | " map.rarity . Lang_Trans("maps_stats", 3) " | " map.packsize . Lang_Trans("maps_stats", 4)
+	Else summary := summary0 := map.mods . Lang_Trans("maps_stats2", 1) " | " map.rarity . Lang_Trans("maps_stats2", 2) " | " map.packsize . Lang_Trans("maps_stats2", 3) " | " map.monsterrarity . Lang_Trans("maps_stats2", 4) " | " map.monstereffect . Lang_Trans("maps_stats2", 5)
+		, summary1 := map.waystones Lang_Trans("maps_stats2", 6) " | " map.revives " " Lang_Trans("mapinfo_rip")
+
+	If !vars.poe_version
 		Loop, Parse, % "maps,scarabs,currency", `,
-			If !Blank(map[A_LoopField])
-				add := " | " map[A_LoopField] . Lang_Trans("maps_stats", 4 + A_Index), summary .= add, summary1 .= StrReplace(add, !summary1 ? " | " : "")
-	}
+			add := " | " (!Blank(map[A_LoopField]) ? map[A_LoopField] . Lang_Trans("maps_stats", 4 + A_Index) : 0), summary .= add, summary1 .= StrReplace(add, Blank(summary1) ? " | " : "")
 
 	dimensions := [], summary_array := StrSplit(summary, "|", A_Space), summary_array0 := StrSplit(summary0, "|", A_Space), summary_array1 := StrSplit(summary1, "|", A_Space)
 	LLK_PanelDimensions(summary_array, settings.mapinfo.fSize, wSummary, hSummary), LLK_PanelDimensions(summary_array1, settings.mapinfo.fSize, wSummary2, hSummary2)
@@ -100,7 +101,8 @@ Mapinfo_GUI(mode := 1)
 	LLK_PanelDimensions(dimensions, settings.mapinfo.fSize, wPanels, hPanels), added := 0, yControl := hControl := 0, count := {}, wPic := settings.mapinfo.fHeight*2 - 1
 	wSummary0 := (vars.poe_version ? wSummary + settings.mapinfo.fWidth *3 : wSummary * summary_array0.Count())
 	divisor := (wPanels + wPic - 1 > wSummary * summary_array0.Count()) ? 4 : summary_array0.Count()
-	wPanels := wGUI := Max(wPanels + wPic - 1, wSummary * summary_array0.Count(), wSummary2 * summary_array1.Count()), wSpectrum := wSummary * summary_array0.Count() - 2, wSpectrum1 := wSpectrum // mod_count
+	msc_count := LLK_HasVal(summary_array1, 0,,, 1).Count(), msc_count := (msc_count ? msc_count : 0)
+	wPanels := wGUI := Max(wPanels + wPic - 1, wSummary * summary_array0.Count(), wSummary2 * (summary_array1.Count() - msc_count)), wSpectrum := wSummary * summary_array0.Count() - 2, wSpectrum1 := wSpectrum // mod_count
 	While Mod(wGui, divisor)
 		wGui += 1, wPanels += 1
 	wPanels := wPanels - wPic + 1
@@ -198,7 +200,7 @@ Mapinfo_GUI(mode := 1)
 		}
 	}
 
-	rolls := ["mods", "quantity", "rarity", "pack size", "maps", "scarabs", "currency", "waystones"]
+	panels := 0, rolls := settings.mapinfo.roll_types.Clone(), rolls.InsertAt(1, "mods")
 	If (map.mods + map.quantity > 0)
 	{
 		;Gui, %GUI_name%: Add, Text, % "xs BackgroundTrans x1 y" yControl + hControl " Section HWNDhwnd Center w" width + settings.mapinfo.fHeight*2 - 3, % summary
@@ -212,14 +214,17 @@ Mapinfo_GUI(mode := 1)
 		}
 		For index, vSum in summary_array1
 		{
-			style := (index = 1 ? "xs Section y+" (yControl + hControl ? -1 : 0) " x" wGUI//2 - ((!vars.poe_version ? wSummary * summary_array1.Count() : wSummary2 * summary_array1.Count()))//2 : "ys x+0")
-			roll := settings.mapinfo.roll_requirements[rolls[vars.poe_version ? 8 : index + 4]]
+			If !vSum
+				Continue
+			panels += 1
+			style := (panels = 1 ? "xs Section y+" (yControl + hControl ? -1 : 0) " x" wGUI//2 - ((!vars.poe_version ? wSummary * (summary_array1.Count() - msc_count) : wSummary2 * summary_array1.Count()))//2 : "ys x+0")
+			roll := settings.mapinfo.roll_requirements[rolls[vars.poe_version ? index + 5 : index + 4]]
 			If vars.poe_version && (index = 2)
 				color := " c" settings.mapinfo.color[(map.revives < 4) ? 4 - map.revives : 1]
 			Else color := settings.mapinfo.roll_highlight && !Blank(roll) && (SubStr(vSum, 1, -1) >= roll) ? " c" settings.mapinfo.roll_colors.1 : ""
 
 			Gui, %GUI_name%: Add, Text, % style " HWNDhwnd BackgroundTrans Border Center w" (!vars.poe_version ? wSummary : wSummary2) . color, % StrReplace(vSum, "  ", " ")
-			If color && !vars.poe_version
+			If color && !(vars.poe_version && index = 2)
 				Gui, %GUI_name%: Add, Progress, % "xp yp wp hp Border BackgroundBlack c" settings.mapinfo.roll_colors.2, 100
 		}
 		added := 0, spectrum := [0, 0, 0, 0], spectrum[-1] := [0, 0, 0, 0], spectrum.0 := 0, spectrum[-1].0 := 0
@@ -263,13 +268,14 @@ Mapinfo_GUI(mode := 1)
 		WinGetPos, x, y,,, % "ahk_id "hwnd_old
 	Else
 	{
+		position := settings.mapinfo.position, offset := vars.client.h//50
 		Gui, %GUI_name%: Show, % "NA x10000 y10000"
 		WinGetPos,,, w, h, % "ahk_id "vars.hwnd.mapinfo.main
 		MouseGetPos, xPos, yPos
-		y := (mode = 2) ? vars.monitor.y + vars.client.yc - h/2 : (yPos - (h + vars.client.h/25) < vars.client.y) ? yPos + vars.client.h/25 : yPos - (h + vars.client.h/25), oob := (y + h > vars.client.y + vars.client.h) ? 1 : 0
-		If oob
-			x := (xPos - vars.client.h/25 - w < vars.client.x) ? xPos + vars.client.h/25 : xPos - vars.client.h/25 - w, y := (yPos + h/2 > vars.client.y + vars.client.h) ? vars.client.y + vars.client.h - h : (yPos - h/2 < vars.client.y) ? vars.client.y : yPos - h/2
-		Else x := (mode = 2) ? vars.client.x + vars.client.w - w : (xPos - w/2 < vars.client.x) ? vars.client.x : (xPos + w/2 > vars.client.x + vars.client.w) ? vars.client.x + vars.client.w - w : xPos - w/2
+		If (mode = 2)
+			x := vars.client.x + vars.client.w - w, y := vars.client.y + vars.client.h/2 - h/2
+		Else x := xPos + (InStr("12", position) ? -w/2 : (position = 3 ? -w - offset : offset)), y := yPos + (position = 1 ? -h - offset : (InStr("34", position)) ? -offset : (position = 2 ? 2*offset : 0))
+		Gui_CheckBounds(x, y, w, h)
 	}
 	Gui, %GUI_name%: Show, % (mode ? "NA " : "") "x"x " y"y
 	LLK_Overlay(mapinfo, "show", mode, GUI_name)
@@ -372,7 +378,7 @@ Mapinfo_Parse(mode := 1, poe_version := "")
 				If mode && settings.general.dev
 				{
 					Clipboard := check
-					MsgBox, % check
+					LLK_ToolTip(check)
 				}
 				map_mods["unknown mod"] := !map_mods["unknown mod"] ? 1 : map_mods["unknown mod"] + 1
 			}
@@ -384,6 +390,8 @@ Mapinfo_Parse(mode := 1, poe_version := "")
 					If InStr(A_LoopField, Lang_Trans("items_" mechanic), 1)
 						content.Push(mechanic)
 		}
+		Else If InStr(A_LoopField, Lang_Trans("items_originator"))
+			content.Push("originator")
 		Else If InStr(A_LoopField, " (enchant)")
 		{
 			If (SubStr(A_LoopField, 1, 1) = "(")
@@ -532,7 +540,7 @@ Mapinfo_Parse2(mode)
 	vars.mapinfo.categories := db.mapinfo["mod types"].Clone(), vars.mapinfo.active_map := {}
 	For index, category in vars.mapinfo.categories
 		vars.mapinfo.active_map[category] := []
-	mod_count := 0, map_mods := {}, map := vars.mapinfo.active_map, mods := db.mapinfo.mods, parsed_lines := {}, map.mods := map.waystones := map.quantity := map.rarity := map.packsize := 0
+	mod_count := 0, map_mods := {}, map := vars.mapinfo.active_map, mods := db.mapinfo.mods, parsed_lines := {}, map.mods := map.waystones := map.quantity := map.rarity := map.monstereffect := map.monsterrarity := map.packsize := 0
 
 	For key in map
 		Loop 6
@@ -547,13 +555,17 @@ Mapinfo_Parse2(mode)
 
 		If InStr(A_LoopField, Lang_Trans("items_map_revives"))
 			map.revives := SubStr(A_LoopField, InStr(A_LoopField, ": ") + 2), map.revives := (check := InStr(map.revives, " (")) ? SubStr(map.revives, 1, check - 1) : map.revives
+		Else If InStr(A_LoopField, Lang_Trans("items_map_monstereffect"))
+			map.monstereffect := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.monstereffect := (check := InStr(map.monstereffect, " (")) ? SubStr(map.monstereffect, 1, check - 1) : map.monstereffect, map.monstereffect := Trim(map.monstereffect, "%")
+		Else If InStr(A_LoopField, Lang_Trans("items_map_monsterrarity"))
+			map.monsterrarity := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.monsterrarity := (check := InStr(map.monsterrarity, " (")) ? SubStr(map.monsterrarity, 1, check - 1) : map.monsterrarity, map.monsterrarity := Trim(map.monsterrarity, "%")
 		Else If InStr(A_LoopField, Lang_Trans("items_map_waystonechance"))
 			map.waystones := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.waystones := (check := InStr(map.waystones, " (")) ? SubStr(map.waystones, 1, check - 1) : map.waystones, map.waystones := Trim(map.waystones, "%")
 		Else If InStr(A_LoopField, Lang_Trans("items_mapquantity"))
 			map.quantity := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.quantity := (check := InStr(map.quantity, " (")) ? SubStr(map.quantity, 1, check - 1) : map.quantity, map.quantity := Trim(map.quantity, "%")
 		Else If InStr(A_LoopField, Lang_Trans("items_maprarity"))
 			map.rarity := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.rarity := (check := InStr(map.rarity, " (")) ? SubStr(map.rarity, 1, check - 1) : map.rarity, map.rarity := Trim(map.rarity, "%")
-		Else If InStr(A_LoopField, Lang_Trans("items_mappacksize"))
+		Else If InStr(A_LoopField, Lang_Trans("items_mappacksize", vars.poe_version))
 			map.packsize := SubStr(A_LoopField, InStr(A_LoopField, "+") + 1), map.packsize := (check := InStr(map.packsize, " (")) ? SubStr(map.packsize, 1, check - 1) : map.packsize, map.packsize := Trim(map.packsize, "%")
 		Else If InStr(A_LoopField, Lang_Trans("items_ilevel"))
 		{
@@ -600,7 +612,7 @@ Mapinfo_Parse2(mode)
 		{
 			map_mods["unknown mod"] := !map_mods["unknown mod"] ? 1 : map_mods["unknown mod"] + 1, map.mods += 1
 			If mode && settings.general.dev
-				MsgBox, % "unknown mod:`n" mod_group
+				LLK_ToolTip("unknown mod:`n" mod_group, 2)
 		}
 	}
 

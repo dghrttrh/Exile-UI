@@ -11,7 +11,7 @@
 	If !IsObject(vars.leveltracker)
 	{
 		vars.leveltracker := {"starter_gems": {"witch": ["fireball", "arcane surge"], "shadow": ["viper strike", "chance to poison"], "ranger": ["burning arrow", "momentum"], "duelist": ["double strike", "chance to bleed"]
-		, "marauder": ["heavy strike", "ruthless"], "templar": ["glacial hammer", "elemental proliferation"], "scion": ["spectral throw", "prismatic burst"]}, "layouts_lock": 0}
+		, "marauder": ["heavy strike", "ruthless"], "templar": ["holy strike", "hallow"], "scion": ["spectral throw", "prismatic burst"]}, "layouts_lock": 0}
 	}
 
 	settings.leveltracker := {}, ini := IniBatchRead("ini" vars.poe_version "\leveling tracker.ini")
@@ -26,6 +26,14 @@
 	}
 	Else If vars.poe_version && !ini["current run" profile].HasKey("act 7")
 		IniWrite, % (ini["current run" profile]["act 7"] := ""), % "ini" vars.poe_version "\leveling tracker.ini", % "current run" profile, act 7
+
+	vars.leveltracker.characters := []
+	Loop, Files, % "ini" vars.poe_version "\leveling guide*.ini"
+	{
+		slot := StrReplace(A_LoopFileShortName, ".ini"), slot := (IsNumber(SubStr(slot, 0)) ? SubStr(slot, 0) : 1)
+		read := IniBatchRead(A_LoopFilePath, "info")
+		vars.leveltracker.characters[slot] := {"character": read.info.character, "build": read.info.name}
+	}
 
 	vars.leveltracker.acts := []
 	If vars.poe_version
@@ -49,13 +57,13 @@
 	}
 
 	ini2 := IniBatchRead("ini" vars.poe_version "\leveling guide" profile ".ini"), vars.leveltracker["PoB" profile] := {}
-	For index, category in ["class", "ascendancies", (!vars.poe_version ? "bandit" : ""), "gems", "trees", "active tree", (!vars.poe_version ? "vendors" : "")]
+	For index, category in ["class", "ascendancies", (!vars.poe_version ? "bandit" : ""), "gems", "trees", "active tree", (!vars.poe_version ? "vendors" : ""), (!vars.poe_version ? "active skillsets" : "")]
 	{
 		If !category
 			Continue
 		string := ini2.PoB[category]
 		If StrLen(string)
-			vars.leveltracker["pob" profile][category] := InStr("{}[]", SubStr(string, 1, 1) . SubStr(string, 0)) ? json.Load(string) : string
+			vars.leveltracker["pob" profile][category] := (InStr("{}[]", SubStr(string, 1, 1) . SubStr(string, 0)) ? json.Load(string) : string)
 		Else If (category = "active tree") && vars.leveltracker["pob" profile].Count() && !StrLen(string)
 			vars.leveltracker["pob" profile][category] := 1
 	}
@@ -73,6 +81,8 @@
 		settings.leveltracker["guide" profile].info.gems := 1
 	Else settings.leveltracker["guide" profile].info.gems .= Blank(settings.leveltracker["guide" profile].info.gems) ? 1 : ""
 
+	settings.leveltracker["guide" profile].info.gems_all .= Blank(settings.leveltracker["guide" profile].info.gems_all) ? 0 : ""
+
 	vars.leveltracker.gearfilter := 1, vars.leveltracker.gear := []
 	For key in ini2["Tracker - Gear"]
 		vars.leveltracker.gear.Push(key)
@@ -87,16 +97,17 @@
 		FileCreateDir, % "img\GUI\skill-tree" profile "\PoE 2\"
 
 	settings.leveltracker.timer := vars.client.stream ? 0 : !Blank(check := ini.settings["enable timer"]) ? check : 0
-	settings.leveltracker.pausetimer := !Blank(check := ini.settings["hideout pause"]) ? check : 0
+	settings.leveltracker.timer_flash := vars.client.stream ? 0 : !Blank(check := ini.settings["enable timer flashing"]) ? check : 1
 	settings.leveltracker.fade := !Blank(check := ini.settings["enable fading"]) ? check : 0
 	settings.leveltracker.fadetime := !Blank(check := ini.settings["fade-time"]) ? check : 5000
 	settings.leveltracker.fade_hover := !Blank(check := ini.settings["show on hover"]) ? check : 1
 	settings.leveltracker.geartracker := vars.client.stream || vars.poe_version ? 0 : !Blank(check := ini.settings["enable geartracker"]) ? check : 0
 	settings.leveltracker.recommend := !Blank(check := ini.settings["enable level recommendations"]) ? check : 0
 	settings.leveltracker.hotkeys := !Blank(check := ini.settings["enable page hotkeys"]) ? check : vars.client.stream
-	settings.leveltracker.hotkey_1 := !Blank(check := ini.settings["hotkey 1"]) ? check : "F3"
-	settings.leveltracker.hotkey_2 := !Blank(check := ini.settings["hotkey 2"]) ? check : "F4"
-	settings.leveltracker.tree_hotkey := tree_hotkey := !Blank(check := ini.settings["tree hotkey"]) ? check : ""
+	settings.leveltracker.hotkey_1 := !Blank(check := ini.settings["hotkey 1"]) ? check : "f3"
+	settings.leveltracker.hotkey_2 := !Blank(check := ini.settings["hotkey 2"]) ? check : "f4"
+	settings.leveltracker.tree_hotkey := tree_hotkey := !Blank(check := ini.settings["tree hotkey"]) ? check : "space"
+	settings.leveltracker.autotrack := !Blank(check := ini.settings.autotrack) ? check : 0
 
 	tree_hotkey := (!GetKeyVK(tree_hotkey) ? "" : tree_hotkey)
 	If !Blank(tree_hotkey)
@@ -388,7 +399,7 @@ Leveltracker(cHWND := "", hotkey := "")
 				KeyWait, LButton
 				Return
 			}
-			start := A_TickCount, loop := 1
+			start := A_TickCount, loop := 1, leaguestart := settings.leveltracker["guide" settings.leveltracker.profile].info.leaguestart
 			While (loop = 1) && (GetKeyState("LButton", "P") && (cHWND = vars.hwnd.leveltracker["+"]) || settings.leveltracker.hotkeys && settings.leveltracker.hotkey_2 && GetKeyState(settings.leveltracker.hotkey_2, "P"))
 				If (A_TickCount >= start + 1000)
 					loop := 1000, vars.leveltracker.fast := 1, area_check := db.leveltracker.areaIDs.HasKey(vars.log.areaID)
@@ -401,9 +412,12 @@ Leveltracker(cHWND := "", hotkey := "")
 					If (index <= vars.leveltracker.guide.progress) || val.condition && !Leveltracker("condition", index)
 						Continue
 					For index, line in (val.condition ? val.lines : val)
-						Loop, Parse, line, %A_Space%
-							If InStr(A_LoopField, "areaid")
-								target_area := StrReplace(A_LoopField, "areaid")
+						If leaguestart && InStr(line, Lang_Trans("lvltracker_format_twink")) || !leaguestart && InStr(line, Lang_Trans("lvltracker_format_league"))
+							Continue
+						Else
+							Loop, Parse, line, %A_Space%
+								If InStr(A_LoopField, "areaid")
+									target_area := StrReplace(A_LoopField, "areaid")
 					If (target_area = vars.log.areaID)
 					{
 						area_check := 1
@@ -574,7 +588,7 @@ Leveltracker_Fade()
 	local
 	global vars, settings
 
-	If !settings.leveltracker.fade || vars.leveltracker.drag || !vars.hwnd.leveltracker.main || (vars.leveltracker.last > A_TickCount) || !LLK_Overlay(vars.hwnd.leveltracker.main, "check") || !vars.leveltracker.toggle
+	If !settings.leveltracker.fade || vars.leveltracker.tabfade || vars.leveltracker.drag || !vars.hwnd.leveltracker.main || (vars.leveltracker.last > A_TickCount) || !LLK_Overlay(vars.hwnd.leveltracker.main, "check") || !vars.leveltracker.toggle
 		Return
 	If (vars.leveltracker.last + settings.leveltracker.fadetime <= A_TickCount) && WinExist("ahk_id "vars.hwnd.leveltracker.main)
 	&& !(settings.leveltracker.fade_hover && LLK_IsBetween(vars.general.xMouse, vars.leveltracker.coords.x1, vars.leveltracker.coords.x2) && LLK_IsBetween(vars.general.yMouse, vars.leveltracker.coords.y1, vars.leveltracker.coords.y2))
@@ -590,7 +604,7 @@ Leveltracker_GemPickups(cHWND := "")
 {
 	local
 	global vars, settings, db, json
-	static toggle := 0, colors := ["CC0000", "00CC00", "0080FF"], wait, default_acts
+	static toggle := 0, colors := ["CC0000", "00CC00", "0080FF"], wait, default_acts, skillsets_provisional, fSize, wDDL
 
 	If wait
 		Return
@@ -599,10 +613,14 @@ Leveltracker_GemPickups(cHWND := "")
 		vars.leveltracker_gempickups := {}
 	check := LLK_HasVal(vars.hwnd.leveltracker_gempickups, cHWND), control := SubStr(check, InStr(check, "_") + 1)
 	profile := settings.leveltracker.profile
+	If !InStr(check, "winbar")
+	{
+		KeyWait, LButton
+		KeyWait, RButton
+	}
 
 	If (check = "xbutton")
 	{
-		KeyWait, LButton
 		LLK_Overlay(vars.hwnd.leveltracker_gempickups.main, "destroy"), vars.hwnd.Delete("leveltracker_gempickups")
 		Sleep 500
 		If WinActive("ahk_id " vars.hwnd.poe_client) || settings.general.dev && WinActive("ahk_exe Code.exe")
@@ -628,24 +646,66 @@ Leveltracker_GemPickups(cHWND := "")
 			vars.leveltracker_gempickups.xPos := xPos, vars.leveltracker_gempickups.yPos := yPos
 		Return
 	}
+	Else If InStr(check, "skillset_")
+	{
+		If (vars.system.click = 2) && !skillsets_provisional[control]
+			Return
+		Else If (vars.system.click = 1)
+		{
+			skillsets_provisional[control] := !skillsets_provisional[control]
+			GuiControl, % "+c" (skillsets_provisional[control] ? "Lime" : "Gray"), % cHWND
+			GuiControl, % "movedraw", % cHWND
+		}
+
+		For gem in vars.leveltracker.skillsets[control]
+		{
+			If (vars.system.click = 1) && skillsets_provisional[control]
+			{
+				GuiControl, Text, % vars.hwnd.leveltracker_gempickups[gem "_ddl"], % Lang_Trans("global_act") " " default_acts[gem]
+				GuiControl, movedraw, % vars.hwnd.leveltracker_gempickups[gem "_ddl"]
+				GuiControl, % "+Background" vars.settings.cButtons2, % vars.hwnd.leveltracker_gempickups[gem "_bar"]
+				Continue
+			}
+			Else For index, skillset in vars.leveltracker.skillsets
+				If (index = control)
+					Continue
+				Else If vars.leveltracker.skillsets[index][gem] && skillsets_provisional[index]
+					Continue 2
+
+			GuiControl, Text, % vars.hwnd.leveltracker_gempickups[gem "_ddl"], % (vars.system.click = 1 ? Lang_Trans("m_updater_skip") : Lang_Trans("global_act") " 6")
+			GuiControl, movedraw, % vars.hwnd.leveltracker_gempickups[gem "_ddl"]
+			GuiControl, % "+Background" (vars.system.click = 1 ? "Red" : "Yellow"), % vars.hwnd.leveltracker_gempickups[gem "_bar"]
+		}
+		Return
+	}
 	Else If InStr(check, "_ddl")
 	{
-		gem := StrReplace(check, "_ddl"), input := SubStr(LLK_ControlGet(cHWND), 0), input := IsNumber(input) ? input : 0
-		GuiControl, % "+Background" (default_acts[gem] != input ? "Fuchsia" : "Black"), % vars.hwnd.leveltracker_gempickups[gem "_bar"]
-		ControlFocus,, % "ahk_id " vars.hwnd.leveltracker_gempickups.xbutton
+		gem := StrReplace(check, "_ddl")
+		WinGetPos, xControl, yControl, wControl, hControl, % "ahk_id " cHWND
+		If Blank(input := Gui_DropDownList(vars.ddl.gempickups[gem], [xControl, yControl, wControl, hControl], "Center"))
+			Return
+		Loop, Parse, input
+			pick .= (IsNumber(A_LoopField) ? A_LoopField : "")
+
+		GuiControl, % "+Background" (default_acts[gem] != pick ? (!pick ? "Red" : "Yellow") : vars.settings.cButtons2), % vars.hwnd.leveltracker_gempickups[gem "_bar"]
+		vars.ddl.gempickups[gem].current := input
 		Return
 	}
 	Else If (check = "save")
 	{
-		KeyWait, LButton
-		vars.leveltracker["PoB" profile].vendors := {}
+		vars.leveltracker["PoB" profile].vendors := {}, vars.leveltracker["PoB" profile]["active skillsets"] := []
 		For kControl, vControl in vars.hwnd.leveltracker_gempickups
 			If InStr(kControl, "_ddl")
 			{
-				gem_name := StrReplace(kControl, "_ddl"), input := SubStr(LLK_ControlGet(vControl), 0), input := (IsNumber(input) ? input : 0)
-				vars.leveltracker["PoB" profile].vendors[gem_name] := input
+				gem_name := StrReplace(kControl, "_ddl"), input := LLK_ControlGet(vControl), pick := ""
+				Loop, Parse, input
+					pick .= (IsNumber(A_LoopField) ? A_LoopField : "")
+				vars.leveltracker["PoB" profile].vendors[gem_name] := (IsNumber(pick) ? pick : 0)
 			}
 		IniWrite, % """" json.dump(vars.leveltracker["PoB" profile].vendors) """", % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, vendors
+		IniWrite, % """" json.dump(skillsets_provisional) """", % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, active skillsets
+		For index, val in skillsets_provisional
+			vars.leveltracker["PoB" profile]["active skillsets"][index] := val
 		IniWrite, 0, % "ini" vars.poe_version "\leveling guide" profile ".ini", Progress, pages
 		Leveltracker_Load()
 		If LLK_Overlay(vars.hwnd.leveltracker.main, "check")
@@ -655,9 +715,11 @@ Leveltracker_GemPickups(cHWND := "")
 	}
 	Else If (check = "reset")
 	{
-		KeyWait, LButton
-		wait := 1, vars.leveltracker["PoB" profile].vendors := {}
+		wait := 1, vars.leveltracker["PoB" profile].vendors := {}, vars.leveltracker["PoB" profile]["active skillsets"] := []
 		IniDelete, % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, vendors
+		IniDelete, % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, active skillsets
+		For index in skillsets_provisional
+			skillsets_provisional[index] := vars.leveltracker["PoB" profile]["active skillsets"][index] := 1
 		IniWrite, 0, % "ini" vars.poe_version "\leveling guide" profile ".ini", Progress, pages
 		Leveltracker_Load()
 		If LLK_Overlay(vars.hwnd.leveltracker.main, "check")
@@ -669,6 +731,12 @@ Leveltracker_GemPickups(cHWND := "")
 		Return
 	}
 
+	If (fSize != settings.leveltracker.fSize)
+	{
+		fSize := settings.leveltracker.fSize
+		LLK_PanelDimensions([Lang_Trans("global_act") " 1", Lang_Trans("global_act") " 2", Lang_Trans("global_act") " 3", Lang_Trans("global_act") " 4", Lang_Trans("global_act") " 6", Lang_Trans("m_updater_skip")], fSize, wDDL, hDDL)
+	}
+
 	toggle := !toggle, GUI_name := "leveltracker_gempickups" toggle, margin := settings.general.fWidth//2
 	While Mod(margin, 2)
 		margin += 1
@@ -678,8 +746,7 @@ Leveltracker_GemPickups(cHWND := "")
 	Gui, %GUI_name%: Font, % "s" settings.leveltracker.fSize " cWhite", % vars.system.font
 	hwnd_old := vars.hwnd.leveltracker_gempickups.main, vars.hwnd.leveltracker_gempickups := {"main": hwnd_manager}
 
-	Gui, %GUI_name%: Add, Text, % "Section x-1 y-1 Center Border gLeveltracker_GemPickups HWNDhwnd_winbar"
-	, % " exile ui: " Lang_Trans("lvltracker_gempickups") " (" Lang_Trans("lvltracker_editor_slot") " " (!profile ? 1 : profile) ") "
+	Gui, %GUI_name%: Add, Text, % "Section x-1 y-1 Center Border gLeveltracker_GemPickups HWNDhwnd_winbar", % " exile ui: " Lang_Trans("lvltracker_gempickups") " (" Lang_Trans("lvltracker_editor_slot") " " (!profile ? 1 : profile) ") "
 	Gui, %GUI_name%: Add, Pic, % " ys BackgroundTrans Border hp-2 w-1 HWNDhwnd_help", % "HBitmap:*" vars.pics.global.help
 	Gui, %GUI_name%: Add, Text, % "ys Center Border gLeveltracker_GemPickups HWNDhwnd_xbutton w" settings.leveltracker.fWidth * 2, % "x"
 	vars.hwnd.leveltracker_gempickups.xbutton := hwnd_xbutton, vars.hwnd.leveltracker_gempickups.winbar := hwnd_winbar
@@ -695,54 +762,83 @@ Leveltracker_GemPickups(cHWND := "")
 			, gems[gem] := 1, dimensions.Push(" " . (gem_name != "barrage support" ? StrReplace(gem_name, " support") : gem_name))
 	LLK_PanelDimensions(dimensions, settings.leveltracker.fSize, wList, hList,,, 0)
 
-	vars.leveltracker_gempickups.tooltips := {}
+	dimensions := [], skillsets_provisional := []
+
+	If (single_set := (vars.leveltracker["PoB" profile].gems.Count() = 1))
+		Gui, %GUI_name%: Add, Text, % "Hidden Section x" margin " y+" margin " w10", % " "
+	Else If (vars.leveltracker["PoB" profile].gems.Count() > 1)
+		For outer in [1, 2]
+		{
+			For index, val in vars.leveltracker["PoB" profile].gems
+				If (outer = 1)
+					dimensions.Push(val.title), skillsets_provisional[index] := (Blank(state := vars.leveltracker["PoB" profile]["active skillsets"][index]) ? 1 : state)
+				Else
+				{
+					color := (skillsets_provisional[index] = 0 ? "Gray" : "Lime")
+					Gui, %GUI_name%: Add, Text, % (index = 1 ? "Section x" margin " y+" margin : "xs y+" margin) " w" wSkillsets " c" color " Border BackgroundTrans gLeveltracker_GemPickups HWNDhwnd", % " " val.title
+					Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp Border HWNDhwnd1 Background" vars.settings.cButtons2 " c" vars.settings.cButtons, 100
+					vars.hwnd.leveltracker_gempickups["skillset_" index] := hwnd
+					vars.hwnd.leveltracker_gempickups["skillset_" index "_bar"] := vars.hwnd.help_tooltips["leveltrackergems_skillsets" handle] := hwnd1, handle .= "|"
+				}
+			If (outer = 1)
+				LLK_PanelDimensions(dimensions, settings.leveltracker.fSize, wSkillsets, hSkillsets)
+			Else
+			{
+				Gui, %GUI_name%: Add, Text, % "ys x+" margin " w2 h5 Border HWNDhwnd_divider"
+				divider := LLK_ControlGetPos(hwnd_divider)
+			}
+		}
+
+	If vars.hwnd.leveltracker_gempickups.skillset_1
+		ControlGetPos, xSkillsets, ySkillsets, wSkillsets, hSkillsets,, ahk_id %hwnd%
+
+	vars.ddl.gempickups := {}, xMax := 0
 	For gem in gems
 	{
-		acts := [], ddl := "", gem_name := (db.leveltracker.gems[gem].name ? db.leveltracker.gems[gem].name : gem), gem_name := (gem_name != "barrage support" ? StrReplace(gem_name, " support") : gem_name)
+		If !db.leveltracker.gems[gem]
+			Continue
+		acts := [], DDL := [], gem_name := (db.leveltracker.gems[gem].name ? db.leveltracker.gems[gem].name : gem), gem_name := (gem_name != "barrage support" ? StrReplace(gem_name, " support") : gem_name)
+		quest_check := {}
 		For Quest, oQuest in db.leveltracker.gems[gem].quests
 			If oQuest.vendor && (!oQuest.vendor.Count() || LLK_HasVal(oQuest.vendor, character_class)) || oQuest.quest && (!oQuest.quest.Count() || LLK_HasVal(oQuest.quest, character_class))
-				acts[db.leveltracker.gems._quests[Quest].act] := 1
+				acts[db.leveltracker.gems._quests[Quest].act] := 1, quest_check[quest] := 1
 		default_acts[gem] := acts.MinIndex(), acts.0 := 1, acts.6 := 1
 
-		vars.leveltracker_gempickups.tooltips[gem_name] := ["skillset(s):"]
-		For index, skillset in vars.leveltracker["PoB" profile].gems
-			For index, group in skillset.groups
-				For index, gem0 in group.gems
-					If RegExMatch(gem0, "i)" gem_name "$")
-					{
-						vars.leveltracker_gempickups.tooltips[gem_name].Push(skillset.title)
-						Continue 3
-					}
-
 		For act in acts
-			ddl .= (!ddl ? "" : "|") . (!act ? Lang_Trans("m_updater_skip") : Lang_Trans("global_act") " " act) . (act = vars.leveltracker["PoB" profile].vendors[gem] ? "||" : "")
-		ddl := StrReplace(ddl, "|||", "||")
+			DDL.Push(!act ? Lang_Trans("m_updater_skip") : Lang_Trans("global_act") " " act)
+		act := vars.leveltracker["PoB" profile].vendors[gem], act := (!IsNumber(act) ? default_acts[gem] : act), current := (!act ? Lang_Trans("m_updater_skip") : Lang_Trans("global_act") " " act)
+		modified := (!Blank(vars.leveltracker["PoB" profile].vendors[gem]) && (default_acts[gem] != vars.leveltracker["PoB" profile].vendors[gem]) ? (vars.leveltracker["PoB" profile].vendors[gem] = 0 ? 2 : 1) : 0)
 
-		If (break := (yLast + hLast >= vars.monitor.h * 0.5) ? 1 : 0)
-			Gui, %GUI_name%: Add, Progress, % "Disabled Hidden HWNDhwnd_break xs xp y+0 w" wList " h" margin/2, 0
-		Gui, %GUI_name%: Font, % "s" settings.leveltracker.fSize - 4
-		Gui, %GUI_name%: Add, DDL, % (A_Index = 1 ? "Section x" margin " y+" margin : (break ? "Section ys x+" margin : "xs y+" margin/2))
-		. (InStr(ddl, "||") ? "" : " Choose2") " HWNDhwnd gLeveltracker_GemPickups w" settings.leveltracker.fWidth * 6, % ddl
-		vars.hwnd.leveltracker_gempickups[gem "_ddl"] := hwnd
-		Gui, %GUI_name%: Font, % "s" settings.leveltracker.fSize
+		If (break := (yLast + hLast >= Max(vars.monitor.h * 0.6, (xSkillsets ? ySkillsets + hSkillsets : 0))) ? 1 : 0)
+		{
+			Gui, %GUI_name%: Add, Progress, % "Hidden Disabled HWNDhwnd_break xs xp y+0 w2 h" margin, 0
+			If !single_set
+				GuiControl, movedraw, % hwnd_divider, % "h" yLast + hLast - divider.y
+		}
 
-		modified := (!Blank(vars.leveltracker["PoB" profile].vendors[gem]) && (default_acts[gem] != vars.leveltracker["PoB" profile].vendors[gem]) ? 100 : 0)
-		Gui, %GUI_name%: Add, Progress, % "Disabled xp-" margin/2 " yp-" margin/2 " wp+" margin " hp+" margin " HWNDhwnd Background" (modified ? "Fuchsia" : "Black"), 0
-		vars.hwnd.leveltracker_gempickups[gem "_bar"] := hwnd
+		Gui, %GUI_name%: Add, Text, % (!vars.ddl.gempickups.Count() ? (single_set ? "Section xp yp" : "Section ys x+" margin) : (break ? "Section ys x" xMax + margin : "xs y+" margin)) " w" wDDL " Center Border BackgroundTrans HWNDhwnd gLeveltracker_GemPickups", % current
+		Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp Border HWNDhwnd1 Background" (modified ? (modified = 2 ? "Red" : "Yellow") : vars.settings.cButtons2) " c" vars.settings.cButtons, 100
+		vars.ddl.gempickups[gem] := {"cHWND": hwnd, "color": "Black", "current": current, "fSize": fSize, "list": DDL.Clone()}
+		vars.hwnd.leveltracker_gempickups[gem "_ddl"] := hwnd, vars.hwnd.leveltracker_gempickups[gem "_bar"] := hwnd1
+		Gui, %GUI_name%: Font, % (quest_check.Count() < 3 && quest_check["a fixture of fate"] ? "underline" : "norm")
 
 		color := ((attribute := db.leveltracker.gems[gem].attribute) ? colors[attribute] : "White")
-		Gui, %GUI_name%: Add, Text, % "ys x+" margin/2 " yp hp 0x200 HWNDhwnd w" wList " c" color, % gem_name
-		vars.hwnd.help_tooltips["leveltrackergems_gem " gem_name] := hwnd
+		Gui, %GUI_name%: Add, Text, % "ys x+" margin/2 " yp hp 0x200 HWNDhwnd c" color, % gem_name
 		ControlGetPos, xLast, yLast, wLast, hLast,, % "ahk_id " hwnd
+		vars.hwnd.leveltracker_gempickups[gem "_panel"] := hwnd, xMax := Max(xMax, xLast + wLast)
 		Gui, %GUI_name%: Font, norm
 	}
+	ControlGetPos, xLastDDL,,,,, % "ahk_id " hwnd1
 
-	Gui, %GUI_name%: Font, % "s" settings.leveltracker.fSize + 8
-	Gui, %GUI_name%: Add, Text, % "Section xs y+" margin/2 " Border gLeveltracker_GemPickups HWNDhwnd cLime", % " " Lang_Trans("global_save") " "
-	Gui, %GUI_name%: Add, Text, % "ys x+" margin " Border gLeveltracker_GemPickups HWNDhwnd1 cRed", % " " Lang_Trans("global_reset") " "
-	Gui, %GUI_name%: Add, Progress, % "Disabled Hidden xs y+0 w" wList " h" margin, 0
-	vars.hwnd.leveltracker_gempickups.save := vars.hwnd.help_tooltips["leveltrackergems_save-reset"] := hwnd
-	vars.hwnd.leveltracker_gempickups.reset := vars.hwnd.help_tooltips["leveltrackergems_save-reset|"] := hwnd1
+	Gui, %GUI_name%: Font, % "s" settings.leveltracker.fSize + 12
+	Gui, %GUI_name%: Add, Text, % "Section xs y+" margin " Border BackgroundTrans gLeveltracker_GemPickups HWNDhwnd cLime", % " " Lang_Trans("global_save") " "
+	Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp Border HWNDhwnd1 Background" vars.settings.cButtons2 " c" vars.settings.cButtons, 100
+	vars.hwnd.leveltracker_gempickups.save := hwnd, vars.hwnd.help_tooltips["leveltrackergems_save-reset"] := hwnd1
+
+	Gui, %GUI_name%: Add, Text, % "ys x+" margin " Border BackgroundTrans gLeveltracker_GemPickups HWNDhwnd cRed", % " " Lang_Trans("global_reset") " "
+	Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp Border HWNDhwnd1 Background" vars.settings.cButtons2 " c" vars.settings.cButtons, 100
+	Gui, %GUI_name%: Add, Progress, % "Hidden Disabled xs y+0 w" xMax - xLastDDL + margin + 1 " h" margin, 0
+	vars.hwnd.leveltracker_gempickups.reset := hwnd, vars.hwnd.help_tooltips["leveltrackergems_save-reset|"] := hwnd1
 
 	Gui, %GUI_name%: Show, % "NA x10000 y10000"
 	ControlFocus,, % "ahk_id " vars.hwnd.leveltracker_gempickups.xbutton
@@ -753,7 +849,7 @@ Leveltracker_GemPickups(cHWND := "")
 
 	xPos := (Blank(vars.leveltracker_gempickups.xPos) ? vars.monitor.x + vars.monitor.w/2 - wWin/2 : vars.leveltracker_gempickups.xPos)
 	yPos := (Blank(vars.leveltracker_gempickups.yPos) ? vars.monitor.y + vars.monitor.h/2 - hWin/2 : vars.leveltracker_gempickups.yPos)
-		
+
 	Gui, %GUI_name%: Show, % "x" xPos " y" yPos
 	LLK_Overlay(hwnd_manager, "show", 0, GUI_name), LLK_Overlay(hwnd_old, "destroy"), wait := 0
 
@@ -807,6 +903,7 @@ Leveltracker_GuideEditor(cHWND)
 		Leveltracker_GuideEditor("save#" targetProfile)
 		If FileExist("ini" vars.poe_version "\leveling guide" targetProfile ".ini")
 			IniWrite, % (settings.leveltracker["guide" targetProfile].info.custom := 0), % "ini" vars.poe_version "\leveling guide" targetProfile ".ini", Info, custom
+		vars.leveltracker_editor.guide_updated := 1
 
 		If InStr(cHWND, "default")
 		{
@@ -834,7 +931,9 @@ Leveltracker_GuideEditor(cHWND)
 			LLK_Overlay(vars.hwnd.leveltracker_editor.main, "destroy"), vars.hwnd.leveltracker_editor.main := ""
 			Sleep 500
 			If WinActive("ahk_id " vars.hwnd.poe_client) || settings.general.dev && WinActive("ahk_exe Code.exe")
-				LLK_Overlay(vars.hwnd.settings.main, "show")
+				If vars.leveltracker_editor.guide_updated
+					Settings_menu(), vars.leveltracker_editor.guide_updated := 0
+				Else LLK_Overlay(vars.hwnd.settings.main, "show")
 			Return
 		}
 		Else If InStr(cHWND, "Wheel")
@@ -845,18 +944,13 @@ Leveltracker_GuideEditor(cHWND)
 		}
 		Else If (check = "winbar")
 		{
-			start := A_TickCount
+			MouseGetPos, xMouse, yMouse
+			WinGetPos, xWin, yWin, width, height, % "ahk_id " vars.hwnd.leveltracker_editor.main
 			While GetKeyState("LButton", "P")
-				If (A_TickCount >= start + 100)
-				{
-					If !width
-					{
-						MouseGetPos, xMouse, yMouse
-						WinGetPos, xWin, yWin, width, height, % "ahk_id " vars.hwnd.leveltracker_editor.main
-					}
-					LLK_Drag(width, height, xPos, yPos, 1,,, xMouse - xWin, yMouse - yWin, 1)
-					Sleep 10
-				}
+			{
+				LLK_Drag(width, height, xPos, yPos, 1,,, xMouse - xWin, yMouse - yWin, 1)
+				Sleep 15
+			}
 			vars.general.drag := 0
 			If !Blank(xPos)
 				vars.leveltracker_editor.xPos := xPos, vars.leveltracker_editor.yPos := yPos
@@ -916,6 +1010,7 @@ Leveltracker_GuideEditor(cHWND)
 			If InStr(cHWND, "#")
 				Return
 			IniWrite, % (settings.leveltracker["guide" profile].info.custom := (vars.leveltracker_editor.default_guide != json.dump(guide))), % "ini" vars.poe_version "\leveling guide" profile ".ini", Info, custom
+			vars.leveltracker_editor.guide_updated := 1
 
 			If (profile = settings.leveltracker.profile)
 			{
@@ -1005,7 +1100,7 @@ Leveltracker_GuideEditor(cHWND)
 				Return
 			Sleep 50
 			If InStr(check, "pastearea_")
-				Clipboard := "areaid" control (InStr(control, "_town") ? " (img:town)" : "") " `;`; " db.leveltracker.areaIDs[control].name
+				Clipboard := "areaid" control (InStr(control, "_town") ? " (img:town" StrReplace(vars.poe_version, " ") ")" : "") " `;`; " db.leveltracker.areaIDs[control].name
 			Else Clipboard := "(img:" control ")"
 			SendInput, ^{v}
 			Return
@@ -1331,7 +1426,7 @@ Leveltracker_Hints()
 	Gui, leveltracker_hints: Margin, -1, -1
 	Gui, leveltracker_hints: Font, % "s"settings.general.fSize " cWhite", % vars.system.font
 
-	If pic && (settings.features.actdecoder && !Blank(settings.actdecoder.hotkey))
+	If pic && (settings.features.actdecoder && !Blank(settings.actdecoder.hotkey) || !settings.features.actdecoder || InStr(vars.log.areaid, "_town"))
 	{
 		pBitmap := Gdip_CreateBitmapFromFile("img\GUI\leveling tracker\hints" vars.poe_version "\" pic ".jpg")
 		pBitmap_resize := Gdip_ResizeBitmap(pBitmap, vars.leveltracker.coords.w, 10000, 1,, 1), Gdip_DisposeBitmap(pBitmap)
@@ -1453,6 +1548,7 @@ Leveltracker_Load(profile := "")
 
 	current_profile := settings.leveltracker.profile, gems := db.leveltracker.gems, class := vars.leveltracker["PoB" current_profile].class
 	import := [], ini := IniBatchRead("ini" vars.poe_version "\leveling guide" (profile ? profile : current_profile) ".ini")
+	leaguestart := settings.leveltracker["guide" current_profile].info.leaguestart
 
 	If !profile
 		vars.leveltracker.guide.progress := !Blank(check := ini.progress.pages) ? check : 0
@@ -1462,13 +1558,33 @@ Leveltracker_Load(profile := "")
 			import.Push(oPage)
 	vars.leveltracker.guide.import := LLK_CloneObject(import)
 
+	reward_gems := {}, vendor_gems := {}, gems_all := {}, vars.leveltracker.skillsets := []
 	vars.leveltracker.guide.gems := (settings.leveltracker["guide" (profile ? profile : current_profile)].info.leaguestart ? ["quicksilver flask"] : [])
 	For iSkillset, oSkillset in vars.leveltracker["PoB" current_profile].gems
+	{
+		vars.leveltracker.skillsets[iSkillset] := {}
 		For iGroup, oGroup in oSkillset.groups
 			For iGem, vGem in oGroup.gems
 				If !LLK_PatternMatch(vGem, "", ["empower", "enhance", "enlighten"],,, 0) && !LLK_HasVal(vars.leveltracker.starter_gems[class], StrReplace(vGem, " |–"))
-					If !LLK_HasVal(vars.leveltracker.guide.gems, InStr(vGem, " |–") ? StrReplace(StrReplace(StrReplace(vGem, "vaal "), "awakened "), " |–") . (!InStr(vGem, "support") ? " support" : "") : vGem)
-						vars.leveltracker.guide.gems.Push(InStr(vGem, " |–") ? StrReplace(vGem, " |–") . (!InStr(vGem, "support") ? " support" : "") : vGem)
+					gem_name := LLK_StringRemove(vGem, " |–,vaal ,awakened ") . (InStr(vGem, "|") && !InStr(vGem, "support") ? " support" : ""), gems_all[gem_name] := 1
+					, vars.leveltracker.skillsets[iSkillset][gem_name] := 1
+	}
+
+	For key in gems_all
+	{
+		exclusive_reward := 0
+		For kQuest, oQuest in gems[key].quests
+			If gems._quests[kQuest].npc && LLK_HasVal(oQuest.quest, class) && oQuest.vendor.Count() && !LLK_HasVal(oQuest.vendor, class)
+				exclusive_reward += 1
+		If exclusive_reward
+			reward_gems[key] := 1
+		Else vendor_gems[key] := 1
+	}
+
+	For key in reward_gems
+		vars.leveltracker.guide.gems.Push(key)
+	For key in vendor_gems
+		vars.leveltracker.guide.gems.Push(key)
 
 	stat_colors := ["D81C1C", "00BF40", "0077FF"], remove := [], array_offset := 0, vars.leveltracker.guide.gems_initial := vars.leveltracker.guide.gems.Clone()
 	skipped_quests := [], lilly_regex := "(" Lang_Trans("quest_mercy") "|" Lang_Trans("quest_fixture") "|" Lang_Trans("quest_fallen") ")"
@@ -1485,6 +1601,8 @@ Leveltracker_Load(profile := "")
 				new_group.Push(line)
 				Continue
 			}
+			Else If leaguestart && InStr(line, Lang_Trans("lvltracker_format_twink")) || !leaguestart && InStr(line, Lang_Trans("lvltracker_format_league"))
+				Continue
 
 			quests_line := [], loop := 1
 			While InStr(line, "<",,, loop)
@@ -1565,7 +1683,10 @@ Leveltracker_Load(profile := "")
 				new_group[index] := SubStr(line, 1, lilly_check - 1)
 
 			If quest_count && (no_reward_count = quest_count)
-				new_group.RemoveAt(index)
+			{
+				If !settings.leveltracker["guide" current_profile].info.gems_all || lilly_check && settings.leveltracker["guide" current_profile].info.gems_all
+					new_group.RemoveAt(index)
+			}
 			Else If !InStr(line, Lang_Trans("quest_lilly") . Lang_Trans("global_colon") " <") && npc && skipped_quests[act][npc].Count()
 			{
 				new_line := ""
@@ -1862,7 +1983,13 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 		While InStr(guide.group1[index_raw - trace_optional], "(hint)_")
 			trace_optional += 1
 
-		If !preview && (!settings.leveltracker["guide" profile].info.optionals && (InStr(step, Lang_Trans("lvltracker_format_optional")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_optional"))) || !settings.leveltracker["guide" profile].info.leaguestart && (InStr(step, Lang_Trans("lvltracker_format_league")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_league"))))
+		If !preview
+			If !settings.leveltracker["guide" profile].info.optionals
+				&& (InStr(step, Lang_Trans("lvltracker_format_optional")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_optional")))
+			|| !settings.leveltracker["guide" profile].info.leaguestart
+				&& (InStr(step, Lang_Trans("lvltracker_format_league")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_league")))
+			|| settings.leveltracker["guide" profile].info.leaguestart
+				&& (InStr(step, Lang_Trans("lvltracker_format_twink")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_twink")))
 			Continue
 		bullets += (InStr(step, "(hint)_") ? 0 : 1)
 	}
@@ -1896,7 +2023,13 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 			While InStr(guide.group1[index_raw - trace_optional], "(hint)_")
 				trace_optional += 1
 
-			If !preview && (!settings.leveltracker["guide" profile].info.optionals && (InStr(step, Lang_Trans("lvltracker_format_optional")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_optional"))) || !settings.leveltracker["guide" profile].info.leaguestart && (InStr(step, Lang_Trans("lvltracker_format_league")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_league"))))
+			If !preview
+				If !settings.leveltracker["guide" profile].info.optionals
+					&& (InStr(step, Lang_Trans("lvltracker_format_optional")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_optional")))
+				|| !settings.leveltracker["guide" profile].info.leaguestart
+					&& (InStr(step, Lang_Trans("lvltracker_format_league")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_league")))
+				|| settings.leveltracker["guide" profile].info.leaguestart
+					&& (InStr(step, Lang_Trans("lvltracker_format_twink")) || trace_optional && InStr(guide.group1[index_raw - trace_optional], Lang_Trans("lvltracker_format_twink")))
 				Continue
 
 			If RegExMatch(step, "i)\(.*\)" StrReplace(Lang_Trans("lvltracker_gembuy"), " ", "."))
@@ -1909,7 +2042,7 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 				step := SubStr(step, 1, lilly_check - 2)
 
 			line := step, hint := InStr(step, "(hint)_"), optional := InStr(step, Lang_Trans("lvltracker_format_optional"))
-			step := StrReplace(step, Lang_Trans("lvltracker_format_optional") " "), step := StrReplace(step, Lang_Trans("lvltracker_format_league") " ")
+			step := LLK_StringRemove(step, Lang_Trans("lvltracker_format_optional") " ," Lang_Trans("lvltracker_format_league") " ," Lang_Trans("lvltracker_format_twink") " ")
 			style := "Section xs", step := StrReplace(StrReplace(StrReplace(step, ": ", " : "), ". ", " . "), ", ", " , "), kill := 0, text_parts := []
 			If (check := InStr(step, " `;"))
 				step := SubStr(step, 1, check - 1)
@@ -1948,7 +2081,7 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 			If buy_prompt && !hardcoded_buy
 			{
 				Gui, %name_main%: Add, Pic, % "Section xs", % "HBitmap:*" vars.pics.leveltracker.bullet_diamond
-				Gui, %name_main%: Add, Text, % "ys x+0 cFuchsia", % Lang_Trans("lvltracker_" (LLK_HasVal(guide.group1, "buy item", 1) ? "item" : "gem") "buy") . " " Lang_Trans("lvltracker_gembuy", 2)
+				Gui, %name_main%: Add, Text, % "ys x+0 cCC99FF", % Lang_Trans("lvltracker_" (LLK_HasVal(guide.group1, "buy item", 1) ? "item" : "gem") "buy") . " " Lang_Trans("lvltracker_gembuy", 2)
 				buy_prompt := 0
 			}
 
@@ -1976,7 +2109,7 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 				Else
 				{
 					text := LLK_StringRemove(StrReplace(StrReplace(part, "&&", "&"), "&", "&&"), "<,>,arena:,(hint)"), area := StrReplace(text, "areaid"), act := LLK_HasVal(areas, area,,,, 1)
-					area := areaIDs[area][InStr(line, "img:waypoint") && areaIDs[area].mapname ? "mapname" : "name"], area := (InStr(area, "(") && !(InStr(area, "(1)") || InStr(area, "(2)")) ? SubStr(area, 1, InStr(area, "(") - 2) : area)
+					area := areaIDs[area][InStr(line, "img:waypoint") && areaIDs[area].mapname ? "mapname" : "name"], area := (vars.poe_version && InStr(area, "(") ? SubStr(area, 1, InStr(area, "(") - 2) : area)
 					If InStr(text, "areaid") ;translate ID to location-name (and add potential act-clarification)
 						text := (!preview && ((act != vars.log.act) && !InStr(text, "labyrinth") || InStr(vars.log.areaID, "hideout")) ? vars.leveltracker.acts[act] " | " : "") . area
 					text := StrReplace(text, "_", " "), text := StrReplace(text, "(a11)", "(epilogue)")
@@ -1994,8 +2127,10 @@ Leveltracker_PageDraw(name_main, name_back, preview, ByRef width, ByRef height, 
 					For key in vars.leveltracker.hints
 						If InStr(StrReplace(part, "_", " "), key)
 							text := IsNumber(SubStr(text, 0)) ? SubStr(text, 1, -1) : text, hint_img := 1
-					If hint_img && (preview || settings.features.actdecoder && !Blank(settings.actdecoder.hotkey))
+					If hint_img && (preview || settings.features.actdecoder && !Blank(settings.actdecoder.hotkey) || !settings.features.actdecoder || InStr(vars.log.areaid, "_town"))
 						color := "Aqua"
+					Else If (color = "Aqua") && !(preview || settings.features.actdecoder && !Blank(settings.actdecoder.hotkey) || !settings.features.actdecoder || InStr(vars.log.areaid, "_town"))
+						color := "White"
 
 					If InStr(part, "<" StrReplace(text, " ", "_") ">") && IsNumber(SubStr(text, 0))
 						text := SubStr(text, 1, -1)
@@ -2094,7 +2229,10 @@ Leveltracker_PobGemCutting(cHWND := "")
 		dimensions := ["all skill gems", "all support gems", "all spirit gems"], profile0 := profile, skillset0 := skillset
 		For index, group in pob.gems[vars.leveltracker_gemcutting.skillset].groups
 			For index1, gem in group.gems
-				gem_trimmed := Trim(gem, " |–"), renamed := db.leveltracker.renamed_gems[gem_trimmed], dimensions.Push(renamed ? StrReplace(gem, gem_trimmed, renamed) : gem)
+			{
+				gem_trimmed := Trim(gem, " |–"), renamed := db.leveltracker.renamed_gems[gem_trimmed], gem_type := LLK_HasKey(db.leveltracker.gems, gem_trimmed,,,, 1)
+				translated := db.leveltracker.gems[gem_type][gem_trimmed].3, dimensions.Push(renamed ? StrReplace(gem, gem_trimmed, renamed) : (translated ? (InStr(gem, "|") ? " |–" : "") translated : gem))
+			}
 		LLK_PanelDimensions(dimensions, settings.leveltracker_gemcutting.fSize, width, height)
 		vars.leveltracker_gemcutting.wSelection := width, vars.leveltracker_gemcutting.regex := []
 	}
@@ -2106,7 +2244,7 @@ Leveltracker_PobGemCutting(cHWND := "")
 	Gui, %GUI_name%: Margin, 0, 0
 	Gui, %GUI_name%: Font, % "s" settings.leveltracker_gemcutting.fSize " cWhite", % vars.system.font
 	hwnd_old := vars.hwnd.leveltracker_gemcutting.main, vars.hwnd.leveltracker_gemcutting := {"main": leveltracker_gemcutting}
-	
+
 	Gui, %GUI_name%: Add, Text, % "Section BackgroundTrans Border", % " " Lang_Trans("global_font") " "
 	Gui, %GUI_name%: Add, Text, % "ys Center BackgroundTrans gLeveltracker_PobGemCutting Border HWNDhwnd w" settings.leveltracker_gemcutting.fWidth*2, % "–"
 	vars.hwnd.leveltracker_gemcutting.font_minus := hwnd
@@ -2146,10 +2284,10 @@ Leveltracker_PobGemCutting(cHWND := "")
 			If (group.gems.Count() > 1)
 				Continue
 
-		renamed := db.leveltracker.renamed_gems[gem]
-		While groups[(renamed ? renamed : gem) . handle]
+		renamed := db.leveltracker.renamed_gems[gem], gem_type := LLK_HasKey(db.leveltracker.gems, gem,,,, 1), translated := db.leveltracker.gems[gem_type][gem].3
+		While groups[(renamed ? renamed : (translated ? translated : gem)) . handle]
 			handle .= "|"
-		groups[(renamed ? renamed : gem) . handle] := LLK_CloneObject(group)
+		groups[(renamed ? renamed : (translated ? translated : gem)) . handle] := LLK_CloneObject(group)
 	}
 
 	For key, group in groups
@@ -2157,10 +2295,10 @@ Leveltracker_PobGemCutting(cHWND := "")
 		regex := "", index := A_Index
 		For index1, gem in group.gems
 		{
-			gem_trimmed := Trim(gem, " |–")
+			gem_trimmed := Trim(gem, " |–"), gem_type := LLK_HasKey(db.leveltracker.gems, gem_trimmed,,,, 1), translated := db.leveltracker.gems[gem_type][gem_trimmed].3
 			type := LLK_HasKey(db.leveltracker.gems, gem_trimmed,,,, 1), color := (IsNumber(db.leveltracker.gems[type][gem_trimmed].2) ? stat_colors[db.leveltracker.gems[type][gem_trimmed].2] : "White")
 			renamed := db.leveltracker.renamed_gems[gem_trimmed]
-			Gui, %GUI_name%: Add, Text, % (index1 = 1 ? "y+" settings.leveltracker_gemcutting.fHeight//4 + 1 " " : "y+-" Ceil(settings.leveltracker_gemcutting.fHeight/5)) "xs x1 BackgroundTrans HWNDhwnd w" width - 2 " c" color, % " " (renamed ? StrReplace(gem, gem_trimmed, renamed) : gem)
+			Gui, %GUI_name%: Add, Text, % (index1 = 1 ? "y+" settings.leveltracker_gemcutting.fHeight//4 + 1 " " : "y+-" Ceil(settings.leveltracker_gemcutting.fHeight/5)) "xs x1 BackgroundTrans HWNDhwnd w" width - 2 " c" color, % " " (renamed ? StrReplace(gem, gem_trimmed, renamed) : (translated ? (InStr(gem, "|") ? " |–" : "") translated : gem))
 			Gui, %GUI_name%: Add, Progress, % "Disabled xp yp wp hp BackgroundBlack", 0
 			If (index1 = 1)
 				ControlGetPos, xFirst, yFirst,,,, % "ahk_id " hwnd
@@ -2318,7 +2456,7 @@ Leveltracker_PobGemLinks(gem_name := "", hover := "", xPos := "", yPos := "", re
 		}
 		Else
 		{
-			dimensions := [], english := []					
+			dimensions := [], english := []
 			For iGem, vGem in pob.gems[hover].groups[val].gems
 			{
 				gem0 := StrReplace(vGem, " |–")
@@ -2382,8 +2520,8 @@ Leveltracker_PobImport(b64, profile)
 
 	If !classes
 		If vars.poe_version
-			classes := {"mercenary": ["tactician", "witchhunter", "gemling legionnaire"], "monk": ["invoker", "acolyte of chayula"], "ranger": ["deadeye", "pathfinder"], "sorceress": ["stormweaver", "chronomancer", "disciple of varashta"], "warrior": ["titan", "warbringer", "smith of kitava"], "witch": ["infernalist", "blood mage", "lich", "abyssal lich"], "huntress": ["amazon", "ritualist"], "druid": ["oracle", "shaman"]}
-		Else classes := {"scion": ["ascendant"], "marauder": ["juggernaut", "berserker", "chieftain"], "ranger": ["warden", "deadeye", "pathfinder"], "witch": ["occultist", "elementalist", "necromancer"]
+			classes := {"mercenary": ["tactician", "witchhunter", "gemling legionnaire"], "monk": ["invoker", "acolyte of chayula", "martial artist"], "ranger": ["deadeye", "pathfinder"], "sorceress": ["stormweaver", "chronomancer", "disciple of varashta"], "warrior": ["titan", "warbringer", "smith of kitava"], "witch": ["infernalist", "blood mage", "lich", "abyssal lich"], "huntress": ["amazon", "ritualist", "spirit walker"], "druid": ["oracle", "shaman"]}
+		Else classes := {"scion": ["ascendant", "reliquarian", "luminary"], "marauder": ["juggernaut", "berserker", "chieftain"], "ranger": ["warden", "deadeye", "pathfinder"], "witch": ["occultist", "elementalist", "necromancer"]
 		, "duelist": ["slayer", "gladiator", "champion"], "templar": ["inquisitor", "hierophant", "guardian"], "shadow": ["assassin", "trickster", "saboteur"]}
 
 	Base64Dec((pobString := RTrim(b64, "=")), compressed), buffer := 1024 * 10000
@@ -2546,6 +2684,7 @@ Leveltracker_PobImport(b64, profile)
 
 		For key, val in object
 			IniWrite, % """" (IsObject(val) ? json.dump(val) : val) """", % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, % key
+		IniDelete, % "ini" vars.poe_version "\leveling guide" profile ".ini", PoB, active skillsets
 		Return object
 	}
 }
@@ -2654,7 +2793,7 @@ Leveltracker_PobSkilltree(mode := "", ByRef failed_versions := "")
 		If !FileExist(file := "data\global\[leveltracker] tree" vars.poe_version " " version ".json")
 		{
 			LLK_ToolTip(Lang_Trans("global_downloading"), 2,,,, "Yellow")
-			Try download := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Lailloken-UI/refs/heads/" (dev ? "dev" : "main") "/data/global/%5Bleveltracker%5D%20tree" vars.poe_version "%20" version ".json")
+			Try download := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Exile-UI/refs/heads/" (dev ? "dev" : "main") "/data/global/%5Bleveltracker%5D%20tree" vars.poe_version "%20" version ".json")
 			If (SubStr(download, 1, 1) . SubStr(download, 0) != "{}")
 			{
 				failed_versions[version] := 1
@@ -2758,7 +2897,7 @@ Leveltracker_PobSkilltree(mode := "", ByRef failed_versions := "")
 			Continue
 		group := tree.nodes[node].group, orbit := tree.nodes[node].orbit, orbitIndex := tree.nodes[node].orbitIndex
 		x_coord := tree.groups[group].x, y_coord := tree.groups[group].y
-		margin := 250
+		margin := 500
 
 		If ascendancy && tree.nodes[node].HasKey(vars.poe_version ? "classesstart" : "classstartindex")
 			ascendancy_points.Push(node)
@@ -3033,7 +3172,7 @@ Leveltracker_Progress(mode := 0) ;advances the guide and redraws the overlay
 	import := vars.leveltracker.guide.import, in_progress := 1, vars.leveltracker.last := A_TickCount*100 ;dummy-value to prevent Loop_main() from prematurely fading the overlay
 	guide := vars.leveltracker.guide, areas := db.leveltracker.areas, areaIDs := db.leveltracker.areaIDs, timer := vars.leveltracker.timer ;short-cut variables
 	vars.leveltracker.fade := mode ? 0 : vars.leveltracker.fade, vars.leveltracker.toggle := mode ? 1 : vars.leveltracker.toggle
-	profile := settings.leveltracker.profile
+	profile := settings.leveltracker.profile, leaguestart := settings.leveltracker["guide" profile].info.leaguestart
 
 	If !vars.log.act || (vars.log.act = "c")
 		vars.log.act := LLK_HasVal(areas, vars.log.areaID,,,, 1), vars.log.act := (vars.poe_version && !vars.log.act && IsNumber(SubStr(vars.log.areaID, 2, 1)) ? SubStr(vars.log.areaID, 2, 1) : vars.log.act)
@@ -3051,7 +3190,9 @@ Leveltracker_Progress(mode := 0) ;advances the guide and redraws the overlay
 
 	guide.target_area := ""
 	For index, val in guide.group1
-		If InStr(val, "areaid") && !InStr(val, "(hint)_")
+		If leaguestart && InStr(val, Lang_Trans("lvltracker_format_twink")) || !leaguestart && InStr(val, Lang_Trans("lvltracker_format_league"))
+			Continue
+		Else If InStr(val, "areaid") && !InStr(val, "(hint)_")
 			Loop, Parse, val, %A_Space%
 				If InStr(A_LoopField, "areaid")
 					guide.target_area := StrReplace(A_LoopField, "areaid")
@@ -3103,7 +3244,7 @@ Leveltracker_Progress(mode := 0) ;advances the guide and redraws the overlay
 	Gui, %GUI_name_controls1%: Add, Text, % "ys hp 0x200 Border HWNDhwnd Center w"wButtons, % ""
 	vars.hwnd.leveltracker["+"] := hwnd, check := 0
 	Gui, %GUI_name_controls1%: Add, Text, % "ys wp hp 0x200 Border HWNDhwnd Center w"wPanels, % ""
-	vars.hwnd.leveltracker.dummy2 := hwnd
+	vars.hwnd.leveltracker.dummy2 := hwnd, cButton := LLK_ControlGetPos(hwnd)
 
 	Gui, %GUI_name_controls2%: New, % "-DPIScale +E0x20 +LastFound -Caption +AlwaysOnTop +ToolWindow +E0x02000000 +E0x00080000 HWNDleveltracker_controls2 +Owner" GUI_name_controls1
 	Gui, %GUI_name_controls2%: Color, Black
@@ -3127,7 +3268,7 @@ Leveltracker_Progress(mode := 0) ;advances the guide and redraws the overlay
 		exp_info := vars.poe_version ? (RegExMatch(vars.log.areaID, "i)^hideout|_town$") ? "" : Lang_Trans("lvltracker_exp") " " (level_diff > 0 ? "+" : "") level_diff) : Leveltracker_Experience("", 1)
 		If !vars.poe_version
 			color := " c" (!InStr(exp_info, "100%") ? (InStr(exp_info, "+") && IsNumber(target_lvl := db.leveltracker.arealvls[vars.leveltracker.guide.target_area]) && target_lvl > vars.log.arealevel ? "Fuchsia" : "Red") : "Lime")
-		Else 
+		Else
 			threshold := 3 + vars.log.level//16, gap := threshold - Abs(level_diff)
 			, color := " c" (level_diff > 0 ? (level_diff = 1 ? "FF8000" : "Red") : (gap > 0 ? "Lime" : (gap = 0 ? "Yellow" : (gap = -1 ? "FF8000" : "Red"))))
 	}
@@ -3135,8 +3276,10 @@ Leveltracker_Progress(mode := 0) ;advances the guide and redraws the overlay
 	If vars.poe_version && settings.leveltracker.recommend
 		iArea := LLK_HasVal(db.leveltracker.areas[vars.log.act], vars.log.areaID,,,, 1), recommendation := db.leveltracker.areas[vars.log.act][iArea].recommendation
 
-	Gui, %GUI_name_controls2%: Add, Text, % "Section xs " (settings.leveltracker.timer ? "xs y+-1" : "") " Border 0x200 BackgroundTrans HWNDhwnd Center w"wPanels . (recommendation ? "" : " cLime")
+	Gui, %GUI_name_controls2%: Font, % "s" settings.leveltracker.fSize - 2
+	Gui, %GUI_name_controls2%: Add, Text, % "Section xs " (settings.leveltracker.timer ? "xs y+-1" : "") " h" cButton.h " Border 0x200 BackgroundTrans HWNDhwnd Center w"wPanels . (recommendation ? "" : " cLime")
 	, % (recommendation ? StrReplace(recommendation, "|", "| " vars.log.level " |") : (settings.leveltracker.geartracker && vars.leveltracker.gear_ready ? Lang_Trans("lvltracker_gearready") : ""))
+	Gui, %GUI_name_controls2%: Font, % "s" settings.leveltracker.fSize
 	Gui, %GUI_name_controls2%: Add, Text, % "ys hp Border 0x200 BackgroundTrans Center w" wButtons, % "<"
 	Gui, %GUI_name_controls2%: Add, Text, % "ys hp Border 0x200 BackgroundTrans Center w" wButtons, % "?"
 	Gui, %GUI_name_controls2%: Add, Text, % "ys hp Border 0x200 BackgroundTrans Center w" wButtons, % ">"
@@ -3448,8 +3591,6 @@ Leveltracker_Timer(mode := "")
 			error := [Lang_Trans("lvltracker_timererror", 2), 2, "red"]
 		Else If (mode = "reset") && !timer.pause
 			error := [Lang_Trans("lvltracker_timererror", 3), 1, "red"]
-		Else If (mode = "pause") && settings.leveltracker.pausetimer && InStr(vars.log.areaID, "hideout")
-			error := [Lang_Trans("lvltracker_timererror", 4), 2, "red"]
 
 		yTooltip := vars.leveltracker.coords.y1 - settings.general.fHeight + 1, yTooltip := (yTooltip < vars.monitor.y) ? vars.leveltracker.coords.y2 - 1 : yTooltip
 		If error
@@ -3481,7 +3622,7 @@ Leveltracker_Timer(mode := "")
 				FormatTime, date,, ShortDate
 				FormatTime, time,, Time
 				timer.name := date ", " time
-				IniWrite, % """"timer.name """", % "ini" vars.poe_version "\leveling tracker.ini", % "current run" settings.leveltracker.profile, name
+				IniWrite, % """" timer.name """", % "ini" vars.poe_version "\leveling tracker.ini", % "current run" settings.leveltracker.profile, name
 				new_run := 1
 			}
 			LLK_ToolTip(new_run ? Lang_Trans("lvltracker_timermessage", 1) : (timer.pause != 0) ? Lang_Trans("lvltracker_timermessage", 2) : Lang_Trans("lvltracker_timermessage", 3),, vars.leveltracker.coords.x1 + vars.leveltracker.coords.w / 2, yTooltip,, "lime",,,, 1)
@@ -3505,10 +3646,17 @@ Leveltracker_Timer(mode := "")
 
 	If vars.hwnd.leveltracker.main && (timer.pause = 0) ;advance the timer
 	{
-		timer.current_split += (timer.current_act = 11) ? 0 : 1, timer.pause := (settings.leveltracker.pausetimer && InStr(vars.log.areaID, "hideout")) || (timer.current_act = 11) ? 1 : 0
+		timer.current_split += (timer.current_act = 11) ? 0 : 1, timer.pause := (timer.current_act = 11) ? 1 : 0
 		If vars.log.act && (timer.current_act + 1 = vars.log.act) ;player enters the next act: save previous act's time, add it to total time, then reset it
 		{
 			IniWrite, % timer.current_split, % "ini" vars.poe_version "\leveling tracker.ini", % "current run" settings.leveltracker.profile, % "act "timer.current_act
+			If !InStr(timer.name, ",") && (timer.current_act = 1)
+			{
+				FormatTime, date,, ShortDate
+				FormatTime, time,, Time
+				IniWrite, % """" (timer.name := date ", " time) """", % "ini" vars.poe_version "\leveling tracker.ini", % "current run" settings.leveltracker.profile, name
+				timer.late_start := 1
+			}
 			If InStr(timer.name, ",")
 				Leveltracker_TimerCSV()
 			timer.total_time += timer.current_split, timer.current_act += 1, timer.current_act := (vars.poe_version && timer.current_act = 8) ? 11 : timer.current_act
@@ -3535,15 +3683,16 @@ Leveltracker_TimerCSV()
 	global vars, settings
 	static csv
 
+	timer := vars.leveltracker.timer
 	If !FileExist("exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv")
 		FileAppend, % """date, time"",act 1,act 2,act 3,act 4,act 5,act 6,act 7" (!vars.poe_version ? ",act 8,act 9,act 10" : ""), % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
 
 	If !csv
 		FileRead, csv, % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
-	If InStr(csv, vars.leveltracker.timer.name)
-		FileAppend, % (append := ","""FormatSeconds(vars.leveltracker.timer.current_split) ".00"""), % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
-	Else FileAppend, % (append := "`n"""vars.leveltracker.timer.name ""","""FormatSeconds(vars.leveltracker.timer.current_split) ".00"""), % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
-	csv .= append
+	If InStr(csv, timer.name)
+		FileAppend, % (append := ",""" FormatSeconds(timer.current_split) ".00"""), % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
+	Else FileAppend, % (append := "`n""" timer.name """,""" FormatSeconds(timer.current_split) ".00" (timer.late_start ? "*" : "") """"), % "exports\campaign runs" (vars.poe_version ? " (PoE 2)" : "") ".csv"
+	csv .= append, vars.leveltracker.timer.late_start := 0
 }
 
 Leveltracker_Toggle(mode, toggle := 1)

@@ -15,7 +15,7 @@
 	settings.statlas.fSize := !Blank(check := ini.settings["font-size"]) ? check : settings.general.fSize
 	settings.statlas.tier := settings.statlas.tier0 := !Blank(check := ini.settings["filter tier"]) ? check : 15
 	settings.statlas.maptracker := !Blank(check := ini.settings["include map-tracker data"]) ? check : (settings.features.maptracker ? 1 : 0)
-	settings.statlas.notable := !Blank(check := ini.settings["show atlas-notable effect"]) ? check : 1
+	settings.statlas.debug := !Blank(check := ini.settings["enable trouble-shooting"]) ? check : 0
 	settings.statlas.zoom := settings.statlas.zoom0 := !Blank(check := ini.settings.zoom) ? check : 0.25
 	LLK_FontDimensions(settings.statlas.fSize, font_height, font_width), settings.statlas.fWidth := font_width, settings.statlas.fHeight := font_height
 }
@@ -25,32 +25,15 @@ Statlas()
 	local
 	global vars, settings, db
 
-	start := A_TickCount
 	If !IsObject(db.maps)
 		DB_Load("maps")
-	Gui, statlas_comms: New, -DPIScale -Caption +LastFound +AlwaysOnTop +ToolWindow +Border, % "Exile UI: statlas"
-	WinSet, Trans, 1
-	Gui, statlas_comms: Add, Text,, % "client: " vars.hwnd.poe_client
-	. "`nclip: " vars.general.xMouse - vars.client.x - vars.client.h//8 "|" vars.general.yMouse - vars.client.y + Round(vars.client.h * 0.03) "|" vars.client.h//4 "|" Round(vars.client.h/(settings.statlas.notable ? 10 : 12)) "`n"
-	. (settings.general.blackbars ? "blackbars: " vars.client.x - vars.monitor.x "|0|" vars.client.w "|" vars.client.h "`n" : "")
-	Gui, statlas_comms: Show, NA x10000 y10000
 
-	vars.statlas := {}
-	Run, modules\_ocr thread.ahk,, UseErrorLevel
-
-	If ErrorLevel
+	x := vars.general.xMouse - vars.client.x - vars.client.h//6, y := vars.general.yMouse - vars.client.y + Round(vars.client.h * 0.03), w := vars.client.h//3, h := Round(vars.client.h/22)
+	text := OCR_Start(x, y, w, h, (settings.statlas.debug ? "ALT" : ""))
+	If !text
 		Return
-	Else
-		While !ocr_failed && Blank(vars.statlas.text)
-		{
-			If (A_TickCount >= start + 1000) || (vars.statlas.text = "OCR failed")
-				ocr_failed := 1
-			Sleep 25
-		}
 
-	If ocr_failed
-		Return
-	text := SubStr(vars.statlas.text, InStr(vars.statlas.text, ":") + 2), text := StrReplace(text, "  ", " ")
+	text := StrReplace(text, "  ", " ")
 	vars.statlas := {}
 
 	Loop, Parse, text, `n, " `r`t"
@@ -68,15 +51,9 @@ Statlas()
 					}
 				Continue
 			}
-			If !vars.statlas.biome && RegExMatch(StrReplace(A_LoopField, " "), "i)^" Lang_Trans("maps_biome"))
-				For key, val in db.maps.biomes
-					If RegExMatch(StrReplace(line, " "), "i)" key "$")
-					{
-						vars.statlas.biome := key
-						Continue 2
-					}
 		}
 
+	Gui, ocr_comms: Destroy
 	If !vars.statlas.map
 		Return
 	Else Return 1
@@ -110,7 +87,7 @@ Statlas_GUI(mode := "")
 		Else settings.statlas.zoom += InStr(mode, "plus") ? 0.05 : -0.05, mode := ""
 
 	toggle := !toggle, GUI_name := "statlas" toggle
-	map := vars.statlas.map, boss := vars.statlas.boss, biome := vars.statlas.biome
+	map := vars.statlas.map, boss := vars.statlas.boss
 	league := LLK_MaxIndex(vars.maptracker.leagues)
 	Gui, %GUI_name%: New, % "-Caption -DPIScale +LastFound +AlwaysOnTop +ToolWindow +E0x02000000 +E0x00080000 HWNDhwnd_statlas"
 	Gui, %GUI_name%: Font, % "s" settings.statlas.fSize " cWhite", % vars.system.font
@@ -157,10 +134,10 @@ Statlas_GUI(mode := "")
 			stats[timeframe].total_runs += runs.Count()
 			For iMaprun, vMaprun in runs
 			{
-				mapname := (InStr(vMaprun.map, ":") ? SubStr(vMaprun.map, InStr(vMaprun.map, ":") + 2) : vMaprun.map)
+				mapname := (InStr(vMaprun.map, ":") ? Trim(SubStr(vMaprun.map, InStr(vMaprun.map, ":",, 0) + 1), " ") : vMaprun.map)
 				While (pCheck := InStr(mapname, "("))
 					remove := SubStr(mapname, pCheck), remove := SubStr(remove, 1, InStr(remove, ")")), mapname := StrReplace(mapname, remove), mapname := Trim(mapname, " ")
-				If (mapname = map.2) && (vMaprun.tier >= settings.statlas.tier)
+				If (mapname = map.2 || mapname = Lang_Trans("maps_" boss)) && (vMaprun.tier >= settings.statlas.tier)
 				{
 					stats[timeframe].run += vMaprun.run, stats[timeframe].runs += 1
 					If vMaprun.kills
@@ -189,12 +166,6 @@ Statlas_GUI(mode := "")
 				dimensions.Push(stats.legacy[val])
 		}
 		LLK_PanelDimensions(dimensions, settings.statlas.fSize, wColumns, hColumns)
-	}
-
-	If settings.statlas.notable && vars.statlas.biome
-	{
-		Gui, %GUI_name%: Add, Text, % "Section BackgroundTrans xs y+-1 Border Center cYellow w" wPics * 2 + 4, % Lang_Trans("maps_biome") " " biome " (" db.maps.biomes[biome] ")"
-		Gui, %GUI_name%: Add, Progress, % "Disabled BackgroundBlack xp yp wp hp", 0
 	}
 
 	If !wColumn || (fSize != settings.statlas.fSize)

@@ -1,5 +1,5 @@
 {
-  "_timestamp": "2025-07-15, 08:30 (utc)",
+  "_timestamp": "2026-07-22, 05:30 (utc)",
   "aisling": {
     "rewards": {
       "transportation": [
@@ -143,11 +143,11 @@
   "it": {
     "rewards": {
       "transportation": [
-        "breach corrupted\nmaps",
+        "trapped chest:\nfoulborn uniques",
         "jewel"
       ],
       "fortification": [
-        "map device:\nbreachstone bargain",
+        "crafting bench:\nbreach ring",
         "trapped chest:\njewels"
       ],
       "research": [
@@ -263,7 +263,7 @@
   "rin": {
     "rewards": {
       "transportation": [
-        "map currency",
+        "originator maps",
         "map"
       ],
       "fortification": [
@@ -271,7 +271,7 @@
         "trapped chest:\nmaps"
       ],
       "research": [
-        "crafting bench:\nmap",
+        "trapped chest:\nscarabs",
         "beyond scarabs"
       ],
       "intervention": [
@@ -296,18 +296,18 @@
       ],
       "intervention": [
         "ritual scarabs",
-        "harbinger scarab"
+        "cartography\nscarabs"
       ]
     }
   },
   "vagan": {
     "rewards": {
       "transportation": [
-        "harbinger scarabs",
-        "weapon"
+        "trarthan scarabs",
+        "trarthan scarab"
       ],
       "fortification": [
-        "incubators (?)",
+        "trapped chest:\nenshrouded uniques",
         "trapped chest:\nweapons"
       ],
       "research": [
@@ -327,7 +327,7 @@
         "apply chromatics:\n10 / 15 / 20 / 30"
       ],
       "fortification": [
-        "apply chromes / jeweller's /\nfusings to your item",
+        "apply jeweller's / chromes /\nfusings to your item",
         "apply jeweller's:\n10 / 15 / 20 / 30"
       ],
       "research": [

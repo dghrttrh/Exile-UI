@@ -30,7 +30,7 @@
 
 	If prev_lang && (prev_lang != settings.general.lang_client)
 	{
-		MsgBox, % "Client language has changed between restarts. The tool will now restart."
+		MsgBox,, Exile UI, % "Client language has changed between restarts. The tool will now restart."
 		LLK_Restart()
 	}
 }
@@ -83,7 +83,7 @@ Lang_Load(file)
 			Continue
 		If !InStr(line, "=") || Mod(LLK_InStrCount(line, """"), 2)
 		{
-			MsgBox, % "Potential error in file ""data\" file ", line " A_Index ":`n- key/value pair is missing an equal sign or quotation marks`n- comment-line is missing semi-colon"
+			MsgBox,, Exile UI, % "Potential error in file ""data\" file ", line " A_Index ":`n- key/value pair is missing an equal sign or quotation marks`n- comment-line is missing semi-colon"
 			Continue
 		}
 		key := SubStr(line, 1, InStr(line, "=") - 1), val := SubStr(line, InStr(line, "=") + 1), val := InStr(val, ";##") ? SubStr(val, 1, InStr(val, ";##") - 1) : val
@@ -113,10 +113,10 @@ Lang_Trans(key, index := 1, insert := "")
 	local
 	global vars
 
-	index := Blank(index) ? 1 : index
-	value := !Blank(vars.lang[key][index]) ? vars.lang[key][index] : vars.lang2[key][index], check := 0
+	index := (Blank(index) ? 1 : StrReplace(index, " "))
+	value := (!Blank(vars.lang[key][index]) ? vars.lang[key][index] : vars.lang2[key][index]), check := 0
 	If IsObject(insert)
 		For index0, string in (!Blank(vars.lang[key][index]) ? vars.lang[key] : vars.lang2[key])
-			value := (index0 = 1) ? "" : value, check += (index0 >= index) ? 1 : 0, value .= (index0 >= index) ? string . insert[check] : ""
-	Return Blank(value) ? "0000" : value
+			value := (index0 = 1 ? "" : value), check += (index0 >= index ? 1 : 0), value .= (index0 >= index ? string . insert[check] : "")
+	Return (Blank(value) ? "0000" : value)
 }

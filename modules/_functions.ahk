@@ -2,6 +2,7 @@
 {
 	If (var = "")
 		Return 1
+	Return 0
 }
 
 CheckClient()
@@ -37,10 +38,10 @@ DB_Load(database)
 		If !vars.poe_version
 			db.leveltracker := {"areas": Json.Load(LLK_FileRead("data\" (FileExist("data\" lang "\[leveltracker] areas.json") ? lang : "english") "\[leveltracker] areas.json"))
 			, "gems": Json.Load(LLK_FileRead("data\" (FileExist("data\" lang "\[leveltracker] gems.json") ? lang : "english") "\[leveltracker] gems.json"))
-			, "trees": {"supported": ["3_27", "3_27_alternate"]}}
+			, "trees": {"supported": ["3_28", "3_28_alternate", "3_29"]}}
 		Else
 			db.leveltracker := {"areaIDs": {}, "areas": json.load(LLK_FileRead("data\" (FileExist("data\" lang "\[leveltracker] areas 2.json") ? lang : "english") "\[leveltracker] areas 2.json"))
-			, "trees": {"supported": ["0_3", "0_4"]}, "gems": Json.Load(LLK_FileRead("data\" (FileExist("data\" lang2 "\[leveltracker] gems 2.json") ? lang2 : "english") "\[leveltracker] gems 2.json"))}
+			, "trees": {"supported": ["0_4", "0_5"]}, "gems": Json.Load(LLK_FileRead("data\" (FileExist("data\" lang2 "\[leveltracker] gems 2.json") ? lang2 : "english") "\[leveltracker] gems 2.json"))}
 
 		If db.leveltracker.gems.HasKey("renamed")
 			db.leveltracker.renamed_gems := LLK_CloneObject(db.leveltracker.gems.renamed), db.leveltracker.gems.Delete("renamed")
@@ -66,6 +67,7 @@ DB_Load(database)
 	}
 	Else If (database = "maps")
 		db.maps := Json.Load(LLK_FileRead("data\" (FileExist("data\" settings.general.lang_client "\maps" vars.poe_version ".json") ? settings.general.lang_client : "english") "\maps" vars.poe_version ".json",, "65001"))
+		, db.maps.Delete("_translation_notes")
 	Else If (database = "item_mods")
 		db.item_mods := Json.Load(LLK_FileRead("data\global\item mods" vars.poe_version ".json"))
 	Else If (database = "item_bases")
@@ -106,26 +108,14 @@ DB_Load(database)
 				If !IsObject(db.mapinfo.mods[section])
 					db.mapinfo.mods[section] := {}
 				If settings.general.dev && (key = "ID") && db.mapinfo.mods[section].ID
-					MsgBox, % "duplicate: " section
+					MsgBox,, Exile UI, % "duplicate: " section
 				db.mapinfo.mods[section][key] := StrReplace(val, "&", "&&")
 				If settings.general.dev && (key = "type") && (val != "expedition") && !LLK_HasVal(db.mapinfo["mod types"], val)
-					MsgBox, % "invalid mod-type for:`n" section
+					MsgBox,, Exile UI, % "invalid mod-type for:`n" section
 			}
 		}
-
-		Loop, Parse, % StrReplace(LLK_FileRead("data\global\Atlas.txt", 1), "`t"), `n, `r
-		{
-			val := SubStr(A_LoopField, InStr(A_LoopField, "=") + 1)
-			maps .= StrReplace(val, ",", " (" A_Index "),") ;create a list of all maps
-			Sort, val, D`,
-			db.mapinfo.maps[A_Index] := StrReplace(SubStr(val, 1, -1), ",", "`n") ;store tier X maps here
-		}
-		Sort, maps, D`,
-		Loop, Parse, % LLK_StringCase(maps), `,
-			If A_LoopField
-				db.mapinfo.maps[SubStr(A_LoopField, 1, 1)] .= !db.mapinfo.maps[SubStr(A_LoopField, 1, 1)] ? A_LoopField : "`n" A_LoopField ;store maps starting with a-z here
 	}
-	Else If (database = "OCR")
+	Else If (database = "TLDR")
 	{
 		tldr := Json.Load(LLK_FileRead("data\english\TLDR-tooltips.json"))
 		db.altars := tldr["eldritch altars"].Clone()
@@ -220,7 +210,7 @@ IniBatchRead(file, section := "", encoding := "1200")
 	If Blank(section) && !InStr(file, "[") && !InStr(file, "]") || !Blank(section) && (file = " " || file = "")
 		Return ini
 
-	Loop, Parse, file, `n, `r
+	Loop, Parse, file, `n, % " `r"
 	{
 		If Blank(A_LoopField)
 			Continue
@@ -234,9 +224,23 @@ IniBatchRead(file, section := "", encoding := "1200")
 		Else key := A_LoopField, val := ""
 
 		val := (SubStr(val, 1, 1) = """" && SubStr(val, 0, 1) = """") ? SubStr(val, 2, -1) : val
-		ini[section][key] := val
+
+		If section
+			ini[section][key] := val
 	}
 	Return ini
+}
+
+LLK_ArrayDump(array, separator := " ", filler := "")
+{
+	local
+
+	string := ""
+	If !IsObject(array)
+		Return array
+	For index, val in array
+		string .= (Blank(string) ? "" : separator) . (Blank(val) ? filler : val)
+	Return string
 }
 
 LLK_ArraySort(array)
@@ -274,7 +278,7 @@ LLK_CloneObject(object)
 
 LLK_Error(ErrorMessage, restart := 0)
 {
-	MsgBox, % ErrorMessage
+	MsgBox,, Exile UI, % ErrorMessage
 	If restart
 		Reload
 	ExitApp
@@ -284,14 +288,14 @@ LLK_FilePermissionError(issue, folder)
 {
 	local
 
-	MsgBox, % Lang_Trans("m_permission_error1", (issue = "create") ? 1 : 2) " " folder "`n`n" Lang_Trans("m_permission_error1", 3) "`n" Lang_Trans("m_permission_error1", 4) "`n`n" Lang_Trans("m_permission_error1", 5) "`n`n" Lang_Trans("m_permission_error1", 6)
+	MsgBox,, Exile UI, % Lang_Trans("m_permission_error1", (issue = "create") ? 1 : 2) " " folder "`n`n" Lang_Trans("m_permission_error1", 3) "`n" Lang_Trans("m_permission_error1", 4) "`n`n" Lang_Trans("m_permission_error1", 5) "`n`n" Lang_Trans("m_permission_error1", 6)
 }
 
 LLK_FileRead(file, keep_case := 0, encoding := "65001")
 {
 	local
 
-	FileRead, read, % (!Blank(encoding) ? "*P" encoding " " : "") file
+	FileRead, read, % (!Blank(encoding) && encoding != "blank" ? "*P" encoding " " : "") file
 	If !keep_case
 		StringLower, read, read
 	Return Trim(read, " `r`n`t")
@@ -303,15 +307,6 @@ LLK_FormatTime(time, format)
 
 	FormatTime, formatted, % time, % format
 	Return formatted
-}
-
-LLK_TimeElapsed(timestamp, unit := "minutes")
-{
-	local
-
-	now := A_NowUTC
-	EnvSub, now, % timestamp, % unit
-	Return now
 }
 
 LLK_HasKey(object, value, InStr := 0, case_sensitive := 0, all_results := 0, recurse := 0)
@@ -441,6 +436,16 @@ LLK_MaxIndex(array)
 	Return array[array.MaxIndex()]
 }
 
+LLK_ObjectSum(object)
+{
+	local
+
+	sum := 0
+	For key, val in object
+		sum += val
+	Return sum
+}
+
 LLK_PatternMatch(text, string, object, swap := 0, value := 1, case := 1) ;swap param switches the order around, val param determines if values or keys of the object are used
 {
 	local
@@ -496,6 +501,63 @@ LLK_StringRemove(string, characters)
 	Return string
 }
 
+LLK_StringReplace(string, array)
+{
+	local
+
+	For index, pair in array
+		string := StrReplace(string, pair.1, pair.2)
+	Return string
+}
+
+LLK_StrSplit(string, type := "array", quotes := 1)
+{
+	local
+
+	array := [], object := {}
+	Loop, Parse, string, % " "
+	{
+		If (!InStr(A_LoopField, """") || RegexMatch(A_LoopField, "i)^"".*""$")) && !new_val
+			array.Push((quotes ? """" : "") . StrReplace(A_LoopField, """") . (quotes ? """" : ""))
+		Else If !InStr(A_LoopField, """") && new_val
+			new_val .= " " A_LoopField
+		Else If RegexMatch(A_LoopField, "i)^""")
+			new_val := A_LoopField
+		Else If RegexMatch(A_LoopField, "i)""$")
+			array.Push((quotes ? """" : "") . StrReplace(new_val " " A_LoopField, """") . (quotes ? """" : "")), new_val := ""
+	}
+	If (type = "array")
+		Return array
+	For index, val in array
+		object[val] := 1
+	Return object
+}
+
+LLK_TimeElapsed(timestamp, unit := "minutes", UTC := 1)
+{
+	local
+
+	now := (UTC ? A_NowUTC : A_Now)
+	EnvSub, now, % timestamp, % unit
+	Return now
+}
+
+LLK_TimeSince(timestamp_early, timestamp_late, short := 0)
+{
+	local
+
+	unit := 1
+	timestamp_late -= timestamp_early, Minutes
+	For index, val in [60, 24, 7]
+		If (timestamp_late >= val)
+			timestamp_late := Round(timestamp_late / val, 1), unit += 2
+		Else Break
+
+	timestamp_late := StrReplace(timestamp_late, ".0")
+	timestamp_late := (timestamp_late >= 10 ? Round(timestamp_late) : timestamp_late)
+	Return timestamp_late . (short ? "" : " ") . SubStr(Lang_Trans("global_timeunits", unit + (timestamp_late != 1 ? 1 : 0)), 1, (short ? 1 : 1000))
+}
+
 LLK_TrimDecimals(string)
 {
 	local
@@ -509,6 +571,69 @@ LLK_TrimDecimals(string)
 			Break
 	}
 	Return string
+}
+
+OCR_Start(x, y, w, h, debug_key := "", usecase := "", opt_params := "[]", opt_effects := "[]") ; debug key: separate key that -- if held down during scans -- opens a GUI with the screen-cap and scan results
+{																			; opt_effects: array, and each index is an array itself consisting of the 4 parameters used by Gdip_CreateEffect(), e.g. [5, 0, 35, 0]
+	local
+	global vars, settings, json
+
+	vars.ocr_comms := {}, object := {}
+	Gui, ocr_comms: New, -DPIScale -Caption +LastFound +AlwaysOnTop +ToolWindow +Border, % "Exile UI: OCR"
+	WinSet, Trans, 1
+	object.client := [vars.hwnd.poe_client, vars.client.h], object.clip := [x, y, w, h]
+	If settings.general.blackbars
+		object.blackbars := [vars.client.x - vars.monitor.x, 0, vars.client.w, vars.client.h]
+	If usecase
+		object.usecase := usecase
+	If !Blank(debug_key)
+		object.debug := debug_key
+	If (settings.general.lang_client = "english")
+		object.language := "english"
+	If opt_params.Count()
+		object.params := opt_params.Clone()
+	If opt_effects.Count()
+		object.effects := opt_effects.Clone()
+
+	Gui, ocr_comms: Add, Text,, % json.dump(object)
+	Gui, ocr_comms: Show, NA x10000 y10000
+
+	Run, % """" A_AhkPath """ """ A_ScriptDir "\modules\_ocr thread.ahk""", % A_ScriptDir, UseErrorLevel
+	If ErrorLevel
+	{
+		If (usecase != "TLDR")
+			LLK_ToolTip(Lang_Trans("ocr_fail"), 2,,,, "Red")
+		Gui, ocr_comms: Destroy
+		Return
+	}
+	Else If !(debug_key && GetKeyState(debug_key, "P"))
+		While !ocr_failed && Blank(vars.ocr_comms.text)
+		{
+			If !start
+				start := A_TickCount
+			If (A_TickCount >= start + 3000)
+				ocr_failed := 1
+			Sleep 25
+		}
+
+	If (vars.ocr_comms.text = "JSON error")
+	{
+		LLK_ToolTip("json error", 1,,,, "Red")
+		Gui, ocr_comms: Destroy
+		Return
+	}
+
+	If ocr_failed || (vars.ocr_comms.text = "OCR failed") || debug_key && GetKeyState(debug_key, "P")
+	{
+		WinWaitClose, OCR debug
+		If (usecase != "TLDR") && ((vars.ocr_comms.text = "OCR failed") || !(debug_key && GetKeyState(debug_key, "P")))
+			LLK_ToolTip(Lang_Trans("global_fail"), 1,,,, "Red")
+		KeyWait, % debug_key
+		Gui, ocr_comms: Destroy
+		Return
+	}
+	Gui, ocr_comms: Destroy
+	Return SubStr(vars.ocr_comms.text, InStr(vars.ocr_comms.text, "`n") + 1)
 }
 
 SnipGuiClose()
@@ -549,12 +674,14 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 	global vars, settings, Json
 
 	vars.update := [0], update := vars.update
+	If !timer && vars.general.updatewait
+		timer := 1
 
 	If !FileExist("update\")
 		FileCreateDir, update\
 	update.1 := !FileExist("update\") ? -2 : update.1
-	FileDelete, update\update.* ;delete any leftover files
-	update.1 := FileExist("update\update.*") ? -1 : update.1 ;error code -1 = delete-permission
+	FileDelete, update\update* ;delete any leftover files
+	update.1 := FileExist("update\update*") ? -1 : update.1 ;error code -1 = delete-permission
 	Loop, Files, update\lailloken-ui-*, D
 		FileRemoveDir, % A_LoopFileLongPath, 1 ;delete any leftover folders
 	Loop, Files, update\exile-ui-*, D
@@ -569,6 +696,7 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 	{
 		If InStr("2", timer)
 			IniWrite, updater, % "ini" vars.poe_version "\config.ini", versions, reload settings
+		vars.general.updatewait := 0
 		Return
 	}
 	versions_local := Json.Load(LLK_FileRead("data\versions.json")) ;load local versions
@@ -582,12 +710,13 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 	}
 
 	FileDelete, data\version_check.json
-	Try version_check := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Lailloken-UI/" (settings.general.dev_env ? "dev" : "main") "/data/versions.json")
+	Try version_check := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Exile-UI/" (settings.general.dev_env ? "dev" : "main") "/data/versions.json")
 	update.1 := !InStr(version_check, """_release""") ? -4 : update.1 ;error-code -4 = version-list download failed
 	If (update.1 = -4)
 	{
 		If InStr("2", timer)
 			IniWrite, updater, % "ini" vars.poe_version "\config.ini", versions, reload settings
+		vars.general.updatewait := 0
 		Return
 	}
 	Else version_check := Trim(version_check, " `r`n`t")
@@ -599,7 +728,7 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 	vars.updater.skip := LLK_IniRead("ini\config.ini", "versions", "skip", 0)
 
 	If !settings.general.dev
-		Try changelog_check := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Lailloken-UI/" (settings.general.dev_env ? "dev" : "main") "/data/changelog.json")
+		Try changelog_check := HTTPtoVar("https://raw.githubusercontent.com/Lailloken/Exile-UI/" (settings.general.dev_env ? "dev" : "main") "/data/changelog.json")
 	Else changelog_check := LLK_FileRead("data\changelog.json")
 	changelog_check := changelog_check ? Trim(changelog_check, " `r`n`t") : ""
 
@@ -621,29 +750,49 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 	}
 
 	If (timer != 2) && (vars.updater.skip = vars.updater.latest.1)
+	{
+		vars.general.updatewait := 0
 		Return
+	}
 
 	If InStr("01", timer) && (versions_live._release.1 > versions_local._release.1)
 	{
-		vars.update := [1]
+		vars.update := [1], vars.general.updatewait := 0
 		Return
 	}
 	Else If (timer = 2)
 	{
+		If WinExist("ahk_class POEWindowClass")
+		{
+			WinGetPos, xWin, yWin, wWin, hWin, ahk_class POEWindowClass
+			winPos := {"x": xWin, "y": yWin, "w": wWin, "h": hWin}
+		}
 		Gui, update_download: New, -Caption -DPIScale +LastFound +AlwaysOnTop +ToolWindow +Border +E0x20 +E0x02000000 +E0x00080000 HWNDdownload
 		Gui, update_download: Color, Black
 		Gui, update_download: Add, Progress, range0-10 HWNDhwnd BackgroundBlack cGreen, 0
-		Gui, update_download: Show
+		If IsObject(winPos)
+		{
+			Gui, update_download: Show, NA x10000 y10000
+			WinGetPos, xWin, yWin, wWin, hWin, % "ahk_id " download
+			Gui, update_download: Show, % "x" winPos.x + winPos.w//2 - wWin//2 " y" winPos.y + winPos.h//2 - hWin//2
+		}
+		Else Gui, update_download: Show
+
 		UpdateDownload(hwnd)
 		branch := InStr(versions_live._release.2, "/main.zip") ? "main" : "beta"
 		vars.updater.target_version := [LLK_IniRead("ini\config.ini", "versions", "apply update")]
-		Loop, Parse, % vars.updater.target_version.1, % "."
-			vars.updater.target_version.2 .= (A_Index = 3) ? (A_LoopField < 10 ? "0" : "") A_LoopField : A_LoopField
+		If (vars.updater.target_version.1 = "dev" || vars.updater.target_version.1 = "hotfix")
+			vars.updater.target_version.2 := vars.updater.target_version.1
+		Else
+			Loop, Parse, % vars.updater.target_version.1, % "."
+				vars.updater.target_version.2 .= (A_Index = 3) ? (A_LoopField < 10 ? "0" : "") A_LoopField : A_LoopField
 
 		LLK_Log("starting update to " vars.updater.target_version.1)
 
 		If !FileExist("update\update_" vars.updater.target_version.2 ".zip")
-			UrlDownloadToFile, % "https://github.com/Lailloken/Lailloken-UI/archive/refs/tags/v" vars.updater.target_version.1 ".zip", % "update\update_" vars.updater.target_version.2 ".zip"
+			If (vars.updater.target_version.1 = "dev" || vars.updater.target_version.1 = "hotfix")
+				UrlDownloadToFile, % "https://github.com/Lailloken/Exile-UI/archive/refs/heads/" vars.updater.target_version.1 ".zip", % "update\update_" vars.updater.target_version.2 ".zip"
+			Else UrlDownloadToFile, % "https://github.com/Lailloken/Exile-UI/archive/refs/tags/v" vars.updater.target_version.1 ".zip", % "update\update_" vars.updater.target_version.2 ".zip"
 		If ErrorLevel || !FileExist("update\update_" vars.updater.target_version.2 ".zip")
 			vars.update := [-5, vars.updater.target_version.1] ;error-code -5 = download of zip-file failed
 		If (vars.update.1 >= 0)
@@ -692,10 +841,11 @@ UpdateCheck(timer := 0) ;checks for updates: timer param refers to whether this 
 			SetTimer, UpdateDownload, Delete
 			Gui, update_download: Destroy
 			IniWrite, updater, % "ini" vars.poe_version "\config.ini", versions, reload settings
-			LLK_Log("failed update to " vars.updater.target_version.1)
+			LLK_Log("failed update to " vars.updater.target_version.1), vars.general.updatewait := 0
 			Return
 		}
 	}
+	vars.general.updatewait := 0
 }
 
 UpdateDownload(mode := "")
@@ -732,4 +882,16 @@ UpdateParseVersion(string)
 	}
 	string .= InStr(string, "(hotfix") ? ")" : ""
 	Return string
+}
+
+URL(cHWND)
+{
+	local
+	global vars
+
+	KeyWait, LButton
+	URL := vars.URLs[cHWND]
+	If Blank(URL)
+		Return
+	Run, % URL
 }

@@ -3477,7 +3477,7 @@
         "abyss_jewel_summoner"
       ],
       "texts": [
-        "2% of Damage taken Recouped as Mana"
+        "% of Damage taken Recouped as Mana"
       ],
       "type": "Prefix"
     },
@@ -3491,20 +3491,9 @@
         "abyss_jewel_summoner"
       ],
       "texts": [
-        "3% of Damage taken Recouped as Mana"
+        "% of Damage taken Recouped as Mana"
       ],
       "type": "Prefix"
-    },
-    "AbyssDamageVSAbyssMonstersJewel1": {
-      "affix": "of Banishing",
-      "level": "1",
-      "tags": [
-        "default"
-      ],
-      "texts": [
-        "% increased Damage with Hits and Ailments against Abyssal Monsters"
-      ],
-      "type": "Suffix"
     },
     "AbyssDexterityIntelligenceJewel1": {
       "affix": "of Cunning",
@@ -3889,9 +3878,7 @@
       "level": "75",
       "tags": [
         "abyss_jewel_melee",
-        "abyss_jewel_ranged",
-        "abyss_jewel_caster",
-        "abyss_jewel_summoner"
+        "abyss_jewel_ranged"
       ],
       "texts": [
         "% increased Impale Effect"
@@ -3903,9 +3890,7 @@
       "level": "86",
       "tags": [
         "abyss_jewel_melee",
-        "abyss_jewel_ranged",
-        "abyss_jewel_caster",
-        "abyss_jewel_summoner"
+        "abyss_jewel_ranged"
       ],
       "texts": [
         "% increased Impale Effect"
@@ -4603,18 +4588,6 @@
       ],
       "type": "Suffix"
     },
-    "AbyssMinionDamageVSAbyssMonstersJewel1": {
-      "affix": "of Marshalling",
-      "level": "1",
-      "tags": [
-        "abyss_jewel_summoner"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage with Hits and Ailments against Abyssal Monsters"
-      ],
-      "type": "Suffix"
-    },
     "AbyssMinionElementalResistancesJewel1": {
       "affix": "of Acclimatisation",
       "level": "1",
@@ -4761,31 +4734,6 @@
       "texts": [
         "Gain ",
         "% of Physical Damage as Extra Fire Damage if you've dealt a Critical Strike Recently"
-      ],
-      "type": "Suffix"
-    },
-    "AbyssReducedPhysicalDamageTakenIfNotHitRecentlyJewel1": {
-      "affix": "of Confidence",
-      "level": "1",
-      "tags": [
-        "abyss_jewel_melee",
-        "abyss_jewel_ranged",
-        "abyss_jewel_caster",
-        "abyss_jewel_summoner"
-      ],
-      "texts": [
-        "2% additional Physical Damage Reduction if you weren't Damaged by a Hit Recently"
-      ],
-      "type": "Suffix"
-    },
-    "AbyssReducedPhysicalDamageTakenVsAbyssMonsterJewel1": {
-      "affix": "of Warding",
-      "level": "1",
-      "tags": [
-        "default"
-      ],
-      "texts": [
-        "% additional Physical Damage Reduction against Abyssal Monsters"
       ],
       "type": "Suffix"
     },
@@ -9722,6 +9670,21 @@
         "500"
       ]
     },
+    "ManaCostEfficiencyJewel": {
+      "affix": "of Efficiency",
+      "tags": [
+        "not_int",
+        "default"
+      ],
+      "texts": [
+        "% increased Mana Cost Efficiency"
+      ],
+      "type": "Suffix",
+      "weights": [
+        "300",
+        "500"
+      ]
+    },
     "ManaLeechPermyriadSuffixJewel": {
       "affix": "of Thirsting",
       "tags": [
@@ -14356,6 +14319,17 @@
       ],
       "type": "Prefix"
     },
+    "AfflictionNotableFieryAegis": {
+      "affix": "Notable",
+      "level": "50",
+      "tags": [
+        "affliction_chance_to_block"
+      ],
+      "texts": [
+        "1 Added Passive Skill is Fiery Aegis"
+      ],
+      "type": "Prefix"
+    },
     "AfflictionNotableFireAttunement_": {
       "affix": "Notable",
       "level": "1",
@@ -14665,6 +14639,17 @@
       ],
       "texts": [
         "1 Added Passive Skill is Holy Conquest"
+      ],
+      "type": "Prefix"
+    },
+    "AfflictionNotableHolyWord": {
+      "affix": "Notable",
+      "level": "50",
+      "tags": [
+        "affliction_warcry_buff_effect"
+      ],
+      "texts": [
+        "1 Added Passive Skill is Holy Word"
       ],
       "type": "Prefix"
     },
@@ -25653,8 +25638,6 @@
       "affix": "of Snow",
       "level": "12",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -25667,8 +25650,6 @@
       "affix": "of Sleet",
       "level": "24",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -25681,8 +25662,6 @@
       "affix": "of Ice",
       "level": "36",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -25695,8 +25674,6 @@
       "affix": "of Rime",
       "level": "50",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -25709,87 +25686,7 @@
       "affix": "of Floe",
       "level": "64",
       "tags": [
-        "wand",
-        "sceptre",
         "amulet"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercent6": {
-      "affix": "of Glaciation",
-      "level": "76",
-      "tags": [
-        "wand",
-        "sceptre"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand1": {
-      "affix": "of Snow",
-      "level": "12",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand2": {
-      "affix": "of Sleet",
-      "level": "24",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand3": {
-      "affix": "of Ice",
-      "level": "36",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand4": {
-      "affix": "of Rime",
-      "level": "50",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand5": {
-      "affix": "of Floe",
-      "level": "64",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Suffix"
-    },
-    "ColdDamagePercentTwoHand6": {
-      "affix": "of Glaciation",
-      "level": "76",
-      "tags": [
-        "staff"
       ],
       "texts": [
         "% increased Cold Damage"
@@ -27233,7 +27130,7 @@
         "warstaff_shaper"
       ],
       "texts": [
-        "+5% Chance to Block Attack Damage while wielding a Staff",
+        "+5% Chance to Block Attack Damage",
         "% to Critical Strike Multiplier if you have Blocked Recently"
       ],
       "type": "Suffix"
@@ -28107,6 +28004,119 @@
       ],
       "type": "Prefix"
     },
+    "DeepwaterSwordAdditionalAttackProjectile": {
+      "affix": "of Phantasms",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Attacks fire an additional Projectile"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordAlwaysHit": {
+      "affix": "of Unerring",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Always Hits Burning Enemies"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordAngerReservation": {
+      "affix": "of Anger",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Anger has ",
+        "% increased Mana Reservation Efficiency"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordBanners": {
+      "affix": "of Banners",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "You and Allies near your Banner have +1% to Damage over Time Multiplier per",
+        "2 Valour consumed for that Banner"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordCombustion": {
+      "affix": "Combusting",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Socketed Gems are Supported by Level 20 Combustion",
+        "% increased Burning Damage"
+      ],
+      "type": "Prefix"
+    },
+    "DeepwaterSwordFlammability": {
+      "affix": "of Curses",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Melee Strikes Curse Enemies with Flammability on Hit, ignoring Curse Limit"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordGrantedSkillGhostCannons": {
+      "affix": "Ghostly Arms",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Trigger level 20 Ghostly Artillery when you Attack with this Weapon"
+      ],
+      "type": "Prefix"
+    },
+    "DeepwaterSwordMeleeDamageWhileBurning": {
+      "affix": "Soultorched",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "% more Melee Damage while Burning"
+      ],
+      "type": "Prefix"
+    },
+    "DeepwaterSwordPhasingOnHit": {
+      "affix": "of Phasing",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Gain Phasing on Hit with this weapon"
+      ],
+      "type": "Suffix"
+    },
+    "DeepwaterSwordSpiritStrike": {
+      "affix": "of Ghosts",
+      "level": "60",
+      "tags": [
+        "deepwater_sword"
+      ],
+      "texts": [
+        "Non-Vaal Strike Skills target 1 additional nearby Enemy"
+      ],
+      "type": "Suffix"
+    },
     "DegenDamageTakenInfluence1_": {
       "affix": "of the Hunt",
       "level": "68",
@@ -28126,1726 +28136,6 @@
       ],
       "texts": [
         "% reduced Damage taken from Damage Over Time"
-      ],
-      "type": "Suffix"
-    },
-    "DelveAbyssJewelSocket1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "weapon",
-        "helmet",
-        "boots",
-        "gloves",
-        "body_armour"
-      ],
-      "texts": [
-        "Has 1 Abyssal Socket"
-      ],
-      "type": "Suffix"
-    },
-    "DelveAmuletBeltManaRecoveryRate1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "belt",
-        "amulet"
-      ],
-      "texts": [
-        "% increased Mana Recovery rate"
-      ],
-      "type": "Suffix"
-    },
-    "DelveAmuletCannotBeChilledOrFrozenWhileMoving1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "amulet"
-      ],
-      "texts": [
-        "Cannot be Chilled or Frozen while moving"
-      ],
-      "type": "Suffix"
-    },
-    "DelveAmuletVaalSkillDuration1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "amulet"
-      ],
-      "texts": [
-        "Vaal Skills have ",
-        "% increased Skill Effect Duration"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourAttackBlock": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "str_armour",
-        "str_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        "% Chance to Block Attack Damage"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourAvoidBleeding1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "shield",
-        "helmet",
-        "boots",
-        "body_armour"
-      ],
-      "texts": [
-        "50% chance to Avoid Bleeding"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourAvoidPoison1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "shield",
-        "helmet",
-        "boots",
-        "body_armour"
-      ],
-      "texts": [
-        "50% chance to Avoid being Poisoned"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourBlindChance": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "dex_armour",
-        "dex_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        "% Global chance to Blind Enemies on hit"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourDodgeAndSpellDodge_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "dex_armour",
-        "dex_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        "% chance to Suppress Spell Damage"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourDoubleArmourEffectOnHit": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "str_armour",
-        "str_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        "% chance to Defend with 200% of Armour"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourElementalAilmentDuration1___": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "shield",
-        "body_armour",
-        "helmet",
-        "gloves",
-        "boots"
-      ],
-      "texts": [
-        "% reduced Elemental Ailment Duration on you"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourEnergyShieldLeechSpells_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "int_armour",
-        "dex_int_armour",
-        "str_int_armour"
-      ],
-      "texts": [
-        "0.3% of Spell Damage Leeched as Energy Shield"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourEnergyShieldRegen": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "int_armour",
-        "dex_int_armour",
-        "str_int_armour"
-      ],
-      "texts": [
-        "Regenerate 1% of Energy Shield per second"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourEvasionOnFullLife": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "dex_armour",
-        "dex_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        "% increased Global Evasion Rating when on Full Life"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourFortifyEffect": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "str_armour",
-        "str_int_armour",
-        "str_dex_armour"
-      ],
-      "texts": [
-        " to maximum Fortification"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourLifeRegen1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver",
-        "shield",
-        "body_armour",
-        "helmet",
-        "gloves",
-        "boots"
-      ],
-      "texts": [
-        "Regenerate 1% of Life per second"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourLocalDisplaySocketedAttacksManaCost1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour",
-        "shield",
-        "boots",
-        "helmet"
-      ],
-      "texts": [
-        "Socketed Attacks have -15 to Total Mana Cost"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourMinionLife1": {
-      "affix": "of the Underground",
-      "level": "74",
-      "tags": [
-        "body_armour",
-        "shield",
-        "belt"
-      ],
-      "texts": [
-        "Minions have ",
-        "% increased maximum Life"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourPhysDamageTakenv2_1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        " Physical Damage taken from Hits"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourPhysDamageTakenv2_2": {
-      "affix": "of the Underground",
-      "level": "30",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        " Physical Damage taken from Hits"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourPhysDamageTakenv2_3": {
-      "affix": "of the Underground",
-      "level": "60",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        " Physical Damage taken from Hits"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourQuality": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "shield",
-        "body_armour"
-      ],
-      "texts": [
-        "% to Quality"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourSocketedSpellsManaCost1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "shield",
-        "boots",
-        "helmet"
-      ],
-      "texts": [
-        "Socketed Spells have 20% reduced Mana Cost"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourSpellBlock__": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "int_armour",
-        "dex_int_armour",
-        "str_int_armour"
-      ],
-      "texts": [
-        "% Chance to Block Spell Damage"
-      ],
-      "type": "Suffix"
-    },
-    "DelveArmourVaalSoulsOnKill1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet",
-        "body_armour",
-        "boots",
-        "shield"
-      ],
-      "texts": [
-        "% chance to gain an additional Vaal Soul on Kill"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBeltChanceToGainOnslaughtOnFlaskUse1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "belt"
-      ],
-      "texts": [
-        "% chance to gain Onslaught when you use a Flask"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBodyArmourAuraEffect1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        "% increased effect of Non-Curse Auras from your Skills"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBodyArmourAvoidCold1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "body_armour",
-        "shield",
-        "quiver"
-      ],
-      "texts": [
-        "% chance to Avoid Cold Damage from Hits"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBodyArmourAvoidFire1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "body_armour",
-        "shield",
-        "quiver"
-      ],
-      "texts": [
-        "% chance to Avoid Fire Damage from Hits"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBodyArmourAvoidLightning1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "body_armour",
-        "shield",
-        "quiver"
-      ],
-      "texts": [
-        "% chance to Avoid Lightning Damage from Hits"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBodyArmourChaosDegenResist1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour",
-        "shield",
-        "quiver"
-      ],
-      "texts": [
-        "% Chaos Resistance against Damage Over Time"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBodyArmourSocketedSkillsSupportedByArcaneSurge1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        "Socketed Gems are Supported by Level 1 Arcane Surge"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBodyDamageRemovedFromManaBeforeLifeNew1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        "% of Damage is taken from Mana before Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBodyFrenzyChargeWhenHit1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "body_armour"
-      ],
-      "texts": [
-        "% chance to gain a Frenzy Charge when Hit"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBootsAdditionalSpectre1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "+1 to Level of all Raise Spectre Gems"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBootsManaRegenerationRateWhileMoving1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "% increased Mana Regeneration Rate while moving"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBootsMovementSpeedIfHitRecently1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "% increased Movement Speed if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBootsPhyiscalDamageReductionRatingWhileMoving1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "% additional Physical Damage Reduction while moving"
-      ],
-      "type": "Suffix"
-    },
-    "DelveBootsSocketedChaosGemLevel1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "+2 to Level of Socketed Chaos Gems"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBootsSocketedColdGemLevel1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "+2 to Level of Socketed Cold Gems"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBootsSocketedFireGemLevel1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "+2 to Level of Socketed Fire Gems"
-      ],
-      "type": "Prefix"
-    },
-    "DelveBootsSocketedLightningGemLevel1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "boots"
-      ],
-      "texts": [
-        "+2 to Level of Socketed Lightning Gems"
-      ],
-      "type": "Prefix"
-    },
-    "DelveDexterityGemLevel1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "staff",
-        "sceptre",
-        "mace",
-        "axe",
-        "sword",
-        "bow",
-        "dagger",
-        "claw",
-        "wand",
-        "str_armour",
-        "int_armour",
-        "dex_armour",
-        "str_dex_armour",
-        "str_int_armour",
-        "dex_int_armour",
-        "str_dex_int_armour",
-        "unset_ring"
-      ],
-      "texts": [
-        "+1 to Level of Socketed Dexterity Gems"
-      ],
-      "type": "Suffix"
-    },
-    "DelveGlovesAddedPhysicalDamageVsBleedingEnemies1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Physical Damage against Bleeding Enemies"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesAddedPhysicalDamageVsPoisonedEnemies1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Physical Damage against Poisoned Enemies"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesAttackAndCastSpeedIfHitRecently1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "% increased Attack and Cast Speed if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveGlovesChaosDamageToSpells1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Chaos Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesColdDamageToSpells1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Cold Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesFireDamageToSpells1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Fire Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesGlobalAddedPhysicalDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesLightningDamageToSpells1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Adds 1 to ",
-        " Lightning Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesLocalDisplaySocketedSkillsAttackSpeed1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Socketed Skills have 18% increased Attack Speed"
-      ],
-      "type": "Suffix"
-    },
-    "DelveGlovesManaGainPerTarget1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Gain ",
-        " Mana per Enemy Hit with Attacks"
-      ],
-      "type": "Suffix"
-    },
-    "DelveGlovesMinionDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveGlovesSocketedSkillsCastSpeed1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "gloves"
-      ],
-      "texts": [
-        "Socketed Skills have 18% increased Cast Speed"
-      ],
-      "type": "Suffix"
-    },
-    "DelveGlovesVaalSkillCriticalChance1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver",
-        "gloves"
-      ],
-      "texts": [
-        "% increased Vaal Skill Critical Strike Chance"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmBaseManaRegeneration1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Regenerate 0.5% of Mana per second"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetEnemyChaosResistanceAura1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Nearby Enemies have -9% to Chaos Resistance"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetEnemyColdResistanceAura1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Nearby Enemies have -9% to Cold Resistance"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetEnemyFireResistanceAura1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Nearby Enemies have -9% to Fire Resistance"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetEnemyLightningResistanceAura1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Nearby Enemies have -9% to Lightning Resistance"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetEnemyPhysicalDamageTakenAura1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Nearby Enemies take 9% increased Physical Damage"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetManaReservationEfficiency1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "10% increased Mana Reservation Efficiency of Skills"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmetReducedManaReserved1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "% increased Mana Reservation Efficiency of Skills"
-      ],
-      "type": "Suffix"
-    },
-    "DelveHelmIgnoreArmourMovementPenalties1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "helmet"
-      ],
-      "texts": [
-        "Ignore all Movement Penalties from Armour"
-      ],
-      "type": "Suffix"
-    },
-    "DelveIntelligenceGemLevel1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "staff",
-        "sceptre",
-        "mace",
-        "axe",
-        "sword",
-        "bow",
-        "dagger",
-        "claw",
-        "wand",
-        "str_armour",
-        "int_armour",
-        "dex_armour",
-        "str_dex_armour",
-        "str_int_armour",
-        "dex_int_armour",
-        "str_dex_int_armour",
-        "unset_ring"
-      ],
-      "texts": [
-        "+1 to Level of Socketed Intelligence Gems"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryAilmentDamage1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver",
-        "ring",
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Damage with Ailments"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryChanceToEvade": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver",
-        "ring",
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% chance to Evade Attack Hits"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryChanceWhenHitForArmourToBeDoubled1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "ring",
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "20% chance to Defend with 200% of Armour"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryChaosDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Chaos Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryColdDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Cold Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryElementalPenetration1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "quiver",
-        "amulet"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Elemental Resistances"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryFireDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryFlaskLifeRecovery1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "ring",
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Life Recovery from Flasks"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryIncreasedEnergyShieldFromBodyArmour1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "ring",
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Energy Shield from Equipped Body Armour"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryLightningDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryMinionRunSpeed1": {
-      "affix": "of the Underground",
-      "level": "74",
-      "tags": [
-        "quiver",
-        "ring",
-        "amulet"
-      ],
-      "texts": [
-        "Minions have ",
-        "% increased Movement Speed"
-      ],
-      "type": "Suffix"
-    },
-    "DelveJewelryPhysicalDamage1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "amulet",
-        "belt"
-      ],
-      "texts": [
-        "% increased Global Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveJewelryVaalSkillDamage1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "belt",
-        "ring"
-      ],
-      "texts": [
-        "% increased Damage with Vaal Skills"
-      ],
-      "type": "Suffix"
-    },
-    "DelveMapMonsterPacksVaalMapWorlds1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "map"
-      ],
-      "texts": [
-        "Area is inhabited by the Vaal",
-        "Found Items have 10% chance to drop Corrupted in Area"
-      ],
-      "type": "Prefix"
-    },
-    "DelveQuiverFrenzyChargeOnHittingRareOrUnique1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver"
-      ],
-      "texts": [
-        "% chance to gain a Frenzy Charge when you Hit a Rare or Unique Enemy"
-      ],
-      "type": "Suffix"
-    },
-    "DelveQuiverIncreasedMana1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "quiver"
-      ],
-      "texts": [
-        "% increased maximum Mana"
-      ],
-      "type": "Suffix"
-    },
-    "DelveRingCannotBeShockedWhileMoving1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "Cannot be Shocked or Ignited while moving"
-      ],
-      "type": "Suffix"
-    },
-    "DelveRingChaosLeech1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "0.2% of Chaos Damage Leeched as Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveRingColdLeech1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "0.2% of Cold Damage Leeched as Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveRingElementalDamage1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "belt",
-        "ring"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Suffix"
-    },
-    "DelveRingFireLeech1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "0.2% of Fire Damage Leeched as Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveRingLightningLeech1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "0.2% of Lightning Damage Leeched as Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveRingManaCostReduction1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "% reduced Mana Cost of Skills"
-      ],
-      "type": "Suffix"
-    },
-    "DelveRingPhysicalLeech1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "ring"
-      ],
-      "texts": [
-        "0.2% of Physical Damage Leeched as Life"
-      ],
-      "type": "Prefix"
-    },
-    "DelveShieldPhysicalDamageReductionRating1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "shield",
-        "quiver"
-      ],
-      "texts": [
-        "% additional Physical Damage Reduction"
-      ],
-      "type": "Prefix"
-    },
-    "DelveStrengthGemLevel1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "staff",
-        "sceptre",
-        "mace",
-        "axe",
-        "sword",
-        "bow",
-        "dagger",
-        "claw",
-        "wand",
-        "str_armour",
-        "int_armour",
-        "dex_armour",
-        "str_dex_armour",
-        "str_int_armour",
-        "dex_int_armour",
-        "str_dex_int_armour",
-        "unset_ring"
-      ],
-      "texts": [
-        "+1 to Level of Socketed Strength Gems"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponArmourIfYouHitRecently1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "sceptre",
-        "mace",
-        "axe",
-        "sword"
-      ],
-      "texts": [
-        "+500 to Armour if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponArmourIfYouHitRecently2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "staff",
-        "mace",
-        "axe",
-        "sword"
-      ],
-      "texts": [
-        "+1000 to Armour if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponChanceToGainOnslaughtOnKill1h1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon",
-        "shield"
-      ],
-      "texts": [
-        "10% chance to gain Onslaught for 4 seconds on Kill"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponChanceToGainOnslaughtOnKill2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "20% chance to gain Onslaught for 4 seconds on Kill"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponColdPenetration1h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Cold Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponColdPenetration2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Cold Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponDamageOnFullLife1h1__": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "% increased Damage when on Full Life"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponDamageOnFullLife2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "% increased Damage when on Full Life"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponDespairOnHit1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Curse Enemies with Despair on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponDespairOnHit2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Curse Enemies with Despair on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponElementalDamagev2_1h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_1h2_": {
-      "affix": "Subterranean",
-      "level": "25",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_1h3": {
-      "affix": "Subterranean",
-      "level": "50",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_1h4": {
-      "affix": "Subterranean",
-      "level": "75",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_2h2__": {
-      "affix": "Subterranean",
-      "level": "25",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_2h3": {
-      "affix": "Subterranean",
-      "level": "50",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponElementalDamagev2_2h4_": {
-      "affix": "Subterranean",
-      "level": "75",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "% increased Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponEnergyShieldRegenIfYouHitRecently1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "dagger",
-        "claw",
-        "wand",
-        "sceptre"
-      ],
-      "texts": [
-        "Regenerate 0.5% of Energy Shield per second if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponEnergyShieldRegenIfYouHitRecently2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "Regenerate 1% of Energy Shield per second if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponEvasionIfYouHitRecently1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "axe",
-        "sword",
-        "dagger",
-        "claw"
-      ],
-      "texts": [
-        "+500 to Evasion Rating if Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponEvasionIfYouHitRecently2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "axe",
-        "sword",
-        "bow"
-      ],
-      "texts": [
-        "+1000 to Evasion Rating if Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponFirePenetration1h1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Fire Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponFirePenetration2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Fire Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponIncreasedDamageFromAuras1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Auras from your Skills grant 2% increased Damage to you and Allies"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponIncreasedDamageFromAuras2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Auras from your Skills grant 4% increased Damage to you and Allies"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponIntimidateOnHit1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "15% chance to Intimidate Enemies for 4 seconds on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponLightningPenetration1h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Lightning Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponLightningPenetration2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Damage Penetrates ",
-        "% Lightning Resistance"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponLocalAttackReduceEnemyElementalResistance1h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "Attacks with this Weapon Penetrate ",
-        "% Elemental Resistances"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponLocalChanceForBleedingDamage100FinalInflictedWithThisWeapon1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "60% chance for Bleeding inflicted with this Weapon to deal 100% more Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponLocalChanceForPoisonDamage100FinalInflictedWithThisWeapon1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "weapon"
-      ],
-      "texts": [
-        "60% chance for Poisons inflicted with this Weapon to deal 100% more Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponManaRegeneratedIfYouveHitRecently1h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon",
-        "shield"
-      ],
-      "texts": [
-        "Regenerate 0.4% of Mana per second if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponManaRegeneratedIfYouveHitRecently2h1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Regenerate 0.8% of Mana per second if you've Hit an Enemy Recently"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponMinionDamage1h1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage1h2": {
-      "affix": "Subterranean",
-      "level": "25",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage1h3___": {
-      "affix": "Subterranean",
-      "level": "50",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage1h4": {
-      "affix": "Subterranean",
-      "level": "75",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage2h2": {
-      "affix": "Subterranean",
-      "level": "25",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage2h3_": {
-      "affix": "Subterranean",
-      "level": "50",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponMinionDamage2h4": {
-      "affix": "Subterranean",
-      "level": "75",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Minions deal ",
-        "% increased Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponSocketedAttacksDamageFinal1h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Socketed Skills deal 40% more Attack Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponSocketedAttacksDamageFinal2h1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Socketed Skills deal 20% more Attack Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponSocketedSpellsDamageFinal1h1_": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Socketed Skills deal 40% more Spell Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponSocketedSpellsDamageFinal2h1": {
-      "affix": "Subterranean",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Socketed Skills deal 20% more Spell Damage"
-      ],
-      "type": "Prefix"
-    },
-    "DelveWeaponVaalSoulCost1h1_": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "one_hand_weapon"
-      ],
-      "texts": [
-        "Non-Aura Vaal Skills require 20% reduced Souls Per Use"
-      ],
-      "type": "Suffix"
-    },
-    "DelveWeaponVaalSoulCost2h1": {
-      "affix": "of the Underground",
-      "level": "1",
-      "tags": [
-        "two_hand_weapon"
-      ],
-      "texts": [
-        "Non-Aura Vaal Skills require 40% reduced Souls Per Use"
       ],
       "type": "Suffix"
     },
@@ -30177,6 +28467,76 @@
       ],
       "texts": [
         "% increased Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentInfluence1": {
+      "affix": "Redeemer's",
+      "level": "75",
+      "tags": [
+        "body_armour_eyrie"
+      ],
+      "texts": [
+        "You and your Minions prevent +100% of Reflected Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentRingInfluence1": {
+      "affix": "Hunter's",
+      "level": "68",
+      "tags": [
+        "ring_basilisk"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentRingInfluence2": {
+      "affix": "Hunter's",
+      "level": "75",
+      "tags": [
+        "ring_basilisk"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentRingUber1": {
+      "affix": "The Shaper's",
+      "level": "68",
+      "tags": [
+        "ring_shaper"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentRingUber2": {
+      "affix": "The Shaper's",
+      "level": "75",
+      "tags": [
+        "ring_shaper"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Elemental Damage"
+      ],
+      "type": "Prefix"
+    },
+    "ElementalDamageCannotBeReflectedPercentUber1": {
+      "affix": "The Shaper's",
+      "level": "68",
+      "tags": [
+        "body_armour_shaper"
+      ],
+      "texts": [
+        "You and your Minions prevent +100% of Reflected Elemental Damage"
       ],
       "type": "Prefix"
     },
@@ -31349,6 +29709,7 @@
       "affix": "of the Earnest",
       "level": "4",
       "tags": [
+        "deepwater_sword",
         "wand",
         "sceptre"
       ],
@@ -31361,6 +29722,7 @@
       "affix": "of the Fervid",
       "level": "12",
       "tags": [
+        "deepwater_sword",
         "wand",
         "sceptre"
       ],
@@ -31373,6 +29735,7 @@
       "affix": "of the Ardent",
       "level": "36",
       "tags": [
+        "deepwater_sword",
         "wand",
         "sceptre"
       ],
@@ -31385,6 +29748,7 @@
       "affix": "of the Zealous",
       "level": "64",
       "tags": [
+        "deepwater_sword",
         "wand",
         "sceptre"
       ],
@@ -31397,6 +29761,7 @@
       "affix": "of the Fanatical",
       "level": "78",
       "tags": [
+        "deepwater_sword",
         "wand",
         "sceptre"
       ],
@@ -31534,8 +29899,6 @@
       "affix": "of Embers",
       "level": "8",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -31548,8 +29911,6 @@
       "affix": "of Coals",
       "level": "22",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -31562,8 +29923,6 @@
       "affix": "of Cinders",
       "level": "36",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -31576,8 +29935,6 @@
       "affix": "of Flames",
       "level": "50",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -31590,87 +29947,7 @@
       "affix": "of Immolation",
       "level": "64",
       "tags": [
-        "wand",
-        "sceptre",
         "amulet"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercent6": {
-      "affix": "of Ashes",
-      "level": "76",
-      "tags": [
-        "wand",
-        "sceptre"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand1": {
-      "affix": "of Embers",
-      "level": "8",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand2": {
-      "affix": "of Coals",
-      "level": "22",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand3": {
-      "affix": "of Cinders",
-      "level": "36",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand4": {
-      "affix": "of Flames",
-      "level": "50",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand5": {
-      "affix": "of Immolation",
-      "level": "64",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Fire Damage"
-      ],
-      "type": "Suffix"
-    },
-    "FireDamagePercentTwoHand6": {
-      "affix": "of Ashes",
-      "level": "76",
-      "tags": [
-        "staff"
       ],
       "texts": [
         "% increased Fire Damage"
@@ -32594,18 +30871,29 @@
         "staff"
       ],
       "texts": [
-        " to Level of all Chaos Spell Skill Gems"
+        "+2 to Level of all Chaos Spell Skill Gems"
       ],
       "type": "Prefix"
     },
     "GlobalChaosSpellGemsLevelTwoHand2": {
       "affix": "Splintermind's",
-      "level": "77",
+      "level": "35",
       "tags": [
         "staff"
       ],
       "texts": [
         "+3 to Level of all Chaos Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalChaosSpellGemsLevelTwoHand3": {
+      "affix": "Schismatist's",
+      "level": "77",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+4 to Level of all Chaos Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -32641,18 +30929,29 @@
         "staff"
       ],
       "texts": [
-        " to Level of all Cold Spell Skill Gems"
+        "+2 to Level of all Cold Spell Skill Gems"
       ],
       "type": "Prefix"
     },
     "GlobalColdSpellGemsLevelTwoHand2": {
       "affix": "Winter Beckoner's",
-      "level": "77",
+      "level": "35",
       "tags": [
         "staff"
       ],
       "texts": [
         "+3 to Level of all Cold Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalColdSpellGemsLevelTwoHand3": {
+      "affix": "Ice Shaper's",
+      "level": "77",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+4 to Level of all Cold Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -33001,18 +31300,29 @@
         "staff"
       ],
       "texts": [
-        " to Level of all Fire Spell Skill Gems"
+        "+2 to Level of all Fire Spell Skill Gems"
       ],
       "type": "Prefix"
     },
     "GlobalFireSpellGemsLevelTwoHand2": {
       "affix": "Lava Conjurer's",
-      "level": "77",
+      "level": "35",
       "tags": [
         "staff"
       ],
       "texts": [
         "+3 to Level of all Fire Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalFireSpellGemsLevelTwoHand3": {
+      "affix": "Magmancer's",
+      "level": "77",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+4 to Level of all Fire Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -33070,18 +31380,29 @@
         "staff"
       ],
       "texts": [
-        " to Level of all Lightning Spell Skill Gems"
+        "+2 to Level of all Lightning Spell Skill Gems"
       ],
       "type": "Prefix"
     },
     "GlobalLightningSpellGemsLevelTwoHand2": {
       "affix": "Tempest Master's",
-      "level": "77",
+      "level": "35",
       "tags": [
         "staff"
       ],
       "texts": [
         "+3 to Level of all Lightning Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalLightningSpellGemsLevelTwoHand3": {
+      "affix": "Typhoon Lord's",
+      "level": "77",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+4 to Level of all Lightning Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -33117,18 +31438,29 @@
         "staff"
       ],
       "texts": [
-        " to Level of all Physical Spell Skill Gems"
+        "+2 to Level of all Physical Spell Skill Gems"
       ],
       "type": "Prefix"
     },
     "GlobalPhysicalSpellGemsLevelTwoHand2_": {
       "affix": "Tecton's",
-      "level": "77",
+      "level": "35",
       "tags": [
         "staff"
       ],
       "texts": [
         "+3 to Level of all Physical Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalPhysicalSpellGemsLevelTwoHand3": {
+      "affix": "Stone Singer's",
+      "level": "77",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+4 to Level of all Physical Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -33169,12 +31501,23 @@
     },
     "GlobalSpellGemsLevelTwoHand1": {
       "affix": "Magister's",
+      "level": "2",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "+1 to Level of all Spell Skill Gems"
+      ],
+      "type": "Prefix"
+    },
+    "GlobalSpellGemsLevelTwoHand2": {
+      "affix": "Archon's",
       "level": "55",
       "tags": [
         "staff"
       ],
       "texts": [
-        " to Level of all Spell Skill Gems"
+        "+2 to Level of all Spell Skill Gems"
       ],
       "type": "Prefix"
     },
@@ -36946,8 +35289,6 @@
       "affix": "of Sparks",
       "level": "10",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -36960,8 +35301,6 @@
       "affix": "of Static",
       "level": "23",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -36974,8 +35313,6 @@
       "affix": "of Electricity",
       "level": "36",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -36988,8 +35325,6 @@
       "affix": "of Voltage",
       "level": "50",
       "tags": [
-        "wand",
-        "sceptre",
         "ring",
         "amulet"
       ],
@@ -37002,87 +35337,7 @@
       "affix": "of Discharge",
       "level": "64",
       "tags": [
-        "wand",
-        "sceptre",
         "amulet"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercent6": {
-      "affix": "of Arcing",
-      "level": "76",
-      "tags": [
-        "wand",
-        "sceptre"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand1": {
-      "affix": "of Sparks",
-      "level": "10",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand2": {
-      "affix": "of Static",
-      "level": "23",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand3": {
-      "affix": "of Electricity",
-      "level": "36",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand4": {
-      "affix": "of Voltage",
-      "level": "50",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand5": {
-      "affix": "of Discharge",
-      "level": "64",
-      "tags": [
-        "staff"
-      ],
-      "texts": [
-        "% increased Lightning Damage"
-      ],
-      "type": "Suffix"
-    },
-    "LightningDamagePercentTwoHand6": {
-      "affix": "of Arcing",
-      "level": "76",
-      "tags": [
-        "staff"
       ],
       "texts": [
         "% increased Lightning Damage"
@@ -38468,6 +36723,19 @@
         "wand",
         "claw",
         "dagger"
+      ],
+      "texts": [
+        "Adds ",
+        " to ",
+        " Fire Damage"
+      ],
+      "type": "Prefix"
+    },
+    "LocalAddedFireDamage11": {
+      "affix": "Ravaging",
+      "level": "82",
+      "tags": [
+        "deepwater_sword"
       ],
       "texts": [
         "Adds ",
@@ -47607,573 +45875,6 @@
       ],
       "type": "Prefix"
     },
-    "NecropolisCraftingAccuracyPer2Dexterity": {
-      "affix": "of Haunting",
-      "level": "68",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "+2 to Accuracy Rating per 2 Dexterity"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingAllResistancesWithChaos": {
-      "affix": "of Haunting",
-      "level": "12",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "% to All Resistances"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingArcaneSurgeOnSpendingMana": {
-      "affix": "of Haunting",
-      "level": "34",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "Gain Arcane Surge after Spending a total of 400 Mana"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingAreaOfEffect": {
-      "affix": "of Haunting",
-      "level": "12",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Area of Effect"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingAvoidFreeze": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% chance to Avoid being Frozen"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingAvoidIgnite": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% chance to Avoid being Ignited"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingAvoidShock": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% chance to Avoid being Shocked"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingBurningGroundEffectEffectiveness": {
-      "affix": "Haunted",
-      "level": "68",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Unaffected by Burning Ground"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingCannotBeKnockedBack": {
-      "affix": "Haunted",
-      "level": "50",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Cannot be Knocked Back"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingChanceToBleed": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "Attacks have ",
-        "% chance to cause Bleeding"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingChaosDamage": {
-      "affix": "Haunted",
-      "level": "1",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "Adds ",
-        " to ",
-        " Chaos Damage to Attacks"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingChilledGroundEffectEffectiveness": {
-      "affix": "Haunted",
-      "level": "68",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Unaffected by Chilled Ground"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingColdResistanceCannotBePenetrated": {
-      "affix": "of Haunting",
-      "level": "68",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Cold Resistance cannot be Penetrated"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingCorruptedBloodImmunity": {
-      "affix": "of Haunting",
-      "level": "60",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Corrupted Blood cannot be inflicted on you"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingCriticalStrikeChance": {
-      "affix": "of Haunting",
-      "level": "1",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Global Critical Strike Chance"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingCriticalStrikeMultiplier": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% to Global Critical Strike Multiplier"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingCurseEffectiveness": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Effect of your Curses"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingDamageTakenGainedAsLife": {
-      "affix": "of Haunting",
-      "level": "45",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "% of Damage taken Recouped as Life"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingDesecratedGroundEffectEffectiveness": {
-      "affix": "Haunted",
-      "level": "68",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Unaffected by Desecrated Ground"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingFasterBleedDamage": {
-      "affix": "of Haunting",
-      "level": "38",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "Bleeding you inflict deals Damage ",
-        "% faster"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingFireResistanceCannotBePenetrated": {
-      "affix": "of Haunting",
-      "level": "68",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Fire Resistance cannot be Penetrated"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingGlobalChanceToBlindOnHit": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% Global chance to Blind Enemies on hit"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingGlobalMaimOnHit": {
-      "affix": "of Haunting",
-      "level": "34",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "Attacks have ",
-        "% chance to Maim on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingImmunityToBlind": {
-      "affix": "of Haunting",
-      "level": "38",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "Cannot be Blinded"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingIncreasedCastSpeed": {
-      "affix": "of Haunting",
-      "level": "1",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Cast Speed"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingIncreasedMaximumPowerCharges": {
-      "affix": "Haunted",
-      "level": "16",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "+1 to Maximum Power Charges"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingIncreasedStunThreshold": {
-      "affix": "of Haunting",
-      "level": "1",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% increased Stun Threshold"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingIntimidateOnHit": {
-      "affix": "of Haunting",
-      "level": "38",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% chance to Intimidate Enemies for 4 seconds on Hit with Attacks"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingLifeReservationEfficiency": {
-      "affix": "of Haunting",
-      "level": "34",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "% increased Life Reservation Efficiency of Skills"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingLightningResistanceCannotBePenetrated": {
-      "affix": "of Haunting",
-      "level": "68",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Lightning Resistance cannot be Penetrated"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingLocalCanSocketIgnoringColour": {
-      "affix": "of Haunting",
-      "level": "1",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Gems can be Socketed in this Item ignoring Socket Colour"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingLocalNoAttributeRequirements": {
-      "affix": "of Haunting",
-      "level": "50",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "Has no Attribute Requirements"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingManaPer2Intelligence": {
-      "affix": "Haunted",
-      "level": "68",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "+1 to maximum Mana per 2 Intelligence"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingManaRegeneration": {
-      "affix": "of Haunting",
-      "level": "1",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Mana Regeneration Rate"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingManaReservationEfficiency": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "% increased Mana Reservation Efficiency of Skills"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingMaximumEnduranceCharges": {
-      "affix": "Haunted",
-      "level": "16",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "+1 to Maximum Endurance Charges"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingMaximumFrenzyCharges": {
-      "affix": "Haunted",
-      "level": "16",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "+1 to Maximum Frenzy Charges"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingMeleeKnockback": {
-      "affix": "of Haunting",
-      "level": "45",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "Melee Attacks Knock Enemies Back on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingMovementCannotBeSlowedBelowBase": {
-      "affix": "Haunted",
-      "level": "45",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Movement Speed cannot be modified to below Base Value"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingNoExtraBleedDamageWhileMoving": {
-      "affix": "of Haunting",
-      "level": "34",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Moving while Bleeding doesn't cause you to take extra Damage"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingPercentDamageGoesToMana": {
-      "affix": "of Haunting",
-      "level": "45",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "% of Damage taken Recouped as Mana"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingPoisonDuration": {
-      "affix": "of Haunting",
-      "level": "38",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% increased Poison Duration"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingPoisonOnHit": {
-      "affix": "of Haunting",
-      "level": "16",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% chance to Poison on Hit"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingReducedBleedDuration": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% reduced Bleed Duration on you"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingReducedExtraDamageFromCrits": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_body_armour"
-      ],
-      "texts": [
-        "You take ",
-        "% reduced Extra Damage from Critical Strikes"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingReducedPoisonDuration": {
-      "affix": "of Haunting",
-      "level": "24",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "% reduced Poison Duration on you"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingShockedGroundEffectEffectiveness": {
-      "affix": "Haunted",
-      "level": "68",
-      "tags": [
-        "necropolis_boots"
-      ],
-      "texts": [
-        "Unaffected by Shocked Ground"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingSpellDamage": {
-      "affix": "Haunted",
-      "level": "1",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "% increased Spell Damage"
-      ],
-      "type": "Prefix"
-    },
-    "NecropolisCraftingSpellsHinderOnHitChance": {
-      "affix": "of Haunting",
-      "level": "34",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% chance to Hinder Enemies on Hit with Spells"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingSpellUnnerveOnHit": {
-      "affix": "of Haunting",
-      "level": "38",
-      "tags": [
-        "necropolis_gloves"
-      ],
-      "texts": [
-        "% chance to Unnerve Enemies for 4 seconds on Hit with Spells"
-      ],
-      "type": "Suffix"
-    },
-    "NecropolisCraftingWarcriesOpenChests": {
-      "affix": "Haunted",
-      "level": "24",
-      "tags": [
-        "necropolis_helmet"
-      ],
-      "texts": [
-        "Your Warcries open Chests"
-      ],
-      "type": "Prefix"
-    },
     "NonChaosAddedAsChaosUber1": {
       "affix": "The Elder's",
       "level": "81",
@@ -49471,6 +47172,76 @@
       ],
       "type": "Prefix"
     },
+    "PhysicalDamageCannotBeReflectedPercentInfluence1": {
+      "affix": "Warlord's",
+      "level": "75",
+      "tags": [
+        "body_armour_adjudicator"
+      ],
+      "texts": [
+        "You and your Minions prevent +100% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
+    "PhysicalDamageCannotBeReflectedPercentRingInfluence1": {
+      "affix": "Hunter's",
+      "level": "68",
+      "tags": [
+        "ring_basilisk"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
+    "PhysicalDamageCannotBeReflectedPercentRingInfluence2": {
+      "affix": "Hunter's",
+      "level": "75",
+      "tags": [
+        "ring_basilisk"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
+    "PhysicalDamageCannotBeReflectedPercentRingUber1": {
+      "affix": "The Elder's",
+      "level": "68",
+      "tags": [
+        "ring_elder"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
+    "PhysicalDamageCannotBeReflectedPercentRingUber2": {
+      "affix": "The Elder's",
+      "level": "75",
+      "tags": [
+        "ring_elder"
+      ],
+      "texts": [
+        "You and your Minions prevent ",
+        "% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
+    "PhysicalDamageCannotBeReflectedPercentUber1": {
+      "affix": "The Elder's",
+      "level": "68",
+      "tags": [
+        "body_armour_elder"
+      ],
+      "texts": [
+        "You and your Minions prevent +100% of Reflected Physical Damage"
+      ],
+      "type": "Prefix"
+    },
     "PhysicalDamageConvertedToChaosUber1": {
       "affix": "of the Elder",
       "level": "68",
@@ -50339,7 +48110,7 @@
         "warstaff_elder"
       ],
       "texts": [
-        "+5% Chance to Block Attack Damage while wielding a Staff",
+        "+5% Chance to Block Attack Damage",
         "25% chance to gain a Power Charge when you Block"
       ],
       "type": "Suffix"
@@ -50937,41 +48708,6 @@
       ],
       "type": "Suffix"
     },
-    "ReducedElementalReflectTakenRingUber1": {
-      "affix": "The Shaper's",
-      "level": "68",
-      "tags": [
-        "ring_shaper"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReducedElementalReflectTakenRingUber2": {
-      "affix": "The Shaper's",
-      "level": "75",
-      "tags": [
-        "ring_shaper"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReducedElementalReflectTakenUber1": {
-      "affix": "The Shaper's",
-      "level": "68",
-      "tags": [
-        "body_armour_shaper"
-      ],
-      "texts": [
-        "You and your Minions take 100% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
     "ReducedExtraDamageFromCrits1___": {
       "affix": "of Dulling",
       "level": "33",
@@ -51082,41 +48818,6 @@
       ],
       "type": "Suffix"
     },
-    "ReducedPhysicalReflectTakenRingUber1": {
-      "affix": "The Elder's",
-      "level": "68",
-      "tags": [
-        "ring_elder"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReducedPhysicalReflectTakenRingUber2": {
-      "affix": "The Elder's",
-      "level": "75",
-      "tags": [
-        "ring_elder"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReducedPhysicalReflectTakenUber1": {
-      "affix": "The Elder's",
-      "level": "68",
-      "tags": [
-        "body_armour_elder"
-      ],
-      "texts": [
-        "You and your Minions take 100% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
-    },
     "ReducedShockEffectInfluence3_": {
       "affix": "of the Crusade",
       "level": "75",
@@ -51127,76 +48828,6 @@
         "% reduced Effect of Shock on you"
       ],
       "type": "Suffix"
-    },
-    "ReflectedElementalDamageInfluence1": {
-      "affix": "Redeemer's",
-      "level": "75",
-      "tags": [
-        "body_armour_eyrie"
-      ],
-      "texts": [
-        "You and your Minions take 100% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReflectedElementalDamageRingInfluence1": {
-      "affix": "Hunter's",
-      "level": "68",
-      "tags": [
-        "ring_basilisk"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReflectedElementalDamageRingInfluence2": {
-      "affix": "Hunter's",
-      "level": "75",
-      "tags": [
-        "ring_basilisk"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Elemental Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReflectedPhysicalDamageInfluence1__": {
-      "affix": "Warlord's",
-      "level": "75",
-      "tags": [
-        "body_armour_adjudicator"
-      ],
-      "texts": [
-        "You and your Minions take 100% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReflectedPhysicalDamageRingInfluence1": {
-      "affix": "Hunter's",
-      "level": "68",
-      "tags": [
-        "ring_basilisk"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
-    },
-    "ReflectedPhysicalDamageRingInfluence2_": {
-      "affix": "Hunter's",
-      "level": "75",
-      "tags": [
-        "ring_basilisk"
-      ],
-      "texts": [
-        "You and your Minions take ",
-        "% reduced Reflected Physical Damage"
-      ],
-      "type": "Prefix"
     },
     "RegenerateLifeOver1SecondInfluence1": {
       "affix": "Hunter's",
@@ -51841,7 +49472,8 @@
         "dagger"
       ],
       "texts": [
-        "Adds 1 to ",
+        "Adds ",
+        " to ",
         " Cold Damage to Spells"
       ],
       "type": "Prefix"
@@ -53558,19 +51190,6 @@
       ],
       "type": "Suffix"
     },
-    "SpellBlockStaffUber1_": {
-      "affix": "of the Elder",
-      "level": "68",
-      "tags": [
-        "staff_elder",
-        "warstaff_elder"
-      ],
-      "texts": [
-        "+5% Chance to Block Attack Damage while wielding a Staff",
-        "% Chance to Block Spell Damage"
-      ],
-      "type": "Suffix"
-    },
     "SpellCriticalStrikeChance1": {
       "affix": "of Menace",
       "level": "11",
@@ -53579,7 +51198,6 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
       ],
@@ -53596,7 +51214,6 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
       ],
@@ -53613,7 +51230,6 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
       ],
@@ -53630,7 +51246,6 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
       ],
@@ -53647,7 +51262,6 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
       ],
@@ -53664,9 +51278,74 @@
         "str_int_shield",
         "dex_int_shield",
         "wand",
-        "staff",
         "sceptre",
         "dagger"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand1": {
+      "affix": "of Menace",
+      "level": "11",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand2": {
+      "affix": "of Havoc",
+      "level": "21",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand3": {
+      "affix": "of Disaster",
+      "level": "28",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand4": {
+      "affix": "of Calamity",
+      "level": "41",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand5": {
+      "affix": "of Ruin",
+      "level": "59",
+      "tags": [
+        "staff"
+      ],
+      "texts": [
+        "% increased Spell Critical Strike Chance"
+      ],
+      "type": "Suffix"
+    },
+    "SpellCriticalStrikeChanceTwoHand6_": {
+      "affix": "of Unmaking",
+      "level": "76",
+      "tags": [
+        "staff"
       ],
       "texts": [
         "% increased Spell Critical Strike Chance"
@@ -54515,6 +52194,150 @@
       ],
       "type": "Suffix"
     },
+    "StaffAttackBlockPercentage1": {
+      "affix": "of the Zealot",
+      "level": "16",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffAttackBlockPercentage2": {
+      "affix": "of the Militant",
+      "level": "28",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffAttackBlockPercentage3": {
+      "affix": "of the Radical",
+      "level": "40",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffAttackBlockPercentage4": {
+      "affix": "of the Devotee",
+      "level": "55",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffAttackBlockPercentage5": {
+      "affix": "of the Idealogue",
+      "level": "66",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffAttackBlockPercentage6": {
+      "affix": "of the Sectarian",
+      "level": "77",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Attack Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage1": {
+      "affix": "of the Mystic",
+      "level": "16",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage2": {
+      "affix": "of the Clairvoyant",
+      "level": "28",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage3": {
+      "affix": "of the Enigmatic",
+      "level": "40",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage4": {
+      "affix": "of the Enlightened",
+      "level": "55",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage5": {
+      "affix": "of the Seer",
+      "level": "66",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
+    "StaffSpellBlockPercentage6": {
+      "affix": "of the Oracle",
+      "level": "77",
+      "tags": [
+        "warstaff",
+        "staff"
+      ],
+      "texts": [
+        "% Chance to Block Spell Damage"
+      ],
+      "type": "Suffix"
+    },
     "Strength1": {
       "affix": "of the Brute",
       "level": "1",
@@ -54739,9 +52562,13 @@
       "affix": "of Impact",
       "level": "5",
       "tags": [
-        "weapon",
+        "mace",
+        "attack_staff",
+        "sword",
+        "axe",
         "belt",
-        "quiver"
+        "quiver",
+        "bow"
       ],
       "texts": [
         "% increased Stun Duration on Enemies"
@@ -54752,9 +52579,13 @@
       "affix": "of Dazing",
       "level": "18",
       "tags": [
-        "weapon",
+        "mace",
+        "attack_staff",
+        "sword",
+        "axe",
         "belt",
-        "quiver"
+        "quiver",
+        "bow"
       ],
       "texts": [
         "% increased Stun Duration on Enemies"
@@ -54765,9 +52596,13 @@
       "affix": "of Stunning",
       "level": "30",
       "tags": [
-        "weapon",
+        "mace",
+        "attack_staff",
+        "sword",
+        "axe",
         "belt",
-        "quiver"
+        "quiver",
+        "bow"
       ],
       "texts": [
         "% increased Stun Duration on Enemies"
@@ -54778,9 +52613,13 @@
       "affix": "of Slamming",
       "level": "44",
       "tags": [
-        "weapon",
+        "mace",
+        "attack_staff",
+        "sword",
+        "axe",
         "belt",
-        "quiver"
+        "quiver",
+        "bow"
       ],
       "texts": [
         "% increased Stun Duration on Enemies"
@@ -54791,9 +52630,13 @@
       "affix": "of Staggering",
       "level": "58",
       "tags": [
-        "weapon",
+        "mace",
+        "attack_staff",
+        "sword",
+        "axe",
         "belt",
-        "quiver"
+        "quiver",
+        "bow"
       ],
       "texts": [
         "% increased Stun Duration on Enemies"
@@ -54937,8 +52780,7 @@
       "level": "5",
       "tags": [
         "mace",
-        "sceptre",
-        "staff",
+        "attack_staff",
         "sword",
         "axe",
         "belt"
@@ -54953,8 +52795,7 @@
       "level": "20",
       "tags": [
         "mace",
-        "sceptre",
-        "staff",
+        "attack_staff",
         "sword",
         "axe",
         "belt"
@@ -54969,8 +52810,7 @@
       "level": "30",
       "tags": [
         "mace",
-        "sceptre",
-        "staff",
+        "attack_staff",
         "sword",
         "axe",
         "belt"
@@ -54985,8 +52825,7 @@
       "level": "44",
       "tags": [
         "mace",
-        "sceptre",
-        "staff",
+        "attack_staff",
         "sword",
         "axe",
         "belt"
@@ -55001,8 +52840,7 @@
       "level": "58",
       "tags": [
         "mace",
-        "sceptre",
-        "staff",
+        "attack_staff",
         "sword",
         "axe",
         "belt"
@@ -55254,7 +53092,7 @@
         "wand_elder"
       ],
       "texts": [
-        "Socketed Gems are Supported by Level 16 Lesser Multiple Projectiles",
+        "Socketed Gems are Supported by Level 16 Multiple Projectiles",
         "% increased Projectile Damage"
       ],
       "type": "Suffix"
@@ -55266,7 +53104,7 @@
         "wand_elder"
       ],
       "texts": [
-        "Socketed Gems are Supported by Level 18 Lesser Multiple Projectiles",
+        "Socketed Gems are Supported by Level 18 Multiple Projectiles",
         "% increased Projectile Damage"
       ],
       "type": "Suffix"
@@ -55278,7 +53116,7 @@
         "wand_elder"
       ],
       "texts": [
-        "Socketed Gems are Supported by Level 20 Lesser Multiple Projectiles",
+        "Socketed Gems are Supported by Level 20 Multiple Projectiles",
         "% increased Projectile Damage"
       ],
       "type": "Suffix"

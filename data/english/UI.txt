@@ -35,7 +35,7 @@
 
 ;## these are some global system-settings that are dependent on the target language
 		system_font			=	"Fontin SmallCaps"		;## except for Fontin SmallCaps, the specified font-type has to be installed on the system
-											;## this key is also present in the client.txt file, where it takes precedence (i.e. the value there will override this one)
+													;## this key is also present in the client.txt file, where it takes priority (i.e. the value there will override this one)
 
 
 ;#####################################################
@@ -56,6 +56,7 @@
 ;## the feature-names are used here and there, so make sure to be consistent across each mention
 		ms_general			=	"general"
 		ms_actdecoder			=	"act-decoder"
+		ms_addons				=	"add-ons"
 		ms_anoints			=	"enchant finder"
 		ms_betrayal-info		=	"betrayal-info"
 		ms_cheat-sheets		=	"cheat-sheets"
@@ -70,12 +71,13 @@
 		ms_map-info			=	"map-info"
 		ms_minor qol tools		=	"minor qol tools"
 		ms_news				=	"announcements"
+		ms_runeshaping			=	"rune-ninja"
 		ms_sanctum			=	"sanctum planner"
 		ms_sanctum			=	"sekhema planner"
 		ms_screen-checks		=	"screen-checks"
 		ms_search-strings		=	"search-strings"
 		ms_stash-ninja			=	"stash-ninja"
-		ms_statlas			=	"statlas"		;## blend of "stats" and "atlas"
+		ms_statlas			=	"statlas"			;## blend of "stats" and "atlas"
 		ms_stream-clients		=	"stream-clients"
 		ms_tldr-tooltips		=	"tldr-tooltips"
 		ms_exchange			=	"vaal street"		;## reference to Wall Street
@@ -99,6 +101,7 @@
 		global_scan			=	"scan"
 		global_match			=	"no match"
 		global_match			=	"not specific enough"
+		global_match			=	"too many matches"		;## when search results don't fit on screen
 		global_window			=	"settings menu"
 		global_general			=	"general settings:"
 		global_ui				=	"ui settings:"
@@ -106,16 +109,22 @@
 		global_button			=	"button-size:"
 		global_enable			=	"enable"
 		global_reset			=	"reset"
+		global_reset			=	"r"
 		global_color			=	"color"
 		global_color			=	"colors:"
 		global_opacity			=	"opacity:"
+		global_zoom			=	"zoom:"
 		global_tier			=	"tier"
+		global_tiers			=	"t1"
+		global_tiers			=	"t2"
+		global_tiers			=	"t3"
 		global_ilvl			=	"ilvl"
 		global_name			=	"name:"
 		global_type			=	"type:"
 		global_add			=	"add"
 		global_calibrate		=	"cal"
 		global_calibrate		=	"calibration required"
+		global_calibrate		=	"calibrate"
 		global_import			=	"import"
 		global_test			=	"test"
 		global_edit			=	"edit"
@@ -130,7 +139,9 @@
 		global_save			=	"save"
 		global_discard			=	"discard"
 		global_restart			=	"apply & restart"
+		global_restart			=	"restart"
 		global_imgfolder		=	"open img folder"
+		global_openfolder		=	"open folder"
 		global_newentry		=	"add entry:"
 		global_savedentry		=	"saved entries:"
 		global_errorname		=	"input cannot be blank"
@@ -160,9 +171,10 @@
 		global_pattern			=	"pattern"			;## as in color pattern
 		global_regular			=	"regular"			;## as in default
 		global_setup			=	"setup"
-		global_variance		=	"variance (0-255)"
+		global_setup			=	"setup required"
+		global_variance		=	"variance"
 		global_hotkey			=	"hotkey:"
-		global_hotkey			=	"alt. hotkey:"		;## alternative hotkey
+		global_hotkey			=	"optional hotkey:"
 		global_panelsize		=	"panel-size:"
 		global_uisize			=	"ui-size:"
 		global_auto			=	"auto"
@@ -179,10 +191,14 @@
 		global_start			=	"start"
 		global_cancel			=	"cancel"
 		global_downloading		=	"downloading..."
+		global_extracting		=	"extracting..."
+		global_copying			=	"copying..."
+		global_download		=	"download"
 		global_search			=	"search:"
 		global_toggle			=	"toggle"			;## pressing a hotkey opens a feature
 		global_hold			=	"hold"			;## feature stays open while holding a hotkey, then closes on release
 		global_hide			=	"hide"
+		global_hide			=	"hide text"
 		global_unhide			=	"unhide"
 		global_revert			=	"revert"
 		global_apply			=	"apply"
@@ -190,8 +206,9 @@
 		global_global			=	"global"
 		global_controller		=	"controller"		;## gamepad
 		global_keyboard		=	"keyboard"
-		global_multithreading	=	"multi-threaded"	;## i.e. using multiple CPU cores/threads
-		global_multithreading	=	"single-threaded"
+		global_multithreading	=	"multi"			;## i.e. using multiple CPU cores/threads
+		global_multithreading	=	"single"
+		global_multithreading	=	"threads:"
 		global_ignore			=	"ignore"
 		global_custom			=	"custom"			;## as in "user-defined"
 		global_condition		=	"condition:"		;## as in "if x condition is met"
@@ -206,12 +223,17 @@
 		global_league_keepers	=	"keepers"
 		global_league_phrecia	=	"phrecia"
 		global_league_vaal		=	"vaal"
+		global_league_aldur		=	"aldur"
+		global_league_mirage	=	"mirage"
+		global_league_rites		=	"ritual event"
+		global_league_allflame	=	"allflame"
 		global_league_ssf		=	"ssf"
 		global_league_trade		=	"trade"
 		global_league_ruthless	=	"ruthless"
 		global_league_normal	=	"normal"			;## unofficial term, used as an opposite for ruthless
 		global_copy			=	"copy"
 		global_icon			=	"icon"
+		global_on				=	"on"
 		global_off			=	"off"
 		global_keywords		=	"keywords"		;## related to search-results: words that come up often
 		global_matches			=	"matches"			;## matches of a search-result
@@ -224,7 +246,7 @@
 		global_databaseinfo		=	"database information"
 		global_current			=	"current"
 		global_updatewait		=	"try again later"
-		global_duration		=	"duration (sec)"
+		global_duration		=	"duration"
 		global_position		=	"position"
 		global_exchange		=	"currency exchange"
 		global_timeunits		=	"minute#minutes#hour#hours#day#days#week#weeks"
@@ -245,6 +267,48 @@
 		global_resume			=	"resume"
 		global_filter			=	"filter"
 		global_clear			=	"clear"			;## remove everything, as in "clear a list"
+		global_view			=	"view:"			;## in the sense of layout or appearance, e.g. split/unified view
+		global_expand			=	"expand"			;## in the sense of lists or tables where specific sections can be collapsed/expanded to (un)hide information
+		global_sync			=	"sync"
+		global_errorpaste		=	"couldn't paste;chat command"
+		global_updateinprogress	=	"update in progress"
+		global_updateinprogress	=	"apply updates first!"
+		global_minimum			=	"minimum"
+		global_high			=	"high"
+		global_restore			=	"restore"			;## as in restore a previous state/setting
+		global_size			=	"size"
+		global_memorystrands	=	"memory strands"
+		global_memorystrands	=	"strands"
+		global_campaign		=	"campaign"
+		global_update			=	"update"
+		global_update			=	"update available"
+		global_update			=	"update check"
+		global_temp			=	"temp"			;## temporary
+		global_volume			=	"volume"			;## refers to sound
+		global_sound			=	"sound"			;## these refer to different types of sound files/effects, e.g. sound 6
+		global_sound			=	"sounds"
+		global_sound			=	"effect"
+		global_small			=	"small"
+		global_medium			=	"medium"
+		global_large			=	"large"
+		global_active			=	"active:"			;## as in currently active/selected
+		global_meta			=	"meta:"			;## as in meta info/knowledge/data
+		global_animations		=	"ui animations"	;## as in UI transitions, movement, etc.
+		global_animations		=	"animations"
+		global_hold_ctrl		=	"hold ctrl"
+		global_load			=	"load"
+		global_troubleshoot		=	"trouble-shooting"
+		global_flash			=	"flash"			;## as in flashing text (alternating color, brightness, etc.)
+		global_omnikey			=	"omni-key"
+		global_omnikey			=	"omni"
+		global_notification		=	"notification"
+		global_shared			=	"shared"			;## e.g. shared hotkey
+		global_separate		=	"separate"
+		global_style			=	"style"
+		global_mode			=	"mode"
+		global_full			=	"full"
+		global_compact			=	"compact"
+		global_folder			=	"folder"
 
 		mechanic_bestiary		=	"bestiary"
 		mechanic_betrayal		=	"betrayal"
@@ -272,8 +336,13 @@
 		mechanic_purifier		=	"purifier"
 		mechanic_seer			=	"nameless seer"
 		mechanic_mist			=	"reflecting mist"
-		mechanic_infamous		=	"infamous mercenary"
+		mechanic_infamous		=	"infamous merc"
 		mechanic_graftblood		=	"high graftblood"
+		mechanic_hideout		=	"hideout"			;## refers to random hideout spawns in PoE1 maps
+
+		msg_clientswitch		=	"switch clients?"	;## window text for when you switch between games while the tool is running
+		msg_clientswitch		=	"you have switched to a different game-client, do you want the tool to switch/restart as well?"
+		msg_clientswitch		=	"if not, launch the correct client and then click <no>"
 
 
 
@@ -387,6 +456,7 @@
 		async_listheader		=	"logged purchases:"
 		async_nolist			=	"not tracking anything (yet)"
 		async_nolist			=	"couldn't find any logs"
+		async_openlogs			=	"open logs"
 		async_listing			=	"listing added"
 		async_listing			=	"already tracking"
 		async_history			=	"price history:"
@@ -394,6 +464,7 @@
 		async_pricefailed		=	"poe.ninja currently unavailable"
 		async_pricefailed		=	"(price sorting not possible)"
 		async_pricefailed		=	"(price conversion not possible)"
+		async_inout			=	"in/out"						;## refers to trading: a split table that shows in/out-going trades
 
 
 
@@ -430,6 +501,7 @@
 		lvltracker_header			=	"skilltree configuration"
 		lvltracker_deleteall		=	"del all"
 
+		lvltracker_autotrack		=	"now tracking:"				;## used when character-tracking dynamically switches to a different char, e.g. "now tracking: Lailloken (17)"
 
 		lvltracker_gemnotes			=	"not included in PoB"
 		lvltracker_gemfail			=	"no gems in PoB"
@@ -476,10 +548,11 @@
 		lvltracker_format_interlude	=	"int "						;## abbreviation: used when the guide leads to a location in a different act (e.g. "enter int 1 | the refuge")
 		lvltracker_format_epilogue	=	"epilogue"
 		lvltracker_format_optional	=	"optional:"					;## in guides, lines with optional tasks/steps can be toggled dynamically if tagged with this string
-		lvltracker_format_league		=	"leaguestart:"						;## same as above but related to league-start tasks/steps
+		lvltracker_format_league		=	"leaguestart:"					;## same as above but related to league-start tasks/steps
+		lvltracker_format_twink		=	"twinkrun:"					;## same as above but related to non-league-start tasks/steps
 
 
-		lvltracker_editor			=	"guide editor"					;## PoE2 only (whole block)
+		lvltracker_editor			=	"guide editor"
 		lvltracker_editor_slot		=	"slot"						;## the act-tracker has multiple slots to save guides into
 		lvltracker_editor_acts		=	"acts:"
 		lvltracker_editor_save		=	"unsaved changes:"
@@ -509,11 +582,51 @@
 
 ;## these strings are displayed/required when using the lootfilter / filterspoon feature
 		lootfilter_basefilter		=	"filter:"
-		lootfilter_modifications		=	"current modifications:"
-		lootfilter_unsaved			=	"long-press to discard"
-		lootfilter_update			=	"apply base filter updates"
-		lootfilter_addstack			=	"add stack:"
-		lootfilter_selection		=	"current selection:"
+		lootfilter_duplicatefiles	=	"There are multiple online filters with the same name."
+		lootfilter_duplicatefiles	=	"Please delete duplicate filters from your profile and local folder."
+		lootfilter_duplicatefiles	=	"Do you want to open your profile page and the local folder?"
+		lootfilter_presetup			=	"Before you continue, open the filter list in the in-game settings and make sure 'FilterSpoon' is on it."
+		lootfilter_presetup			=	"(Don't select it yet, it's an empty file)"
+		lootfilter_ingameitem		=	"in-game item"
+		lootfilter_selections		=	"filter rule: customization"
+		lootfilter_selections		=	"filter rule: conditions"
+		lootfilter_selections		=	"move to different tier"
+		lootfilter_modhistory		=	"modification history"						;## similar to a browser/file history
+		lootfilter_fullrollback		=	"unmodified online filter (full reset)"			;## an option to reset back to the unmodified filter you started with
+		lootfilter_tierbrowse		=	"right-click to browse tier"
+		lootfilter_pending			=	"unsaved/pending modification"
+		lootfilter_newtier			=	"new tier"
+		lootfilter_globalsetting		=	"global quick-setting"
+		lootfilter_globalsetting		=	"global quick-settings"
+		lootfilter_minquality		=	"min qual"
+		lootfilter_minlevel			=	"min level"
+		lootfilter_mintier			=	"min tier"
+		lootfilter_presentation		=	"presentation"
+		lootfilter_maps			=	"regular maps"								;## as opposed to special maps (conquerors, guardians, originator, etc.)
+		lootfilter_gems			=	"regular gems"								;## as opposed to special gems (exceptional, transfigured, overlvl/qual, etc.)
+		lootfilter_economy			=	"economy"
+		lootfilter_economy			=	"economy-check:"
+		lootfilter_lowcutoff		=	"cut-off too low"							;## cut-off in the sense of threshold, i.e. anything below a value X
+		lootfilter_currency			=	"general currency"
+		lootfilter_essences			=	"essences"
+		lootfilter_divcards			=	"divination cards"
+		lootfilter_qualflasks		=	"quality flasks"
+		lootfilter_beam			=	"beam"									;## refers to the colored light-beam you can add to dropped items
+		lootfilter_scarabs			=	"scarabs"
+		lootfilter_stack			=	"stack"
+		lootfilter_stack			=	"stacks"
+		lootfilter_minimap			=	"map"
+		lootfilter_socketgear		=	"socketed gear"							;## refers to socket-related vendor recipes, e.g. jeweller's/chromes in PoE1 and artificer's in PoE2
+
+		lootfilter_matches			=	"too many matches (collapse sections to see more)"
+
+		lootfilter_gems			=	"uncut gems"								;## PoE2 only (whole block)
+		lootfilter_minskilllevel		=	"min skill"								;## min level for skill gems
+		lootfilter_minspiritlevel	=	"min spirit"								;## min level for spirit gems
+		lootfilter_minsupportlevel	=	"min supp."								;## min level for support gems
+		lootfilter_socketables		=	"socketables"
+
+		lootfilter_notification		=	"sync lootfilter"							;## configurable reminder notification after X hours
 
 
 
@@ -531,7 +644,7 @@
 ;#####################################################
 
 ;## these strings are displayed/required when using the map-tracker feature
-		maptracker_idle		=	"not tracking"
+		maptracker_idle		=	"not mapping"
 		maptracker_kills		=	"press the omni-key to;start the kill-tracker"
 		maptracker_kills		=	"kill-count updated"
 		maptracker_check		=	"double-check;map content!"
@@ -592,6 +705,12 @@
 		lab_mismatch			=	"layouts don't match!"
 		lab_mismatch			=	"current:"
 		lab_movemarker			=	"long-click to move the marker here"
+		quickpob_multi			=	"more than 1;pob window"
+		quickpob_fail			=	"couldn't launch;path of building"
+		quickpob_fail			=	"start-up aborted"
+		quickpob_fail			=	"build timed out"
+		quickpob_loading		=	"waiting for;build to load..."
+		quickpob_snip			=	"snip offset:"
 
 
 
@@ -602,6 +721,8 @@
 ;## these strings are displayed/required when using OCR features
 		ocr_notext			=	"couldn't find any text"
 		ocr_nousecase			=	"use-case unclear"		;## scanned text doesn't fit any use-case
+		ocr_debug				=	"trouble-shooting..."
+		ocr_closetooltip		=	"(press esc/hotkey)"
 		ocr_nocoords			=	"couldn't get coordinates"
 		ocr_erroraltar			=	"couldn't reliably read mods, retry"
 		ocr_vaalarea			=	"area"
@@ -610,6 +731,7 @@
 		ocr_vaalplayer			=	"player"
 		ocr_vaalvessel			=	"vessel"
 		ocr_vaalunclear		=	"unclear"
+		ocr_fail				=	"couldn't launch;ocr process"
 
 
 
@@ -622,11 +744,11 @@
 		omnikey_copyfail		=	"clipboard-copy failed"
 		omnikey_escape			=	"(esc to exit)"
 		omnikey_scroll			=	"scrolling..."						;## as in scroll-wheel
-		omnikey_chromes		=	"click into the <total sockets>;field and press space"	;## refers to "total sockets" on the chromatic-calc website
+		omnikey_chromes		=	"paste the item data;into the first field"
 		omnikey_clustersearch	=	"press ctrl-f to highlight;the selected jewel type"
 		omnikey_labimport		=	"select lab difficulty"
 		omnikey_labimport		=	"right-click layout image"
-		omnikey_labimport		=	"click <copy image>;optional:"				;## "copy image" when right-clicking a picture in your browser
+		omnikey_labimport		=	"click <copy image>;optional:"			;## "copy image" when right-clicking a picture in your browser
 		omnikey_labimport		=	"right-click <lab compass file>"			;## there's a link underneath each lab-layout image on poelab.com
 		omnikey_labimport		=	"click <copy link address>"				;## when right-clicking a link in your browser
 		omnikey_labimport		=	"press ctrl + a, ctrl + c"
@@ -789,9 +911,9 @@
 
 ;## these strings are displayed/required in the "general" section of the settings menu
 		m_general_settings		=	"tool settings:"
-		m_general_kill			=	"exit x minutes after closing the game:"
-		m_general_browser		=	"browser features"
-		m_general_capslock		=	"capslock-toggling"						;## by default, AHK will toggle capslock back and forth whenever it sends key-strokes
+		m_general_autoclose		=	"auto-close:"
+		m_general_browser		=	"browser qol"
+		m_general_capslock		=	"caps-toggle"							;## by default, AHK will toggle capslock back and forth whenever it sends key-strokes
 		m_general_charleague	=	"character & league:"
 		m_general_character		=	"char"
 		m_general_level		=	"lvl"
@@ -807,21 +929,26 @@
 		m_general_display		=	"windowed"
 		m_general_display		=	"borderless windowed"
 		m_general_resolution	=	"custom resolution:"
-		m_general_filler		=	"black out screen area around the client"
+		m_general_resolution	=	"resolution:"
+		m_general_screenfiller	=	"screen-filler"
+		m_general_screenfiller	=	"split"								;## as in split-screen
 		m_general_position		=	"window-position:"
 		m_general_posleft		=	"left"
 		m_general_poscenter		=	"center"
 		m_general_posright		=	"right"
 		m_general_postop		=	"top"
 		m_general_posbottom		=	"bottom"
+		m_general_postaskbar	=	"taskbar"
 		m_general_borderless	=	"apply borderless-windowed mode"
+		m_general_borderless	=	"borderless"
 		m_general_blackbars		=	"the client has black bars on the sides"	;## black bars as in letterboxes
 		m_general_permissions	=	"write-permissions test:"
 		m_general_start		=	"start test"
 		m_general_admin		=	"restart as admin"
-		m_general_menuwidget	=	"menu-widget size:"
+		m_general_menuwidget	=	"menu-widget:"
 		m_general_animations	=	"disable ui animations"
-		m_general_input		=	"input method:"
+		m_general_input		=	"input method:"						;## keyboard or controller
+		m_general_input		=	"input:"
 
 
 
@@ -860,20 +987,25 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "act-decoder" section of the settings menu
-		m_actdecoder_enable		=	"enable the act-decoder overlay"
-		m_actdecoder_opacity	=	"opacity when locked:"
-		m_actdecoder_zoom		=	"zoom when locked:"
 		m_actdecoder_simple		=	"only show generic layouts"
-		m_actdecoder_missing	=	"act-decoder:;no layouts"
+		m_actdecoder_download	=	"download layouts:"
+		m_actdecoder_download	=	"layouts have not been downloaded yet"
+		m_actdecoder_leftover	=	"found leftover files (previous download)"
+		m_actdecoder_failed		=	"update check failed, try again later"
+		m_actdecoder_success	=	"layouts are up-to-date"
+		m_actdecoder_required	=	"but it requires a newer tool version"		;## continuation of "update available", displayed if a general tool update is required first
 
 
 
 ;#####################################################
-;## settings menu: act-decoder
+;## settings menu: add-ons
 ;#####################################################
 
-;## these strings are displayed/required in the "act-decoder" section of the settings menu
-		m_anoints_enable		=	"enable the enchant finder feature"
+;## these strings are displayed/required in the "add-ons" section of the settings menu
+		m_addons_failed		=	"write issue: couldn't create add-ons folder"
+		m_addons_warning		=	"warning: proceed with caution and do your own research"
+		m_addons_warning		=	"WARNING:;;Add-ons are not validated and may contain dangerous code.;Please do your own research and check the source code before downloading them.;;Do you want to proceed?"
+		m_addons_list			=	"list of downloaded add-ons:"
 
 
 
@@ -882,9 +1014,6 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "betrayal-info" section of the settings menu
-		m_betrayal_enable		=	"enable the betrayal-info overlay"
-		m_betrayal_ruthless		=	"ruthless rewards & highlighting"	;## it's a toggle to switch between regular and ruthless rewards
-		m_betrayal_recognition	=	"image-recognition:"
 		m_betrayal_colors		=	"reward-colors:"
 		m_betrayal_rewards		=	"reward customization:"
 
@@ -895,7 +1024,6 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "cheat-sheets" section of the settings menu
-		m_cheat_enable			=	"enable the cheat-sheet toolkit"
 		m_cheat_hotkeys		=	"hotkey settings:"
 		m_cheat_modifier		=	"omni-key modifier:"			;## as in modifier-key (ALT, CTRL, etc.)
 		m_cheat_advance		=	"advanced cheat-sheets"
@@ -904,6 +1032,7 @@
 		m_cheat_app			=	"app"
 		m_cheat_advanced		=	"advanced"
 		m_cheat_list			=	"list of available cheat-sheets:"
+		m_cheat_samples		=	"available sample cheat-sheets:"
 
 
 
@@ -912,7 +1041,7 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "clone-frames" section of the settings menu
-		m_clone_toggle			=	"auto-toggle:"
+		m_clone_hide			=	"auto-hide:"
 		m_clone_performance		=	"performance (fps) settings:"		;## frames per second
 		m_clone_performance		=	"measured fps:"
 		m_clone_performance		=	"low"
@@ -928,7 +1057,7 @@
 		m_clone_scale			=	"scale:"
 		m_clone_exitedit		=	"exit edit-mode first"
 		m_clone_errorborders	=	"invalid frame borders"
-		m_clone_closebutton		=	"use <close button> for auto-toggling (beta)"
+		m_clone_closetoggle		=	"close button"
 		m_clone_town			=	"clone-frames are hidden in hideouts and towns unless this settings section is open"
 
 
@@ -938,10 +1067,10 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "vaal street" section of the settings menu
-		m_exchange_enable		=	"enable currency exchange features"
-		m_exchange_graphs		=	"show balance graphs"
-		m_async_enable			=	"enable async trading features"
-		m_async_name			=	"show full item names"
+		m_exchange_currency		=	"currency exchange features"
+		m_exchange_balance		=	"balance graphs"
+		m_async_trade			=	"async trading features"
+		m_async_name			=	"full item names"
 		m_async_minchange		=	"min. price change:"				;## used for 'quick reprice' feature: new price needs to be at least x% lower than the current price
 
 
@@ -958,14 +1087,10 @@
 		m_hotkeys_ckey			=	"the c-key is used for something;other than <character screen>"		;## in-game setting, on C by default
 		m_hotkeys_movekey		=	"move-key:"												;## i.e. the key used to move the character, default l-mouse
 		m_hotkeys_omnikey_new	=	"omni-key:"
-		m_hotkeys_omnikey_new	=	"omni-key (general):"
-		m_hotkeys_omnikey_new	=	"omni-key 2 (for items):"
-		m_hotkeys_keyblock		=	"block the keypress"										;## option that blocks what a key normally does, e.g. CapsLock-key toggles capslock-state, windows-key opens start-menu
-		m_hotkeys_keyblock		=	"keypress is blocked"										;## same as above, but as a note instead of option
+		m_hotkeys_exclusive		=	"exclusive"												;## option that blocks what a key normally does, e.g. CapsLock-key toggles capslock-state, windows-key opens start-menu
 		m_hotkeys_widget		=	"widget-key:"
-		m_hotkeys_emergency		=	"force-restart:"											;## hotkey to force-restart the tool in case of crash/hang
-		m_hotkeys_winkey		=	"win-key"													;## Windows-key
-		m_hotkeys_menuwidget	=	"menu-widget (alt. key):"
+		m_hotkeys_menukey		=	"menu-key:"
+		m_hotkeys_restartkey	=	"restart-key:"
 		m_hotkeys_error		=	"invalid hotkey"
 		m_hotkeys_error		=	"duplicate keybinds detected"
 		m_hotkeys_error		=	"alt-key is rebound, but no;alternative key is set up"				;## if certain tickboxes are ticked, the user has to provide an alternative hotkey
@@ -978,22 +1103,20 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "item-info" section of the settings menu
-		m_iteminfo_enable		=	"enable the item-info feature"
 		m_iteminfo_profiles		=	"profile settings:"
 		m_iteminfo_profiles		=	"profile selection:"
-		m_iteminfo_profiles		=	"reset the profile's:"				;## you can choose between two options: a profile's desired, or undesired mods
+		m_iteminfo_profiles		=	"reset profile's:"					;## you can choose between two options: a profile's desired, or undesired mods
 		m_iteminfo_desired		=	"desired"
 		m_iteminfo_undesired	=	"undesired"
-		m_iteminfo_undesired	=	"(un)desired:"
 		m_iteminfo_modbars		=	"roll-range:"
-		m_iteminfo_hiderange	=	"hide affix roll-range"
-		m_iteminfo_league		=	"enable league-start mode"
-		m_iteminfo_base		=	"show & compare item's base-stats"		;## base-stats as in armor, evasion, ES, attack-speed, phys/ele dmg
-		m_iteminfo_class		=	"item-class"
+		m_iteminfo_hiderange	=	"hide roll-range"
+		m_iteminfo_stattrack	=	"stat-track"						;## option to track the stats of your current gear
+		m_iteminfo_basestats	=	"base-stats"						;## option to show/compare base-stats, e.g armor, evasion, ES, attack-speed, phys/ele dmg
+		m_iteminfo_iclass		=	"class"
 		m_iteminfo_ilvl		=	"display item-lvl requirements"
 		m_iteminfo_highlight	=	"highlight customization:"
 		m_iteminfo_fractured	=	"fr"								;## this abbreviation for "fractured" should always have a length of 2 (max 3 if really necessary)
-		m_iteminfo_override		=	"<undesired> overrides tier/ilvl color"
+		m_iteminfo_overridetier	=	"override tier/ilvl"
 		m_iteminfo_rules		=	"global rules/overrides:"
 		m_iteminfo_rules		=	"weapon res"						;## as in ele-resistance mods on weapons (which are generally undesired)
 		m_iteminfo_rules		=	"attack dmg"
@@ -1001,7 +1124,7 @@
 		m_iteminfo_rules		=	"resists"
 		m_iteminfo_rules		=	"life/mana gain on hit/kill"
 		m_iteminfo_rules		=	"crit"
-		m_iteminfo_quality		=	"show quality & iron rune scaling"
+		m_iteminfo_qualscaling	=	"qual & rune scaling"
 		m_iteminfo_affixinfo	=	"affix-info:"
 		m_iteminfo_maxtier		=	"max tier"
 
@@ -1012,7 +1135,8 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "filterspoon" section of the settings menu
-		m_lootfilter_enable		=	"enable the filterspoon feature (experimental)"
+		m_lootfilter_colors		=	"ui & buttons:"
+		m_lootfilter_tester		=	"preset-tester:"					;## a section in the settings menu to test/preview various filter settings (size, opacity, etc.)
 
 
 
@@ -1021,14 +1145,12 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "act-tracker" section of the settings menu
-		m_lvltracker_enable			=	"enable the act-tracker feature"
-		m_lvltracker_timer			=	"enable timer"
-		m_lvltracker_pause			=	"pause timer in hideouts"
-		m_lvltracker_fade			=	"fade out after x seconds:"
-		m_lvltracker_fade			=	"fade in on mouse-hover"
+		m_lvltracker_timer			=	"timer"
+		m_lvltracker_fadeout		=	"fade"
+		m_lvltracker_fadeout		=	"hover"
 		m_lvltracker_gear			=	"gear tracker"
-		m_lvltracker_recommend		=	"lvl recommendations"
-		m_lvltracker_hotkeys		=	"enable page-hotkeys"
+		m_lvltracker_lvltips		=	"lvl tips"
+		m_lvltracker_pagehotkeys		=	"page-hotkeys"
 		m_lvltracker_poboverlays		=	"pob overlay settings:"
 		m_lvltracker_pobgems		=	"gems: use toggle instead of hold"
 		m_lvltracker_pobmanual		=	"tree: use screen-caps instead of schematics"
@@ -1038,12 +1160,14 @@
 		m_lvltracker_incompatible	=	"incompatible guide-data,;update required"
 		m_lvltracker_treeclear		=	"delete data"
 		m_lvltracker_leaguestart		=	"league-start"
-		m_lvltracker_optionals		=	"optionals"			;## refers to optional loot, quests, etc.
+		m_lvltracker_optionals		=	"optionals"						;## refers to optional loot, quests, etc.
 		m_lvltracker_bandit			=	"bandit"
 		m_lvltracker_bandits		=	"alira"
 		m_lvltracker_bandits		=	"kraityn"
 		m_lvltracker_bandits		=	"oak"
-		m_lvltracker_treehotkey		=	"hotkey to close trees:"	;## optional setting for users who don't close the in-game tree with ESC
+		m_lvltracker_treehotkey		=	"hotkey to close trees:"				;## optional setting for users who don't close the in-game tree with ESC
+		m_lvltracker_gemquests		=	"gem-quests"						;## quests that unlock gems
+		m_lvltracker_autotracking	=	"auto-track"
 
 
 
@@ -1062,21 +1186,18 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "map-tracker" section of the settings menu
-		m_maptracker_enable			=	"enable the map-tracker feature"
-		m_maptracker_hide			=	"hide the panel when the tracker is paused"
+		m_maptracker_tracking		=	"tracking settings:"
+		m_maptracker_pausehide		=	"hide on pause"
 		m_maptracker_loot			=	"loot"
 		m_maptracker_kills			=	"kills"
-		m_maptracker_mapinfo		=	"map-info data"						;## option to include data from the map-info feature
 		m_maptracker_notes			=	"notes"								;## option to add notes to map runs
 		m_maptracker_sidearea		=	"side-areas"
-		m_maptracker_rename			=	"tag & rename boss maps"					;## adds a "boss:"-tag to logged map-runs
-		m_maptracker_character		=	"character/build info"
-		m_maptracker_league			=	"league info"
-		m_maptracker_content		=	"track atlas mechanics"
-		m_maptracker_dialogue		=	"–> dialogue tracking:"					;## tracking is done via in-game dialogue in the chat-box
-		m_maptracker_screen			=	"–> screen tracking:"					;## tracking is done via screen-reading
-		m_maptracker_portal			=	"reminder when using portal scrolls"		;## shows a reminder-tooltip when activating a portal scroll
-		m_maptracker_portal			=	"portal scroll hotkey:"
+		m_maptracker_bosstags		=	"boss-tags"							;## adds a "boss:"-tag to logged map-runs
+		m_maptracker_character		=	"char/build"
+		m_maptracker_league			=	"league"
+		m_maptracker_dialogue		=	"dialogue tracking:"					;## tracking is done via in-game dialogue in the chat-box
+		m_maptracker_screen			=	"screen tracking:"						;## tracking is done via screen-reading
+		m_maptracker_portalreminder	=	"portal reminder:"
 
 
 
@@ -1085,15 +1206,14 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "map-info" section of the settings menu
-		m_mapinfo_enable			=	"enable the map-info panel"
-		m_mapinfo_tab				=	"show panel while holding the widget-key"
-		m_mapinfo_textcolors		=	"text-colors:"
+		m_mapinfo_sidepanel			=	"side-panel"
+		m_mapinfo_mapmods			=	"map-mods:"
 		m_mapinfo_header			=	"header"								;## as in line at the top of a section/paragraph
-		m_mapinfo_logbook			=	"logbook-colors:"
+		m_mapinfo_logbooks			=	"logbooks:"
 		m_mapinfo_modsettings		=	"map-mod settings:"
 		m_mapinfo_pinned			=	"pinned mods:"
 		m_mapinfo_modsearch			=	"mod search:"
-		m_mapinfo_roll_highlight		=	"highlight map rolls"
+		m_mapinfo_maprolls			=	"map rolls"
 		m_mapinfo_reset			=	"reset tiers"
 
 
@@ -1104,7 +1224,7 @@
 
 
 ;## these strings are displayed/required in the "announcements" section of the settings menu
-		m_news_recent			=	"most recent announcements:"
+		m_news_recent			=	"most recent announcement(s):"
 
 ;#####################################################
 ;## settings menu: minor qol tools
@@ -1115,8 +1235,20 @@
 		m_qol_map_events		=	"map-event notifications:"
 		m_qol_notepad			=	"notepad:"
 		m_qol_widget			=	"widget opacity:"
-		m_qol_widgetcolor		=	"default widget colors:"
-		m_qol_lab				=	"lab overlay:"
+		m_qol_widgetcolor		=	"widget colors:"
+		m_qol_lab				=	"lab overlay"
+		m_qol_quickpob			=	"quick pob"
+		m_qol_findpob			=	"confirm install path"
+		m_qol_findpob			=	"is this the correct path?"
+
+
+
+;#####################################################
+;## settings menu: rune-ninja
+;#####################################################
+
+;## these strings are displayed/required in the "rune-ninja" section of the settings menu
+		m_runeshaping_correction	=	"auto-correct dictionary:"					;## a list of strings that can be set up to fix recurring scan issues
 
 
 
@@ -1125,10 +1257,8 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "sanctum planner" section of the settings menu
-		m_sanctum_enable		=	"enable the sanctum planner overlay"
-		m_sanctum_enable		=	"enable the sekhema planner overlay"
-		m_sanctum_cheatsheets	=	"show cheat-sheet"
-		m_sanctum_relics		=	"enable the relic-management overlay"
+		m_sanctum_cheatsheet	=	"cheat-sheet"
+		m_sanctum_relicmanager	=	"relic manager"
 
 
 
@@ -1139,14 +1269,17 @@
 ;## these strings are displayed/required in the "screen-checks" section of the settings menu
 		m_screen_pixel			=	"list of required pixel-checks:"
 		m_screen_image			=	"list of required image-checks:"
-		m_screen_inactive		=	"the features that are currently enabled do not require any further setup"
+		m_screen_inactive		=	"the features that are currently enabled don't require any setup"
 		m_screen_gamescreen		=	"infopanel"									;## refers to the small panel in the top-right corner that shows area-name, server, league, etc.
 		m_screen_close_button	=	"close button"
 		m_screen_instructions	=	"read the instructions on;the <info> button!"
+		m_screen_runeshaping	=	"runeshaping"
+		m_screen_runeshaping2	=	"runeshaping (controller)"
 		m_screen_sanctum		=	"sanctum floor map"
 		m_screen_sanctum		=	"sekhema floor map"
 		m_screen_async1		=	"async trade (sell)"
 		m_screen_async2		=	"async trade (buy)"
+		m_screen_tradesearch	=	"trade search"
 
 
 ;#####################################################
@@ -1157,6 +1290,8 @@
 		m_search_usecases		=	"use-cases currently set up:"
 		m_search_hideout lilly	=	"hideout lilly"					;## as in the Lilly who is in your hideout (she has a different vendor window)
 		m_search_add			=	"add use-case:"
+		m_search_universal		=	"universal search-strings:"
+		m_search_edit			=	"edit strings"
 
 
 
@@ -1165,33 +1300,37 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "stash-ninja" section of the settings menu
-		m_stash_enable			=	"enable the stash-ninja feature"
 		m_stash_blight			=	"blight"
 		m_stash_breach			=	"breach"
 		m_stash_currency1		=	"currency"
 		m_stash_currency2		=	"currency ii"
+		m_stash_currency3		=	"currency iii"
 		m_stash_delirium		=	"delirium"
 		m_stash_delve			=	"delve"
 		m_stash_essences		=	"essence"
 		m_stash_fragments		=	"fragment"
-		m_stash_betrayal		=	"betrayal"
+		m_stash_betrayal		=	"allflame"
 		m_stash_scarabs		=	"scarab"
 		m_stash_ultimatum		=	"ultimatum"
 		m_stash_ritual			=	"ritual"
-		m_stash_socketables		=	"socketables"
+		m_stash_abyss			=	"abyss"
+		m_stash_expedition		=	"expedition"
+
+		m_stash_runes1			=	"runes"				;## the sub-tabs in the PoE2 fragments tab
+		m_stash_runes2			=	"kalguuran runes"
+		m_stash_soulcores		=	"soul cores"
+		m_stash_idols			=	"idols"
+
 		m_stash_leagues		=	"league:"
 		m_stash_tabs			=	"stash tab configuration:"
 		m_stash_limits			=	"price-range profiles:"
-		m_stash_profiles		=	"apply trade value to profiles 1-4"
-		m_stash_history		=	"show price history"
+		m_stash_pricehistory	=	"price history"
+		m_stash_globalprofiles	=	"global profiles"
 		m_stash_exalt			=	"show exalt rates"
-		m_stash_mintrade		=	"minimum trade value (chaos):"
-		m_stash_folder			=	"this tab is in a stash folder"
-		m_stash_bulk			=	"enable bulk-sale management"
-		m_stash_margins		=	"margins (%):"
+		m_stash_infolder		=	"in folder"
 		m_stash_active			=	"active tab:"
-		m_stash_bookmarking		=	"enable bookmarking"
-		m_stash_grid			=	"fine-tune grid alignment:"
+		m_stash_bookmarking		=	"bookmarks"
+		m_stash_grid			=	"grid:"
 
 
 
@@ -1200,9 +1339,6 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "statlas" section of the settings menu
-		m_statlas_enable		=	"enable the statlas feature"
-		m_statlas_maptracker	=	"show map-tracker data"
-		m_statlas_localknowledge	=	"show <local knowledge> notable effect"
 
 
 
@@ -1217,9 +1353,8 @@
 		m_ocr_error			=	"test requires at least 8 unique words"
 		m_ocr_error			=	"screen-cap too large"
 		m_ocr_finish			=	"press esc to finish setup"
-		m_ocr_hotkey			=	"<toggle highlighting> (in game):"
 		m_ocr_debug			=	"enable debug features"
-		m_ocr_unsupported		=	"720p and lower resolutions are not supported because screen-reading has a very high failure rate at low resolutions, making this feature almost unusable"
+		m_ocr_unsupported		=	"720p and lower resolutions are not supported because screen-reading has a very high failure rate at low resolutions, making this feature almost unusable."
 
 
 
@@ -1228,7 +1363,6 @@
 ;#####################################################
 
 ;## these strings are displayed/required in the "updater" section of the settings menu
-		m_updater_autocheck		=	"automatically check for updates"
 		m_updater_version		=	"version information:"
 		m_updater_version		=	"current:"
 		m_updater_version		=	"latest:"

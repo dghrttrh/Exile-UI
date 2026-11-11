@@ -14,7 +14,7 @@
 	settings.iteminfo.trigger := !Blank(check := ini.settings["enable wisdom-scroll trigger"]) ? check : 0
 	;settings.iteminfo.ilvl := (settings.general.lang_client != "english") ? 0 : !Blank(check := ini.settings["enable item-levels"]) ? check : 0
 	settings.iteminfo.itembase := !Blank(check := ini.settings["enable base-info"]) ? check : (vars.poe_version ? 0 : 1)
-	settings.iteminfo.override := !Blank(check := ini.settings["enable blacklist-override"]) ? check : (vars.poe_version ? 1 : 0)
+	settings.iteminfo.override := !Blank(check := ini.settings["enable blacklist-override"]) ? check : 1
 	settings.iteminfo.compare := (settings.general.lang_client != "english") || vars.poe_version ? 0 : !Blank(check := ini.settings["enable gear-tracking"]) ? check : 0
 	settings.iteminfo.activation := !Blank(check := ini.settings.activation) ? check : "toggle"
 	;settings.iteminfo.bars_tier := !Blank(check := ini.settings["tier bars"]) ? check : 1
@@ -29,6 +29,7 @@
 	settings.iteminfo.rules.attacks := (settings.general.lang_client != "english") ? 0 : !Blank(check := ini.settings["attacks override"]) ? check : 0
 	settings.iteminfo.rules.hitgain := (settings.general.lang_client != "english") ? 0 : !Blank(check := ini.settings["lifemana gain override"]) ? check : 0
 	settings.iteminfo.rules.crit := (settings.general.lang_client != "english") ? 0 : !Blank(check := ini.settings["crit override"]) ? check : 0
+	settings.iteminfo.Delete("rules")
 
 	settings.iteminfo.fSize := !Blank(check := ini.settings["font-size"]) ? check : settings.general.fSize
 	LLK_FontDimensions(settings.iteminfo.fSize, height, width), settings.iteminfo.fWidth := width, settings.iteminfo.fHeight := height
@@ -38,6 +39,9 @@
 	settings.iteminfo.colors_tier := [], settings.iteminfo.colors_ilvl := [], settings.iteminfo.colors_marking := []
 	settings.iteminfo.dColors_ilvl := ["FFFFFF", "00FF00", "006600", "FFFF00", "FF8000", "FF3333", "990000", "FF00FF"]
 	settings.iteminfo.ilevels := ["80", "70", "60", "50", "40", "30", "20", "10"]
+
+	Loop 5
+		settings.iteminfo["profile_name" A_Index] := ini.settings["profile " A_Index " name"]
 
 	Loop 8 ;load custom colors
 	{
@@ -180,7 +184,7 @@ Iteminfo(refresh := 0) ; refresh: 1 to refresh it normally, 2 for clipboard pars
 					item.itembase_copy := A_LoopField
 				Continue
 			}
-			If InStr(A_LoopField, "---")
+			If InStr(A_LoopField, "---") && (item.name != Lang_Trans("items_merc_warrant")) || (item.name = Lang_Trans("items_merc_warrant")) && (A_Index = 6)
 				Break
 			If InStr(A_LoopField, Lang_Trans("items_class"), 1)
 				item.class_copy := item.class := StrReplace(A_LoopField, Lang_Trans("items_class") " ") ;StrReplace(StrReplace(A_LoopField, "item class: "), " ", "_")
@@ -190,6 +194,8 @@ Iteminfo(refresh := 0) ; refresh: 1 to refresh it normally, 2 for clipboard pars
 				item.name := StrReplace(StrReplace(StrReplace(A_LoopField, "exceptional "), "superior "), "synthesised ") ;remove 'superior' and 'synthesised' from the name
 			If (A_Index = 4) || !item.class && (A_Index = 3)
 				item.itembase := StrReplace(A_LoopField, "synthesised ") ;remove 'synthesised' from the base-type
+			If (A_Index = 5) && (item.name = Lang_Trans("items_merc_warrant"))
+				item.name := A_LoopField, item.itembase := Lang_Trans("items_merc_warrant")
 		}
 	}
 
@@ -206,6 +212,8 @@ Iteminfo(refresh := 0) ; refresh: 1 to refresh it normally, 2 for clipboard pars
 
 	If InStr(clip, Lang_Trans("items_quality") . " +")
 		item.quality := SubStr(clip, InStr(clip, Lang_Trans("items_quality") . " +") + StrLen(Lang_Trans("items_quality") . " +")), item.quality := SubStr(item.quality, 1, InStr(item.quality, "%") - 1)
+	Else If InStr(clip, Lang_Trans("items_quality2"))
+		item.quality := SubStr(clip, InStr(clip, Lang_Trans("items_quality2"))), item.quality := SubStr(item.quality, InStr(item.quality, "+") + 1), item.quality := SubStr(item.quality, 1, InStr(item.quality, "%") - 1)
 
 	If !item.itembase ;if base-type couldn't be directly determined from the first lines, derive it from the item's characteristics or database
 	{
@@ -215,7 +223,7 @@ Iteminfo(refresh := 0) ; refresh: 1 to refresh it normally, 2 for clipboard pars
 		{
 			Loop, Parse, % vars[(refresh = 2) ? "omnikey" : "iteminfo"].clipboard, `n, `r
 			{
-				If !LLK_PatternMatch(A_LoopField, "{ ", ["Master Crafted Prefix ", "Prefix ", "Master Crafted Suffix ", "Suffix "])
+				If !RegExMatch(A_LoopField, "i)\{\s(master.crafted.|fractured.)*(prefix|suffix)")
 					Continue
 				If InStr(A_LoopField, "Prefix")
 					prefix := SubStr(A_LoopField, InStr(A_LoopField, """") + 1), prefix := SubStr(prefix, 1, InStr(prefix, """") - 1) . " "
@@ -571,16 +579,16 @@ Iteminfo_Stats2()
 			}
 
 			If InStr(A_LoopField, Lang_Trans("items_phys_dmg"))
-				phys_dmg := SubStr(StrReplace(A_LoopField, " (augmented)"), InStr(A_LoopField, ":") + 2)
+				phys_dmg := SubStr(LLK_StringReplace(A_LoopField, [[" (augmented)", ""], [Lang_Trans("items_dmg_minmax"), "-"]]), InStr(A_LoopField, ":") + 2)
 			Else If InStr(A_LoopField, Lang_Trans("items_chaos_dmg"))
 			{
-				chaos_dmg := SubStr(StrReplace(A_LoopField, " (augmented)"), InStr(A_LoopField, ":") + 2)
+				chaos_dmg := SubStr(LLK_StringReplace(A_LoopField, [[" (augmented)", ""], [Lang_Trans("items_dmg_minmax"), "-"]]), InStr(A_LoopField, ":") + 2)
 				If InStr(chaos_dmg, "(")
 					chaos_dmg := SubStr(chaos_dmg, 1, InStr(chaos_dmg, "(") - 2)
 			}
 			Else If Lang_Match(A_LoopField, vars.lang.items_dmg)
 			{
-				ele_dmg := SubStr(StrReplace(A_LoopField, " (augmented)"), InStr(A_LoopField, ":") + 2)
+				ele_dmg := SubStr(LLK_StringReplace(A_LoopField, [[" (augmented)", ""], [Lang_Trans("items_dmg_minmax"), "-"]]), InStr(A_LoopField, ":") + 2)
 				Loop, Parse, ele_dmg, `,
 				{
 					If InStr(A_LoopField, "(")
@@ -633,7 +641,7 @@ Iteminfo_Stats2()
 			phys%A_Index% := Round((phys%A_Index% / ((100 + phys_inc + phys_rune_inc)/100)) / ((100 + item.quality)/100))
 
 		item.damage := {"phys": [Round((Round(phys1 * (100 + phys_inc)/100) + Round(phys2 * (100 + phys_inc)/100))/2 * (1 + Max(20, item.quality)/100) * speed)]}
-		Loop, % Max(RegExMatch(item.class, "i)quarterstav|two.hand|bow") ? 2 : 1, item.sockets)
+		Loop, % Max(RegExMatch(item.class, "i)quarterstav|two.hand|bow|talisman") ? 2 : 1, item.sockets)
 			item.damage.phys.Push(Round((phys1 * (100 + (A_Index * 18) + phys_inc)/100 + phys2 * (100 + (A_Index * 18) + phys_inc)/100)/2 * (1 + Max(20, item.quality)/100) * speed))
 
 		item.dps := {"total": Format("{:0.2f}", pdps + edps0 + cdps), "phys": pdps, "ele": edps0, "chaos": cdps, "speed": speed}
@@ -940,7 +948,7 @@ Iteminfo_Mods2()
 			clip2 := ""
 		If clip2 && InStr(A_LoopField, "---")
 			Break
-		If (!InStr(A_LoopField, "{") || InStr(A_LoopField, Lang_Trans("items_implicit"))) || LLK_PatternMatch(A_LoopField, "", ["rune)", "implicit)", "---", "enchant)"])
+		If (!InStr(A_LoopField, "{") || InStr(A_LoopField, Lang_Trans("items_implicit")) || InStr(A_LoopField, Lang_Trans("items_implicit_corrupt")) || InStr(A_LoopField, Lang_Trans("items_implicit_anoint"))) || LLK_PatternMatch(A_LoopField, "", ["rune)", "implicit)", "---", "enchant)"])
 			Continue
 		Loop, Parse, A_LoopField, `n, % " "
 		{
@@ -1417,9 +1425,10 @@ Iteminfo_GUI()
 	Loop, Parse, clip2, | ;parse the item-info affix by affix
 	{
 		If (item.class != "base jewels")
-			tier := unique ? "u" : InStr(A_LoopField, Lang_Trans("items_tier")) ? SubStr(A_LoopField, InStr(A_LoopField, Lang_Trans("items_tier")) + StrLen(Lang_Trans("items_tier")) + 1, 2) : InStr(A_LoopField, "(crafted)") ? "c" : "#", tier := InStr(tier, ")") ? StrReplace(tier, ")") : tier ;determine affix tier for non-jewel items
+			tier := unique ? "u" : InStr(A_LoopField, Lang_Trans("items_tier")) ? SubStr(A_LoopField, InStr(A_LoopField, Lang_Trans("items_tier")) + StrLen(Lang_Trans("items_tier")) + 1, 2) : InStr(A_LoopField, "{ master") ? "c" : "#", tier := InStr(tier, ")") ? StrReplace(tier, ")") : tier ;determine affix tier for non-jewel items
 		Else tier := "?"
 
+		outer_loopfield := A_LoopField
 		mod := SubStr(A_LoopField, InStr(A_LoopField, "`n") + 1) ;text of the mod
 		While InStr(mod, "`n(") ;remove info-text
 			parse := SubStr(mod, InStr(mod, "`n(")), parse := SubStr(parse, 1, InStr(parse, ")")), mod := StrReplace(mod, parse)
@@ -1721,7 +1730,7 @@ Iteminfo_GUI()
 		If !unique ;add tier and icon/ilvl-cells for non-uniques
 		{
 			;determine the right color for the cells
-			If InStr(A_LoopField, " (fractured)")
+			If InStr(outer_loopfield, "{ fractured")
 			{
 				color := tColors.7 ;fractured mods have a specific color
 				If InStr(highlights, "+",,, LLK_InStrCount(A_LoopField, "`n")) && ((tier = 1) || item.class = "base jewels") ;if the fractured mod is also desired, add red highlighting to the text and make it bold
@@ -1741,14 +1750,14 @@ Iteminfo_GUI()
 			Else color := InStr("c#", tier) ? tColors.0 : (tier >= 6) ? tColors.6 : IsNumber(tier) ? tColors[tier] : "Black"
 
 			affixinfo := settings.iteminfo.affixinfo
-			label := Iteminfo_ModgroupCheck(name) ? Iteminfo_ModgroupCheck(name) : Iteminfo_ModCheck(mod, item.type), label := InStr(A_LoopField, " (crafted)") ? "mastercraft" : label ;check for suitable icon
+			label := !(InStr(A_LoopField, "attack speed") && InStr(outer_loopfield, "of infamy")) && Iteminfo_ModgroupCheck(name) ? Iteminfo_ModgroupCheck(name) : Iteminfo_ModCheck(mod, item.type), label := InStr(outer_loopfield, "{ master") ? "mastercraft" : label ;check for suitable icon
 			width := (label && affixinfo = 1 || affixinfo = 2 && item.class != "base jewels" && ilvl != "??" || affixinfo = 3 && max_tier) ? UI.wSegment/2 : UI.wSegment ;determine the width of the cell, and whether it needs to be divided into two parts
-			width := (settings.iteminfo.override && InStr(highlights, "-",,, LLK_InStrCount(A_LoopField, "`n")) && !InStr(A_LoopField, " (fractured)")) ? UI.wSegment : width
+			width := (settings.iteminfo.override && InStr(highlights, "-",,, LLK_InStrCount(A_LoopField, "`n")) && !InStr(outer_loopfield, "{ fractured")) ? UI.wSegment : width
 
 			If (affixinfo = 3 && tier = max_tier) && InStr(highlights, "+",,, LLK_InStrCount(A_LoopField, "`n"))
 				width := UI.wSegment, color := "White", color_t := "Red"
 
-			Gui, %GUI_name%: Add, Text, % "x"x " y"y " h"height " w"width " BackgroundTrans Border 0x200 Center c" (color = "black" ? "White" : color_t), % tier ;add tier-cell
+			Gui, %GUI_name%: Add, Text, % "x"x " y"y " h"height " w"width " BackgroundTrans Border Center c" (color = "black" ? "White" : color_t) . (height <= UI.hSegment ? "" : " 0x200"), % tier ;add tier-cell
 			Gui, %GUI_name%: Add, Progress, % "xp yp wp hp Border Disabled BackgroundBlack c"color, 100
 			Gui, %GUI_name%: Font, norm
 
@@ -1781,7 +1790,7 @@ Iteminfo_GUI()
 						Gui, %GUI_name%: Add, Text, % "x+0 wp hp 0x200 Border Center BackgroundTrans HWNDhwnd", % max_tier
 				}
 				ControlGetPos, x, y,,,, % "ahk_id " hwnd ;get the cells coordinates to place progress-control right onto it (can't use xp yp in cases with taller cells that also contain an icon)
-				If (affixinfo = 2 && item.class != "base jewels" && ilvl != "??") && !InStr(A_LoopField, " (fractured)") ;get the correct color for the ilvl (unless the mod is fractured)
+				If (affixinfo = 2 && item.class != "base jewels" && ilvl != "??") && !InStr(outer_loopfield, "{ fractured") ;get the correct color for the ilvl (unless the mod is fractured)
 				{
 					For index, level in settings.iteminfo.ilevels
 						If (ilvl >= level)
@@ -1848,7 +1857,7 @@ Iteminfo_GUI()
 	If qual_scaling && !RegExMatch(item.name, "i)morior|tabula") && (item.type = "attack" && item.damage.phys.1 || item.type = "defense")
 	{
 		colors := {"armour": "804040", "evasion": "408040", "energy": "404080", "phys": "black"}, object := (item.type = "attack") ? item.damage : item.defenses
-		sockets := Max(RegExMatch(item.class, "i)body.armour|quarterstaves|two.hand|bow") ? 2 : 1, item.sockets)
+		sockets := Max(RegExMatch(item.class, "i)body.armour|quarterstaves|two.hand|bow|talisman") ? 2 : 1, item.sockets)
 		Gui, %GUI_name%: Add, Text, % "Section xs Border Right w" Max(UI.Segments - (sockets + 1)/2 - (sockets + 1) * object.Count(), 0) * UI.wSegment " h" UI.hSegment, % Lang_Trans("iteminfo_qual_scaling") " "
 		For outer, currency in [(item.type = "defense" ? "scraps" : "whetstone"), "greater_iron", "greater_iron2", "greater_iron3", "greater_iron4"]
 		{
@@ -2062,10 +2071,10 @@ Iteminfo_ModgroupCheck(name, mode := 0) ;check the affix-name to determine if th
 		Return
 
 	If !vars.poe_version
-		parse := "bestiary,delve,incursion,syndicate,shaper,elder,crusader,redeemer,hunter,warlord,essence"
+		parse := "abyss,bestiary,delve,incursion,syndicate,shaper,elder,crusader,redeemer,hunter,warlord,essence,infamous"
 	Else parse := "abyss,essence"
 
-	abyss := ["veiled", "amanamu", "kurgal", "ulaman", "lightless"]
+	abyss := (vars.poe_version ? ["veiled", "amanamu", "kurgal", "ulaman", "lightless"] : ["abyssal"])
 	bestiary := ["saqawal", "farrul", "craiceann", "fenumus"]
 	delve := ["subterranean", "of the underground"]
 	incursion := ["Citaqualotl", "Guatelitzi", "Matatl", "Tacati", "Topotante", "Xopec"]
@@ -2077,6 +2086,7 @@ Iteminfo_ModgroupCheck(name, mode := 0) ;check the affix-name to determine if th
 	hunter := ["hunter's", " hunt"]
 	warlord := ["warlord", "conquest"]
 	essence := ["essences", " essence"]
+	infamous := ["infamous", "of infamy"]
 
 	Loop, Parse, parse, `,
 		For key, val in %A_LoopField%
@@ -2386,14 +2396,8 @@ Iteminfo_GearParse(slot) ;parse the info of an equipped item and save it for ite
 	}
 
 	Clipboard := ""
-	If settings.hotkeys.rebound_alt && settings.hotkeys.item_descriptions
-		SendInput, % "{" settings.hotkeys.item_descriptions " down}^{c}{" settings.hotkeys.item_descriptions " up}"
-	Else SendInput, !^{c}
+	SendInput, % "^{c}"
 	ClipWait, 0.1
-	If vars.poe_version && !settings.general.dev
-		If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-			SendInput, % "{" settings.hotkeys.item_descriptions " up}"
-		Else SendInput, {ALT up}
 
 	If !Clipboard
 	{
@@ -2832,16 +2836,15 @@ Iteminfo_Overlays() ;show update buttons for specific gear-slots underneath the 
 	local
 	global vars, settings
 
-	If settings.iteminfo.compare
-		For slot, val in vars.iteminfo.compare.slots
-		{
-			If LLK_IsBetween(vars.general.xMouse, val.x1, val.x2) && LLK_IsBetween(vars.general.yMouse, val.y1, val.y2) && (vars.log.areaID != "login") && vars.pixels.inventory
-			&& !WinExist("ahk_id "vars.hwnd.iteminfo_comparison[slot]) && (vars.general.wMouse != vars.hwnd.iteminfo.main) && (vars.general.wMouse != vars.hwnd.omni_context.main) && WinActive("ahk_group poe_window")
-				LLK_Overlay(vars.hwnd.iteminfo_comparison[slot], "show",, "iteminfo_button_" slot)
-			Else If WinExist("ahk_id " vars.hwnd.iteminfo_comparison[slot])
-			&& (!(LLK_IsBetween(vars.general.xMouse, val.x1, val.x2) && LLK_IsBetween(vars.general.yMouse, val.y1, val.y2)) || (vars.general.wMouse = vars.hwnd.iteminfo.main) || (vars.general.wMouse = vars.hwnd.omni_context.main) || (vars.log.areaID = "login") || !WinActive("ahk_group poe_window") || !vars.pixels.inventory)
-				LLK_Overlay(vars.hwnd.iteminfo_comparison[slot], "hide")
-		}
+	For slot, val in vars.iteminfo.compare.slots
+	{
+		If vars.pixels.inventory && LLK_IsBetween(vars.general.xMouse, val.x1, val.x2) && LLK_IsBetween(vars.general.yMouse, val.y1, val.y2) && (vars.log.areaID != "login")
+		&& !WinExist("ahk_id "vars.hwnd.iteminfo_comparison[slot]) && (vars.general.wMouse != vars.hwnd.iteminfo.main) && (vars.general.wMouse != vars.hwnd.omni_context.main) && WinActive("ahk_group poe_window")
+			LLK_Overlay(vars.hwnd.iteminfo_comparison[slot], "show",, "iteminfo_button_" slot)
+		Else If WinExist("ahk_id " vars.hwnd.iteminfo_comparison[slot])
+		&& (!(LLK_IsBetween(vars.general.xMouse, val.x1, val.x2) && LLK_IsBetween(vars.general.yMouse, val.y1, val.y2)) || (vars.general.wMouse = vars.hwnd.iteminfo.main) || (vars.general.wMouse = vars.hwnd.omni_context.main) || (vars.log.areaID = "login") || !WinActive("ahk_group poe_window") || !vars.pixels.inventory)
+			LLK_Overlay(vars.hwnd.iteminfo_comparison[slot], "hide")
+	}
 }
 
 Iteminfo_Trigger(mode := 0) ;handles shift-clicks on items and currency for the shift-trigger feature
@@ -2857,14 +2860,8 @@ Iteminfo_Trigger(mode := 0) ;handles shift-clicks on items and currency for the 
 			Return
 		last := A_TickCount
 		Sleep 350
-		If settings.hotkeys.rebound_alt && settings.hotkeys.item_descriptions
-			SendInput, % "{" settings.hotkeys.item_descriptions " down}^{c}{" settings.hotkeys.item_descriptions " up}"
-		Else SendInput, !^{c}
+		SendInput, % "^{c}"
 		ClipWait, 0.1
-		If vars.poe_version && !settings.general.dev
-			If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-				SendInput, % "{" settings.hotkeys.item_descriptions " up}"
-			Else SendInput, {ALT up}
 
 		If Clipboard
 		{

@@ -51,7 +51,7 @@
 			vars.log[A_LoopField] := ""
 	}
 	If settings.general.character && !Blank(log_character.1)
-		Log_Parse(log_character, bla, bla, bla, bla, bla, bla, level, bla, character_class)
+		Log_Parse(log_character, bla, bla, bla, bla, bla, bla, level, bla, character_class, bla)
 
 	If mode
 	{
@@ -59,7 +59,7 @@
 		Return
 	}
 
-	Log_Parse(log_content, areaID, areaname, areaseed, arealevel, areatier, act, bla, date_time, bla)
+	Log_Parse(log_content, areaID, areaname, areaseed, arealevel, areatier, act, bla, date_time, bla, bla)
 
 	Loop, Parse, % vars.log.parsing, `,, %A_Space%
 		If Blank(vars.log[A_LoopField]) && !Blank(%A_LoopField%)
@@ -70,7 +70,11 @@
 
 	vars.log.level := !vars.log.level ? 0 : vars.log.level
 	If !mode
+	{
 		vars.log.access_time := A_TickCount - start
+		If vars.log.latest_location
+			vars.log.file.Close(), vars.log.file := FileOpen(vars.log.latest_location, "a", "UTF-8")
+	}
 }
 
 Log_Backup()
@@ -82,7 +86,7 @@ Log_Backup()
 	WinWaitClose, % "ahk_id " vars.hwnd.poe_client,, 3
 	If WinExist("ahk_id " vars.hwnd.poe_client)
 	{
-		MsgBox, % "Backup failed:`nCannot close the game-client."
+		MsgBox,, Exile UI, % "Backup failed:`nCannot close the game-client."
 		Return
 	}
 	file := StrReplace(vars.log.file_location, "client.txt", "Client (old).txt")
@@ -99,7 +103,7 @@ Log_Backup()
 		If ErrorLevel
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nCannot move the old file.`nThe tool will restart."
+			MsgBox,, Exile UI, % "Backup failed:`nCannot move the old file.`nThe tool will restart."
 			LLK_Restart()
 			Return
 		}
@@ -107,7 +111,7 @@ Log_Backup()
 		If !IsObject(dest_file)
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nCannot create the new file.`n`nRestart the game to let it create the new file.`nYou'll have to waypoint-travel around a few times before relaunching the tool."
+			MsgBox,, Exile UI, % "Backup failed:`nCannot create the new file.`n`nRestart the game to let it create the new file.`nYou'll have to waypoint-travel around a few times before relaunching the tool."
 			ExitApp
 		}
 		append := source_file.Read(), append := SubStr(append, InStr(append, "`n") + 1) . (vars.log.character_last ? vars.log.character_last "`r`n" : "")
@@ -116,9 +120,9 @@ Log_Backup()
 		If !FileExist(vars.log.file_location) || !FileExist(file)
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nSomething went wrong while copying the file. The game's log folder will open after closing this message."
+			MsgBox,, Exile UI, % "Backup failed:`nSomething went wrong while copying the file. The game's log folder will open after closing this message."
 			Run, % "explore " SubStr(vars.log.file_location, 1, InStr(vars.log.file_location, "\",, 0) - 1)
-			MsgBox, % "Trouble-shooting steps:`n- If ""Client (old).txt"" doesn't exist, nothing happened and the original log-file wasn't changed.`n`n- If only ""Client (old).txt"" exists, the old file was moved but a new one wasn't created. Launching the game will create a new one, but you have to waypoint-travel around a bit before relaunching the tool."
+			MsgBox,, Exile UI, % "Trouble-shooting steps:`n- If ""Client (old).txt"" doesn't exist, nothing happened and the original log-file wasn't changed.`n`n- If only ""Client (old).txt"" exists, the old file was moved but a new one wasn't created. Launching the game will create a new one, but you have to waypoint-travel around a bit before relaunching the tool."
 			ExitApp
 		}
 	}
@@ -129,7 +133,7 @@ Log_Backup()
 		If !IsObject(source_file) || !IsObject(dest_file)
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nCannot access the current or backup file.`nThe tool will restart."
+			MsgBox,, Exile UI, % "Backup failed:`nCannot access the current or backup file.`nThe tool will restart."
 			LLK_Restart()
 		}
 		Loop
@@ -156,7 +160,7 @@ Log_Backup()
 		If FileExist(vars.log.file_location)
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nCannot delete the ""Client.txt"" log-file.`n. You'll have to delete it manually (the folder will open once you close this message).`n`nAfter deleting, restart the game, waypoint-travel around a few times, then restart the tool."
+			MsgBox,, Exile UI, % "Backup failed:`nCannot delete the ""Client.txt"" log-file.`n. You'll have to delete it manually (the folder will open once you close this message).`n`nAfter deleting, restart the game, waypoint-travel around a few times, then restart the tool."
 			Run, % "explore " SubStr(vars.log.file_location, 1, InStr(vars.log.file_location, "\",, 0) - 1)
 			ExitApp
 		}
@@ -164,7 +168,7 @@ Log_Backup()
 		If !IsObject(source_file)
 		{
 			LLK_Overlay(vars.hwnd.tooltip1, "destroy")
-			MsgBox, % "Backup failed:`nCannot create the new file.`n`nRestart the game to let it create the new file.`nYou'll have to waypoint-travel around a few times before relaunching the tool."
+			MsgBox,, Exile UI, % "Backup failed:`nCannot create the new file.`n`nRestart the game to let it create the new file.`nYou'll have to waypoint-travel around a few times before relaunching the tool."
 			ExitApp
 		}
 
@@ -182,7 +186,7 @@ Log_Backup()
 	}
 }
 
-Log_CharacterInfo(line)
+Log_CharacterInfo(line, any_character := 0)
 {
 	local
 	global vars, settings
@@ -192,8 +196,9 @@ Log_CharacterInfo(line)
 		parse := SubStr(line, InStr(line, ":",, 0) + 1)
 		Loop, Parse, parse
 			level .= (IsNumber(A_LoopField) ? A_LoopField : "")
-		If InStr(line, settings.general.character " " Lang_Trans("system_parenthesis")) || InStr(line, settings.general.character . Lang_Trans("system_parenthesis"))
+		If any_character || InStr(line, settings.general.character " " Lang_Trans("system_parenthesis")) || InStr(line, settings.general.character . Lang_Trans("system_parenthesis"))
 			class := SubStr(line, InStr(line, Lang_Trans("system_parenthesis")) + 1), class := LLK_StringCase(SubStr(class, 1, InStr(class, Lang_Trans("system_parenthesis", 2)) - 1))
+			, character := SubStr(parse, 1, InStr(parse, Lang_Trans("system_parenthesis")) - 1), character := Trim(character, " ")
 	}
 	Else If Lang_Match(line, vars.lang.log_whois)
 	{
@@ -215,7 +220,7 @@ Log_CharacterInfo(line)
 		}
 	}
 	If level && class
-		Return [level, class]
+		Return [level, class, character]
 }
 
 Log_Get(log_text, data)
@@ -225,27 +230,23 @@ Log_Get(log_text, data)
 	static unique_maps := {"merchant": "seer", "vault": "vaults"}
 
 	If (data = "areaname")
-		If !LLK_StringCompare(log_text, ["map", "breach", "ritual"])
+		If !LLK_StringCompare(log_text, ["map", "breach", "ritual", "expedition"])
 			%data% := log_text
 		Else
 		{
-			If LLK_StringCompare(log_text, ["breach"])
+			If InStr(log_text, "expedition")
 			{
-				If settings.maptracker.rename
-					Return Lang_Trans("maps_boss") ": " Lang_Trans("maps_xesht")
-				Else Return Lang_Trans("maps_xesht", 2) " (" Lang_Trans("maps_boss") ")"
-			}
-			Else If LLK_StringCompare(log_text, ["ritual"])
-			{
-				If settings.maptracker.rename
-					Return Lang_Trans("maps_boss") ": " Lang_Trans("maps_ritualboss")
-				Else Return Lang_Trans("maps_ritualboss", 2) " (" Lang_Trans("maps_boss") ")"
-			}
-			Else If InStr(log_text, "uberboss_monolith")
-			{
-				If settings.maptracker.rename
-					Return Lang_Trans("maps_boss") ": " Lang_Trans("maps_arbiter")
-				Else Return Lang_Trans("maps_arbiter", 2) " (" Lang_Trans("maps_boss") ")"
+				If !IsObject(db.maps)
+					DB_Load("maps")
+				If (map_name := db.maps.maps[log_text].name)
+					%data% := map_name, boss := db.maps.maps[log_text].boss
+				Else %data% := SubStr(log_text, InStr(log_text, "_") + 1)
+
+				If boss && settings.maptracker.rename
+					Return Lang_Trans("maps_boss") . Lang_Trans("global_colon") " " Lang_Trans("maps_" boss)
+				Else If boss
+					Return LLK_StringCase(%data%) " (" Lang_Trans("maps_boss") ")"
+				Else Return LLK_StringCase(%data%)
 			}
 			Else If RegExMatch(log_text, "Hideout.*_Claimable")
 			{
@@ -256,16 +257,17 @@ Log_Get(log_text, data)
 			If !IsObject(db.maps)
 				DB_Load("maps")
 
-			%data% := StrReplace(SubStr(log_text, 4), "_noboss"), map_name := db.maps.maps[%data%].name
-			If InStr(%data%, "uberboss_")
-				%data% := (settings.maptracker.rename ? Lang_Trans("maps_boss") ": " : "") . (map_name ? map_name : StrReplace(%data%, "uberboss_")) . (settings.maptracker.rename ? "" : " (" Lang_Trans("maps_boss") ")")
+			%data% := (RegexMatch(log_text, "i)^map") ? StrReplace(SubStr(log_text, 4), "_noboss") : log_text), map_name := db.maps.maps[%data%].name, boss := db.maps.maps[%data%].boss, boss := Lang_Trans("maps_" boss)
+			rename := settings.maptracker.rename
+			If InStr(%data%, "uberboss_") || RegexMatch(%data%, "i)ritualleagueboss|breachdomain")
+				%data% := (rename ? Lang_Trans("maps_boss") . Lang_Trans("global_colon") " " : "") . (boss && rename ? boss : (map_name ? map_name : StrReplace(%data%, "uberboss_"))) . (settings.maptracker.rename ? "" : " (" Lang_Trans("maps_boss") ")")
 			Else If LLK_StringCompare(%data%, ["unique"])
 			{
 				For key, val in unique_maps
 					If !override && InStr(%data%, key)
-						%data% := Lang_Trans("items_unique") ": " Lang_Trans("maps_" (val ? val : key)), override := 1
+						%data% := Lang_Trans("items_unique") . Lang_Trans("global_colon") " " Lang_Trans("maps_" (val ? val : key)), override := 1
 				If !override
-					%data% := Lang_Trans("items_unique") ": " (map_name ? map_name : SubStr(%data%, 7))
+					%data% := Lang_Trans("items_unique") . Lang_Trans("global_colon") " " (map_name ? map_name : SubStr(%data%, 7))
 			}
 			Else If LLK_PatternMatch(log_text, "", ["losttowers", "swamptower", "mesa", "bluff", "alpineridge"],,, 0)
 			{
@@ -276,8 +278,7 @@ Log_Get(log_text, data)
 				%data% := Lang_Trans("maps_" %data%)
 			Else If map_name
 				%data% := map_name
-
-			Loop, Parse, % %data%
+			Else Loop, Parse, % %data%
 				%data% := (A_Index = 1) ? "" : %data%, %data% .= (A_Index != 1 && (SubStr(%data%, 0) != " ") && RegExMatch(A_LoopField, "[A-Z]") ? " " : "") . A_LoopField
 		}
 	Return LLK_StringCase(%data%)
@@ -305,24 +306,41 @@ Log_Loop(mode := 0)
 			LLK_Overlay(vars.hwnd.alarm.main, "destroy")
 	}
 
-	If vars.log.file_location ;for the unlikely event where the user manually deletes the client.txt while the tool is still running
+	If !vars.log.file_wait && vars.log.file_location ;for the unlikely event where the user manually deletes the client.txt while the tool is still running
 		If IsObject(vars.log.file) && !FileExist(vars.log.file_location)
 			vars.log.file.Close(), vars.log.file := ""
 		Else If !IsObject(vars.log.file) && FileExist(vars.log.file_location)
 			vars.log.file := FileOpen(vars.log.file_location, "a", "UTF-8")
 
 	guide := vars.leveltracker.guide ;short-cut variable
-	If !vars.news.wait && (!news_check || (A_TickCount >= news_check + 900000))
+	If !vars.news.wait && (!news_check || (A_TickCount >= news_check + 1800000))
 	{
 		news_check := A_TickCount
 		SetTimer, News, -100
 	}
 
-	If !WinActive("ahk_group poe_ahk_window") || !vars.log.file_location || !WinExist("ahk_group poe_window") || !FileExist(vars.log.file_location)
+	If vars.log.file_wait || !WinActive("ahk_group poe_ahk_window") || !vars.log.file_location || !WinExist("ahk_group poe_window") || !FileExist(vars.log.file_location)
 	{
 		If WinExist("ahk_id " vars.hwnd.maptracker.main)
 			LLK_Overlay(vars.hwnd.maptracker.main, "destroy")
 		Return
+	}
+
+	If vars.lootfilter.update_pending.1 && (A_TickCount >= vars.lootfilter.update_pending.2 + 5000)
+		vars.lootfilter.update_pending := "", LLK_ToolTip(Lang_Trans("global_fail"),,,,, "Red")
+
+	If (vars.lootfilter.update_applied || vars.lootfilter.modifications_pending.Count() > 1) && WinExist("ahk_id " vars.hwnd.lootfilter.main)
+	{
+		tick := SubStr(Floor(A_TickCount/1000), 0)
+		GuiControl, % "+c" (Mod(tick, 2) ? settings.lootfilter.color_accent : "White"), % vars.hwnd.lootfilter.filter_apply
+		GuiControl, % "+c" (Mod(tick, 2) ? "White" : settings.lootfilter.color_accent) " +BackgroundFF8000", % vars.hwnd.lootfilter.filter_apply_bar
+	}
+
+	If vars.lootfilter.tester_applied && WinExist("ahk_id " vars.hwnd.settings.main)
+	{
+		tick := SubStr(Floor(A_TickCount/1000), 0)
+		GuiControl, % "+c" (Mod(tick, 2) ? "Red" : "White"), % vars.hwnd.settings.tester_restore
+		GuiControl, % "movedraw", % vars.hwnd.settings.tester_restore
 	}
 
 	If IsObject(vars.maptracker)
@@ -332,7 +350,8 @@ Log_Loop(mode := 0)
 
 	If log_content.Count()
 	{
-		Log_Parse(log_content, areaID, areaname, areaseed, arealevel, areatier, act, level, date_time, character_class)
+		auto_track := "a"
+		Log_Parse(log_content, areaID, areaname, areaseed, arealevel, areatier, act, level, date_time, character_class, auto_track)
 		Loop, Parse, % vars.log.parsing, `,, %A_Space%
 		{
 			If Blank(%A_LoopField%)
@@ -345,6 +364,25 @@ Log_Loop(mode := 0)
 					vars.log.areaname := "" ;make it blank because there sometimes is a desync between it and areaID, i.e. they are parsed in two separate loop-ticks
 				Else vars.log.areaname := Log_Get(areaID, "areaname")
 		}
+		If (auto_track = 1)
+			level0 := 0
+
+		If settings.features.lootfilter && settings.lootfilter.notify && (settings.lootfilter.ingame_filter = "filterspoon.filter") && settings.lootfilter.last_sync
+		&& (LLK_TimeElapsed(settings.lootfilter.last_sync,, 0) >= settings.lootfilter.notify * 60) && RegExMatch(areaID, "i)^hideout")
+		{
+			If !vars.lootfilter.last_notification
+			{
+				vars.lootfilter.last_notification := A_TickCount
+				game_ini := IniBatchRead(vars.system.config_folder "\" (vars.poe_version ? "poe2_" : "") "production_Config.ini",, "blank")
+				If (game_ini.ui.item_filter != "filterspoon.filter")
+				{
+					settings.lootfilter.ingame_filter := game_ini.ui.item_filter
+					Return
+				}
+			}
+			MapEvent("lootfilter")
+		}
+
 		If (settings.features.leveltracker * settings.leveltracker.geartracker) && IsNumber(level) && (level0 != level)
 			Geartracker_GUI(WinExist("ahk_id " vars.hwnd.geartracker.main) ? "" : "refresh")
 
@@ -383,7 +421,23 @@ Log_Loop(mode := 0)
 					}
 		}
 
-		If character_class && WinExist("ahk_id " vars.hwnd.settings.main) && RegExMatch(vars.settings.active, "i)general|leveling.tracker")
+		If (auto_track = 2)
+		{
+			timer := vars.leveltracker.timer
+			If IsNumber(timer.current_split) && (timer.current_split != timer.current_split0)
+				IniWrite, % (timer.current_split0 := timer.current_split), % "ini" vars.poe_version "\leveling tracker.ini", % "current run" settings.leveltracker.profile, time
+			vars.leveltracker.timer.pause := -1
+
+			If vars.leveltracker.skilltree_schematics.GUI
+				Leveltracker_PobSkilltree("close")
+			Init_log("refresh"), Init_leveltracker(), Leveltracker_Load()
+			If LLK_Overlay(vars.hwnd.leveltracker.main, "check") && vars.leveltracker.guide.import.Count()
+				Leveltracker_Progress(1)
+			Else Leveltracker_Toggle("destroy"), vars.hwnd.leveltracker.main := ""
+		}
+		If IsNumber(auto_track)
+			LLK_ToolTip(Lang_Trans("lvltracker_autotrack") "`n" LLK_StringCase(settings.general.character) " (" vars.log.level ")", 3, vars.monitor.x + vars.monitor.w/2, vars.monitor.y,, "Lime", settings.general.fSize * 2,, 150, 1,, 1)
+		If (character_class || IsNumber(auto_track)) && WinExist("ahk_id " vars.hwnd.settings.main) && RegExMatch(vars.settings.active, "i)general|leveling.tracker")
 			Settings_menu(vars.settings.active,, 0)
 	}
 
@@ -393,7 +447,7 @@ Log_Loop(mode := 0)
 	If settings.qol.lab && InStr(vars.log.areaID, "labyrinth_") && !InStr(vars.log.areaID, "Airlock") && vars.log.areaseed && vars.lab.rooms.Count() && !vars.lab.rooms[vars.lab.room.1].seed
 		vars.lab.rooms[vars.lab.room.1].seed := vars.log.areaseed, vars.lab.room.3 := vars.log.areaseed
 
-	If settings.features.leveltracker && (A_TickCount > vars.leveltracker.last_manual + 2000) && vars.hwnd.leveltracker.main && (vars.log.areaID = vars.leveltracker.guide.target_area) && !vars.leveltracker.fast ;advance the guide when entering target-location
+	If settings.features.leveltracker && (A_TickCount >= vars.leveltracker.last_manual + 2000) && vars.hwnd.leveltracker.main && (vars.log.areaID = vars.leveltracker.guide.target_area) && !vars.leveltracker.fast ;advance the guide when entering target-location
 		vars.leveltracker.guide.target_area := "", Leveltracker("+")
 
 	If !vars.poe_version && settings.features.mapinfo && vars.mapinfo.expedition_areas && vars.log.areaname && !Blank(LLK_HasVal(vars.mapinfo.expedition_areas, vars.log.areaname)) && !vars.mapinfo.active_map.expedition_filter
@@ -411,13 +465,15 @@ Log_Loop(mode := 0)
 	Leveltracker_Timer()
 }
 
-Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel, ByRef areatier, ByRef act, ByRef level, ByRef date_time, ByRef character_class)
+Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel, ByRef areatier, ByRef act, ByRef level, ByRef date_time, ByRef character_class, ByRef auto_track)
 {
 	local
 	global vars, settings, db
 
 	For index, loopfield in content
 	{
+		If Blank(loopfield)
+			Continue
 		If InStr(loopfield, "Generating level ", 1)
 		{
 			parse := SubStr(loopfield, InStr(loopfield, "area """) + 6), areaID := SubStr(parse, 1, InStr(parse, """") -1) ;store PoE-internal location name in var
@@ -438,7 +494,7 @@ Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel
 		Else If InStr(loopfield, " connected to ") && InStr(loopfield, ".login.") || InStr(loopfield, "*****")
 			areaID := "login"
 
-		/*
+		/* this log-msg was removed at some point from PoE2 but is still present in PoE1
 		Else If InStr(loopfield, "current input mode = ")
 		{
 			timestamp := SubStr(loopfield, 1, InStr(loopfield, " ",,, 2) - 1)
@@ -454,11 +510,45 @@ Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel
 		}
 		*/
 
-		If Lang_Match(loopfield, vars.lang.log_enter)
-			parse := SubStr(loopfield, InStr(loopfield, vars.lang.log_enter.1)), areaname := LLK_StringCase(Lang_Trim(parse, vars.lang.log_enter, Lang_Trans("log_location")))
+		If (filter_tag := vars.lootfilter.update_pending.1)
+			If InStr(loopfield, "Finished reloading online filter " filter_tag)
+			{
+				vars.lootfilter.update_pending := "", vars.lootfilter.update_applied := (vars.lootfilter.modifications["profile" settings.lootfilter.profile].Count() > 1 ? 1 : 0), filter := settings.lootfilter.active_filter
+				vars.lootfilter.modifications_pending := [], vars.lootfilter.modifications_pending.0 := ""
+				Lootfilter_Load("init_" filter)
+				Lootfilter_Editor(), LLK_ToolTip(Lang_Trans("global_success"),,,,, "Lime")
+			}
+
+		If (auto_track = "a") && (settings.leveltracker.autotrack * settings.features.leveltracker) && InStr(loopfield, "[info")
+		{
+			char_name := "", parse := SubStr(loopfield, InStr(loopfield, "]",, 0))
+			If InStr(parse, ":")
+				parse := SubStr(parse, 1, InStr(parse, ":") - 1), char_name := SubStr(parse, InStr(parse, " ",, 0) + 1), char_name := LLK_StringCase(char_name)
+
+			If char_name && (char_name != settings.general.character) && !RegexMatch(char_name, "i)\.|\s") && !RegExMatch(char_name, "@|#|%|&|\$")
+				For iChars, oChars in vars.leveltracker.characters
+					If oChars.character && (oChars.character = char_name)
+					{
+						auto_track := 2
+						IniWrite, % (settings.general.character := char_name), % "ini" vars.poe_version "\config.ini", Settings, active character
+						IniWrite, % """" (settings.general.build := oChars.build) """", % "ini" vars.poe_version "\config.ini", Settings, active build
+						IniWrite, % (iChars = 1 ? "" : iChars), % "ini" vars.poe_version "\leveling tracker.ini", Settings, profile
+						Break
+					}
+		}
+		If !vars.poe_version && RegExMatch(loopfield, "i)set.source.\[(?!\(|" Lang_Trans("log_act") ".\d)")
+			parse := SubStr(loopfield, InStr(loopfield, "[",, 0)), areaname := LLK_StringCase(Trim(parse, " []`r`n"))
 
 		If !Blank(settings.general.character) && InStr(loopfield, settings.general.character) && IsObject((character_info := Log_CharacterInfo(loopfield)))
 			level := character_info.1, character_class := character_info.2
+		Else If (settings.leveltracker.autotrack * settings.features.leveltracker) && (vars.log.areaID = "1_1_1" || vars.log.areaID = "g1_1") && vars.hwnd.leveltracker.main && InStr(loopfield, Lang_Trans("log_level"))
+		{
+			parse := SubStr(loopfield, InStr(loopfield, ":",, 0) + 1), character_info := Log_CharacterInfo(loopfield, 1), profile := settings.leveltracker.profile
+			IniWrite, % (settings.general.character := character_info.3), % "ini" vars.poe_version "\config.ini", Settings, active character
+			IniWrite, % """" (settings.general.build := settings.leveltracker["guide" profile].info.name) """", % "ini" vars.poe_version "\config.ini", Settings, active build
+			IniWrite, % """" (settings.leveltracker["guide" profile].info.character := character_info.3) """", % "ini" vars.poe_version "\leveling guide" profile ".ini", Info, character
+			level := character_info.1, character_class := character_info.2, auto_track := 1
+		}
 
 		If settings.features.maptracker && (vars.log.areaID = vars.maptracker.map.id) && (Lang_Match(loopfield, vars.lang.log_slain) || Lang_Match(loopfield, vars.lang.log_suicide))
 			vars.maptracker.map.deaths += 1, vars.maptracker.map.died := 1
@@ -470,7 +560,15 @@ Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel
 				parse := (A_Index = 1) ? "" : parse, parse .= IsNumber(A_LoopField) ? A_LoopField : ""
 
 			If (vars.maptracker.refresh_kills = 1)
+			{
+				If IsNumber(vars.maptracker.map_prev.kills.1)
+				{
+					IniWrite, % (backlog_kills := parse - vars.maptracker.map_prev.kills.1), % "ini" vars.poe_version "\map tracker log.ini", % vars.maptracker.map_prev.date_time, kills
+					If IsObject(vars.maptracker.entries)
+						vars.maptracker.entries[SubStr(vars.maptracker.map_prev.date_time, 1, InStr(vars.maptracker.map_prev.date_time, " ") - 1)].1.kills := backlog_kills, LLK_Overlay(vars.hwnd.maptracker_logs.main, "destroy")
+				}
 				vars.maptracker.map.kills := [parse], LLK_ToolTip(Lang_Trans("maptracker_kills", 2),,,,, "Lime"), vars.tooltip_mouse := "", vars.maptracker.refresh_kills := 2
+			}
 			Else If (vars.maptracker.refresh_kills > 1) && Maptracker_Towncheck()
 				vars.maptracker.map.kills.2 := parse, LLK_ToolTip(Lang_Trans("maptracker_kills", 2),,,,, "Lime"), vars.maptracker.refresh_kills := 3, vars.maptracker.last_kills := parse
 		}
@@ -480,12 +578,22 @@ Log_Parse(content, ByRef areaID, ByRef areaname, ByRef areaseed, ByRef arealevel
 
 		If settings.qol.mapevents
 			For index0, type in settings.mapevents.event_list
-				If settings.mapevents[type]
+				If (type = "hideout") && settings.mapevents.hideout && InStr(loopfield, "] Spawning discoverable Hideout")
+				{
+					map_ID := (areaID ? areaID : vars.log.areaID), map_seed := (areaseed ? areaseed : vars.log.areaseed)
+					If (map_ID != vars.mapevents.hideout.ID || map_seed != vars.mapevents.hideout.seed)
+						MapEvent_Hideout(map_ID, map_seed)
+					Break
+				}
+				Else If settings.mapevents[type]
 					For index1, line in vars.lang["log_" type]
 						If InStr(loopfield, line, 1) && (type != "infamous" || type = "infamous" && MapEvent_InfamousMerc(loopfield "."))
 						{
 							MapEvent(type)
 							Break
 						}
+
+		For key, val in vars.addons.list
+			vars.addons.list[key].func.LogRead(loopfield)
 	}
 }

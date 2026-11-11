@@ -21,21 +21,24 @@
 		WinWaitActive, % "ahk_id " vars.hwnd.poe_client
 	}
 
+	If settings.maptracker.kills_omnikey && (vars.maptracker.refresh_kills = 2) && Maptracker_Towncheck() && WinExist("ahk_id "vars.hwnd.maptracker.main) && !vars.maptracker.pause
+	{
+		Clipboard := "/kills"
+		SendInput, {ENTER}
+		Sleep, 50
+		SendInput, ^{a}^{v}{ENTER}
+		Omni_Release()
+		Return
+	}
+
 	If WinExist("ahk_id " vars.hwnd.maptrackernotes_edit.main)
 	{
 		Maptracker_NoteAdd(), Omni_Release()
 		Return
 	}
 
-	If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-		SendInput, % "{" settings.hotkeys.item_descriptions " down}^{c}{" settings.hotkeys.item_descriptions " up}"
-	Else SendInput, !^{c}
-
+	SendInput, % "^{c}"
 	ClipWait, 0.1
-	If vars.poe_version && !settings.general.dev
-		If settings.hotkeys.item_descriptions && settings.hotkeys.rebound_alt
-			SendInput, % "{" settings.hotkeys.item_descriptions " up}"
-		Else SendInput, {ALT up}
 
 	If Clipboard
 	{
@@ -44,13 +47,13 @@
 			LLK_ToolTip(Lang_Trans("omnikey_language"), 3,,,, "red"), Omni_Release()
 			Return
 		}
-		
+
 		vars.omnikey.start := A_TickCount, vars.omnikey.item := {} ;store data about the clicked item here
 		Omni_ItemInfo()
 
 		If InStr(Clipboard, "note: ~b/o") && WinExist("ahk_id " vars.hwnd.async.main)
 		{
-			AsyncTrade2(vars.async.mode), Omni_Release()
+			AsyncTradeReprice(vars.async.mode), Omni_Release()
 			Return
 		}
 
@@ -92,34 +95,8 @@
 				Legion_Parse(), Legion_GUI()
 			Case "context_menu":
 				Omni_ContextMenu()
-			Case "horizons":
-				HorizonsTooltip("a")
-				Omni_Release()
-				LLK_Overlay(vars.hwnd.horizons.main, "destroy")
-			Case "horizons_map":
-				HorizonsTooltip(vars.omnikey.item.tier)
-				Omni_Release()
-				LLK_Overlay(vars.hwnd.horizons.main, "destroy")
-			Case "horizons_shaper":
-				HorizonsTooltip("shaper")
-				Omni_Release()
-				LLK_Overlay(vars.hwnd.horizons.main, "destroy")
 			Case "lootfilter":
-				input := LLK_ControlGet(vars.hwnd.lootfilter.search), item := vars.omnikey.item, shift := GetKeyState("Shift", "P")
-				If (item.rarity = Lang_Trans("items_magic")) && !item.itembase && WinExist("ahk_id " vars.hwnd.lootfilter.main)
-				{
-					Omni_Release()
-					Return
-				}
-				If !InStr(input, """" (item.itembase ? item.itembase : item.name) """") || !shift && InStr(input, ",")
-				{
-					If shift && !Blank(input)
-						input .= ", """ LLK_StringCase(item.itembase ? item.itembase : item.name) """"
-					Else input := """" LLK_StringCase(item.itembase ? item.itembase : item.name) """"
-					If WinExist("ahk_id " vars.hwnd.lootfilter.main)
-						GuiControl,, % vars.hwnd.lootfilter.search, % input
-					Lootfilter_GUI("search", "dock_" (vars.general.xMouse >= vars.monitor.x + vars.client.xc ? "1" : "2"), "omnikey")
-				}
+				Lootfilter_Clipboard()
 			Case "mapinfo":
 				If Mapinfo_Parse(1, vars.poe_version)
 					Mapinfo_GUI()
@@ -160,12 +137,16 @@ Omnikey2()
 				continue
 			If Cheatsheet_Search(cheatsheet)
 			{
-				Cheatsheet_Activate(cheatsheet)
+				Cheatsheet_Activate(cheatsheet), cheatsheet_on := 1
 				Break
 			}
 		}
-		Gdip_DisposeImage(vars.cheatsheets.pHaystack), Omni_Release()
-		Return
+		Gdip_DisposeImage(vars.cheatsheets.pHaystack)
+		If cheatsheet_on
+		{
+			Omni_Release()
+			Return
+		}
 	}
 
 	Screenchecks_ImageSearch()
@@ -199,18 +180,29 @@ Omnikey2()
 	}
 	Else If settings.features.statlas && vars.imagesearch.atlas.check
 	{
-		If !WinExist("statlas debug") && Statlas()
+		If !WinExist("OCR debug") && Statlas()
 			Statlas_GUI()
-		Else If !WinExist("statlas debug")
-			LLK_ToolTip(Lang_Trans("global_fail"),,,,, "Red")
 
 		Omni_Release(), active := 1
-		Gui, statlas_comms: Destroy
+		Gui, ocr_comms: Destroy
 		LLK_Overlay(vars.hwnd.statlas.main, "destroy"), vars.hwnd.statlas.main := ""
 		If (settings.statlas.tier0 != settings.statlas.tier)
 			IniWrite, % (settings.statlas.tier0 := settings.statlas.tier), % "ini" vars.poe_version "\statlas.ini", settings, filter tier
 		If (settings.statlas.zoom0 != settings.statlas.zoom)
 			IniWrite, % (settings.statlas.zoom0 := settings.statlas.zoom), % "ini" vars.poe_version "\statlas.ini", settings, zoom
+	}
+	Else If settings.features.runeshaping && vars.imagesearch["runeshaping" (settings.general.input_method = 2 ? "2" : "")].check
+	{
+		If !WinExist("OCR debug")
+			Runeshape_OCR()
+
+		If settings.runeshaping.hold_ctrl
+			SendInput, {LControl down}
+		Omni_Release(), active := 1
+		If settings.runeshaping.hold_ctrl
+			SendInput, {LControl up}
+		LLK_Overlay(vars.hwnd.runeshaping.main, "destroy"), vars.hwnd.runeshaping := ""
+		Gui, ocr_comms: Destroy
 	}
 	Else If (InStr(vars.log.areaID, "_town") || LLK_StringCompare(vars.log.areaID, ["hideout"]) || (vars.log.areaID = "1_3_17_1") || vars.client.stream) && vars.leveltracker.toggle && (guide.gemList.Count() || guide.itemList.Count())
 	{
@@ -238,7 +230,7 @@ Omnikey2()
 		vars.searchstrings.pHaystack := Gdip_BitmapFromHWND(vars.hwnd.poe_client, 1)
 		For string, val in vars.searchstrings.list
 		{
-			If !val.enable
+			If !val.enable || InStr(string, "_")
 				Continue
 			If String_Search(string)
 			{
@@ -287,10 +279,10 @@ Omni_Context(mode := 0)
 			If (A_TickCount >= vars.omnikey.start + 200)
 				Return "essences"
 
-	If vars.hwnd.anoints.main && RegExMatch(vars.omnikey.item.name, "^(Diluted|Liquid|Concentrated)\s.*|.*\sOil$")
+	If vars.hwnd.anoints.main && RegExMatch(vars.omnikey.item.name, "^(Potent\s){0,1}(Diluted|Liquid|Concentrated)\s.*|.*\sOil$")
 		Return "anoints_stock"
 
-	If settings.features.lootfilter && !vars.general.shift_trigger && (item.name || item.itembase) && (WinExist("ahk_id " vars.hwnd.lootfilter.main) || GetKeyState("Shift", "P"))
+	If settings.features.lootfilter && (item.name || item.itembase) && (vars.hwnd.lootfilter.main && WinExist("ahk_id " vars.hwnd.lootfilter.main) || GetKeyState(settings.lootfilter.modifier_key, "P"))
 		Return "lootfilter"
 	If WinExist("ahk_id " vars.hwnd.recombination.main) && LLK_PatternMatch(item.class, "", vars.recombination.classes,,, 0)
 		Return "recombination"
@@ -310,23 +302,10 @@ Omni_Context(mode := 0)
 			If (A_TickCount >= vars.omnikey.start + 200)
 				Return "relics"
 
-	If !vars.poe_version && !settings.features.stash && (item.name = "Orb of Horizons")
-		While GetKeyState(vars.omnikey.hotkey, "P") || !Blank(vars.omnikey.hotkey2) && GetKeyState(vars.omnikey.hotkey2, "P")
-			If (A_TickCount >= vars.omnikey.start + 200)
-				Return "horizons"
-	If (!vars.poe_version && !LLK_PatternMatch(item.name "`n" item.itembase, "", ["Doryani", "Maple"]) && LLK_PatternMatch(item.name "`n" item.itembase, "", ["Map", "Invitation", "Blueprint:", "Contract:", "Expedition Logbook"])
+	If (!vars.poe_version && !LLK_PatternMatch(item.name "`n" item.itembase, "", ["Doryani", "Maple"]) && LLK_PatternMatch(item.name "`n" item.itembase, "", ["Map", "Chart", "Invitation", "Blueprint:", "Contract:", "Expedition Logbook"])
 	|| vars.poe_version && LLK_PatternMatch(item.name "`n" item.itembase, "", [Lang_Trans("items_waystone")]))
 	&& (item.rarity != Lang_Trans("items_unique"))
 	{
-		While !vars.poe_version && (settings.mapinfo.activation = "toggle" || GetKeyState("Alt", "P")) && (GetKeyState(vars.omnikey.hotkey, "P") || !Blank(vars.omnikey.hotkey2) && GetKeyState(vars.omnikey.hotkey2, "P")) && LLK_PatternMatch(item.name "`n" item.itembase, "", ["Map"])
-			If (A_TickCount >= vars.omnikey.start + 200)
-			{
-				If LLK_PatternMatch(vars.omnikey.clipboard, "", ["Maze of the Minotaur", "Forge of the Phoenix", "Lair of the Hydra", "Pit of the Chimera"])
-					Return "horizons_shaper"
-				Else If item.tier
-					Return "horizons_map"
-				Else Return
-			}
 		If InStr(clip, Lang_Trans("items_mapreward"))
 			Return "context_menu"
 
@@ -413,11 +392,11 @@ Omni_ContextMenu()
 			}
 
 			If (item.rarity != Lang_Trans("items_unique")) && !Blank(item.class)
-			&& (settings.general.lang_client = "english" && !InStr(item.class, "currency") || (LLK_HasVal(db.item_bases._classes, item.class) || vars.poe_version && (vars.omnikey.poedb[item.class] || item.class = "augment")) || LLK_PatternMatch(item.name, "", ["Essence of", "Scarab", "Catalyst", " Oil", "Memory of "])) || RegExMatch(item.name, "^(Diluted|Liquid|Concentrated)\s")
+			&& (settings.general.lang_client = "english" && !InStr(item.class, "currency") || (LLK_HasVal(db.item_bases._classes, item.class) || vars.poe_version && (vars.omnikey.poedb[item.class] || item.class = "augment")) || LLK_PatternMatch(item.name, "", ["Essence of", "Scarab", "Catalyst", " Oil", "Memory of "])) || RegExMatch(item.name, "^(Potent\s){0,1}(Diluted|Liquid|Concentrated)\s")
 			{
 				If !Blank(LLK_HasVal(db.item_bases._classes, item.class))
 					class := db.item_bases._classes[LLK_HasVal(db.item_bases._classes, item.class)]
-				Else If RegExMatch(item.name, "^(Diluted|Liquid|Concentrated)\s")
+				Else If RegExMatch(item.name, "^(Potent\s){0,1}(Diluted|Liquid|Concentrated)\s")
 					class := "Liquid emotion"
 				Else If LLK_PatternMatch(item.name, "", ["Essence of", "Scarab", "Catalyst", " Oil", "Memory of "])
 					class := LLK_PatternMatch(item.name, "", ["Essence of", "Scarab", "Catalyst", " Oil", "Memory of "])
@@ -440,12 +419,18 @@ Omni_ContextMenu()
 				}
 				If !vars.poe_version && LLK_PatternMatch(item.class, "", vars.recombination.classes,,, 0)
 					Gui, omni_context: Add, Text, % "Section xs gOmni_ContextMenuPick HWNDhwnd3 " style, % "recombination"
-				If settings.features.anoints && RegExMatch(item.name, "^(Diluted|Liquid|Concentrated)\s|\sOil$")
+				If settings.features.anoints && RegExMatch(item.name, "^(Potent\s){0,1}(Diluted|Liquid|Concentrated)\s|\sOil$")
 					Gui, omni_context: Add, Text, % "Section xs gOmni_ContextMenuPick HWNDhwnd4 " style, % Lang_Trans("ms_anoints")
 
 				vars.hwnd.omni_context.wiki_class := hwnd, vars.omni_context[hwnd] := (class = "augment") ? (InStr(item.name, Lang_Trans("items_soul_core")) ? "soul core" : (InStr(item.name, Lang_Trans("items_idol")) ? "idol" : "rune")) : class, vars.hwnd.omni_context.poedb := hwnd1
 				vars.hwnd.omni_context.craftofexile := hwnd2, vars.hwnd.omni_context.recombination := hwnd3, vars.hwnd.omni_context.anoints := hwnd4
 				width := (Max(w, w1, w2) > width) ? Max(w, w1, w2) : width
+			}
+			Else If (item.rarity = Lang_Trans("items_unique")) && !Blank(item.class) && !Blank(item.attributes)
+			{
+				Gui, omni_context: Add, Text, % "Section xs gOmni_ContextMenuPick HWNDhwnd1" style, % "poe.db: " Lang_Trans("system_poedb_lang", 3)
+				ControlGetPos,,, w3,,, % "ahk_id " hwnd1
+				vars.hwnd.omni_context.poedb := hwnd1
 			}
 
 			If InStr(item.name, "to the goddess")
@@ -470,6 +455,12 @@ Omni_ContextMenu()
 				ControlGetPos,,, w7,,, % "ahk_id " hwnd
 				ControlGetPos,,, w8,,, % "ahk_id " hwnd1
 				vars.hwnd.omni_context.poedb := hwnd, vars.hwnd.omni_context.poedb1 := hwnd1
+				If (cluster_type = "large")
+				{
+					Gui, omni_context: Add, Text, % "Section xs gOmni_ContextMenuPick HWNDhwnd" style, % "cluster calc"
+					ControlGetPos,,, w12,,, % "ahk_id " hwnd
+					vars.hwnd.omni_context.clustercalc := hwnd
+				}
 			}
 
 			If !item.unid && (item.itembase = "Timeless Jewel") && InStr(vars.omnikey.clipboard, Lang_Trans("items_uniquemod"))
@@ -489,7 +480,7 @@ Omni_ContextMenu()
 				vars.hwnd.omni_context.chromatics := hwnd
 			}
 		}
-		Loop 11
+		Loop 12
 			w%A_Index% := !w%A_Index% ? 0 : w%A_Index%
 		width := Max(w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11)
 	}
@@ -529,7 +520,7 @@ Omni_ContextMenuPick(cHWND)
 	Else If (check = "poelab")
 	{
 		Run, % "https://www.poelab.com/"
-		If settings.qol.lab && settings.features.browser
+		If settings.qol.lab
 		{
 			WinWaitActive, ahk_group snipping_tools,, 2
 			ToolTip_Mouse("lab", 1)
@@ -545,10 +536,10 @@ Omni_ContextMenuPick(cHWND)
 			page := (InStr(A_GuiControl, "all clusters") ? "" : (InStr(item.itembase, "small") ? "Small_" : InStr(item.itembase, "medium") ? "Medium_" : "Large_")) "Cluster_Jewel"
 		Else If InStr(item.itembase, "Runic ", 1)
 			page := (item.class = "boots") ? "Runic_Sabatons" : (item.class = "helmets") ? "Runic_Crown" : "Runic_Gauntlets"
-		Else If !Blank(LLK_HasVal(["unset ring", "iron flask", "bone ring", "convoking wand", "bone spirit shield", "silver flask"], item.itembase)) || InStr(item.class, "jewels") || InStr(item.class, "heist")
+		Else If !Blank(LLK_HasVal(["unset ring", "iron flask", "bone ring", "convoking wand", "bone spirit shield", "silver flask", Lang_Trans("items_cannon")], item.itembase)) || InStr(item.class, "jewels") || InStr(item.class, "heist")
 			page := StrReplace(item.itembase, " ", "_")
 		Else page := StrReplace(item.class, " ", "_") . item.attributes
-		Run, % "https://poe" Trim(vars.poe_version, " ") "db.tw/" . Lang_Trans("system_poedb_lang") . "/" . page . (InStr(page, "cluster_jewel") ? "#EnchantmentModifiers" : "#ModifiersCalc")
+		Run, % "https://poe" Trim(vars.poe_version, " ") "db.tw/" . Lang_Trans("system_poedb_lang") . "/" . page . (item.rarity = Lang_Trans("items_unique") ? "#VaalOrbCorrupted" (vars.poe_version ? "Enchantment" : "Implicit") : (InStr(page, "cluster_jewel") ? "#EnchantmentModifiers" : "#ModifiersCalc"))
 		Clipboard := item.ilvl
 		If InStr(page, "cluster_jewel") && settings.features.browser
 		{
@@ -556,6 +547,8 @@ Omni_ContextMenuPick(cHWND)
 			ToolTip_Mouse("cluster", 1)
 		}
 	}
+	Else If (check = "clustercalc")
+		Run, % "https://clusters.poetools.dev/"
 	Else If (check = "craftofexile")
 		Run, % "https://www.craftofexile.com/?game=poe" (vars.poe_version ? "2" : "1")
 	Else If (check = "seed")
@@ -570,7 +563,7 @@ Omni_ContextMenuPick(cHWND)
 		Run, https://siveran.github.io/calc.html
 		If settings.features.browser
 		{
-			WinWaitActive, ahk_group snipping_tools,, 2
+			WinWaitActive, ahk_group snipping_tools,, 1
 			ToolTip_Mouse("chromatics", 1)
 		}
 	}
@@ -603,14 +596,10 @@ Omni_ItemInfo()
 	Else If vars.poe_version && item.class && (vars.omnikey.poedb[item.class] = 2)
 	{
 		item.attributes := ""
-		Loop, Parse, % vars.omnikey.clipboard, `n, % "`r "
-			If InStr(A_LoopField, "Requires:")
-			{
-				Loop, Parse, A_LoopField, `,, % "`n`r "
-					If !InStr(A_LoopField, "Level")
-						item.attributes .= "_" LLK_StringCase(SubStr(StrReplace(A_LoopField, "(augmented) "), InStr(A_LoopField, " ") + 1, 3))
-				Break
-			}
+		For class, val in db.item_bases
+			If InStr(item.class, class)
+				If val.HasKey(item.itembase)
+					item.attributes .= (val[item.itembase].ar ? "_str" : ""), item.attributes .= (val[item.itembase].ev ? "_dex" : ""), item.attributes .= (val[item.itembase].es ? "_int" : "")
 	}
 
 	Loop, Parse, clip, `n, % "`r " ;store the item's class, rarity, and miscellaneous info
@@ -623,13 +612,19 @@ Omni_ItemInfo()
 			If LLK_PatternMatch(loopfield, "", vars.lang["items_" A_LoopField])
 				item[A_LoopField] := StrReplace(StrReplace(SubStr(loopfield, InStr(loopfield, ":") + 2), " (augmented)"), " (unmet)")
 
+		If (item.itembase = Lang_Trans("items_merc_warrant"))
+			If InStr(A_LoopField, Lang_Trans("items_merc_build"))
+				item.name .= " (" SubStr(A_LoopField, InStr(A_LoopField, ":") + 2) ")"
+			Else If InStr(A_LoopField, Lang_Trans("items_merc_level"))
+				item.ilvl := SubStr(A_LoopField, InStr(A_LoopField, ":") + 2)
+
 		If InStr(A_LoopField, Lang_Trans("items_ilevel"))
 			item.ilvl := SubStr(A_LoopField, InStr(A_LoopField, ":") + 2)
 
 		If InStr(A_LoopField, Lang_Trans("mods_cluster_passive"))
 			item.cluster_enchant := StrReplace(StrReplace(SubStr(A_LoopField, StrLen(Lang_Trans("mods_cluster_passive")) + 2), "+"), " (enchant)")
 
-		If !InStr("rings,belts,amulets", item.class) && LLK_PatternMatch(SubStr(A_LoopField, 0), "", ["R", "G", "B", "W", "A"])
+		If !InStr("rings,belts,amulets", item.class) && LLK_PatternMatch(SubStr(A_LoopField, 0), "", ["R", "G", "B", "W", "A", "S"])
 			item.sockets := StrLen(StrReplace(StrReplace(SubStr(A_LoopField, InStr(A_LoopField, ":") + 2), " "), "-"))
 
 		If InStr(A_LoopField, Lang_Trans("items_maptier"))
