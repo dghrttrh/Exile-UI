@@ -871,8 +871,10 @@ Leveltracker_GuideEditor(cHWND)
 			icons := [0, 1, 2, 3, 4, 5, 6, 7, "checkpoint", "waypoint", "portal", "arena", "quest_2", "help", "in-out2", "ring", "rune", "artificer", "jeweller", "gcp", "exa", "regal", "skill", "spirit", "support"]
 		Else icons := [0, 1, 2, 3, 4, 5, 6, 7, "waypoint", "portal", "arena", "quest", "help", "craft", "lab", "in-out2"]
 
+	;translations may not include a localized default guide: fall back to English
 	If !vars.leveltracker_editor.act
-		vars.leveltracker_editor := {"act": 1, "default_guide": json.load(LLK_FileRead("data\" settings.general.lang "\[leveltracker] default guide" vars.poe_version ".json")), "page": [1]}
+		guide_lang := FileExist("data\" settings.general.lang "\[leveltracker] default guide" vars.poe_version ".json") ? settings.general.lang : "english"
+		, vars.leveltracker_editor := {"act": 1, "default_guide": json.load(LLK_FileRead("data\" guide_lang "\[leveltracker] default guide" vars.poe_version ".json")), "page": [1]}
 		, vars.leveltracker_editor.default_guide := json.dump(vars.leveltracker_editor.default_guide)
 
 	If !IsObject(db.leveltracker)

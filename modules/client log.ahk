@@ -388,7 +388,7 @@ Log_Loop(mode := 0)
 
 		If settings.features.leveltracker && (WinExist("ahk_id " vars.hwnd.leveltracker.main) && (IsNumber(level) && (level0 != level) || !Blank(areaID) && areaID != vars.leveltracker.guide.target_area)
 		|| LLK_Overlay(vars.hwnd.leveltracker.main, "check") && (RegexMatch(areaID, "i)^hideout") || db.leveltracker.areaIDs[areaID] && areaID != vars.leveltracker.guide.target_area)
-		&& !RegexMatch(vars.log.areaID, "i)labyrinth_|g3_10$|sanctum_") && !LLK_HasVal(vars.leveltracker.guide.group1, Lang_Trans("ms_leveling tracker"), 1))
+		&& !RegexMatch(vars.log.areaID, "i)labyrinth_|g3_10$|sanctum_") && !LLK_HasVal(vars.leveltracker.guide.group1, "act-tracker", 1)) ;end-of-guide marker in the guide data, not a UI string (UI translations would break the match)
 			Leveltracker_Progress()
 
 		If !Blank(areaID) && settings.features.leveltracker && WinActive("ahk_id " vars.hwnd.poe_client) && RegExMatch(areaID, "i)labyrinth_|sanctum_|g3_10$") && WinExist("ahk_id " vars.hwnd.leveltracker.main)
