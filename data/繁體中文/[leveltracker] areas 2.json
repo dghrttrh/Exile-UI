@@ -1,0 +1,474 @@
+[
+  [
+    {
+      "id": "g1_1",
+      "name": "河岸"
+    },
+    {
+      "id": "g1_town",
+      "name": "皆伐營地"
+    },
+    {
+      "id": "g1_2",
+      "name": "皆伐",
+      "recommendation": "2 | 2"
+    },
+    {
+      "id": "g1_3",
+      "name": "泥沼陋居"
+    },
+    {
+      "id": "g1_4",
+      "name": "葛瑞爾林",
+      "recommendation": "2 | 2"
+    },
+    {
+      "id": "g1_5",
+      "name": "赤谷",
+      "recommendation": "2 | 4"
+    },
+    {
+      "id": "g1_6",
+      "name": "纏縛陰林",
+      "recommendation": "4 | 5"
+    },
+    {
+      "id": "g1_7",
+      "name": "不朽帝國之墓",
+      "recommendation": "5 | 6"
+    },
+    {
+      "id": "g1_8",
+      "name": "政務官陵墓",
+      "recommendation": "7 | 7"
+    },
+    {
+      "id": "g1_9",
+      "name": "配偶的墓室",
+      "recommendation": "6 | 7"
+    },
+    {
+      "id": "g1_10",
+      "name": "盤根魔域"
+    },
+    {
+      "id": "g1_11",
+      "name": "獵場",
+      "recommendation": "7 | 8"
+    },
+    {
+      "id": "g1_12",
+      "name": "弗雷索恩",
+      "recommendation": "9 | 10"
+    },
+    {
+      "id": "g1_13_1",
+      "name": "奧格姆農地",
+      "recommendation": "8 | 9"
+    },
+    {
+      "id": "g1_13_2",
+      "name": "奧格姆村",
+      "recommendation": "10 | 11"
+    },
+    {
+      "id": "g1_14",
+      "name": "宅第壁壘",
+      "recommendation": "11 | 12"
+    },
+    {
+      "id": "g1_15",
+      "name": "奧格姆宅第",
+      "recommendation": "12 | 13+"
+    }
+  ],
+  [
+    {
+      "id": "g2_1",
+      "name": "瓦斯提里郊區",
+      "recommendation": "13+ | 14"
+    },
+    {
+      "id": "g2_town",
+      "name": "阿杜拉車隊"
+    },
+    {
+      "id": "g2_2",
+      "name": "叛徒之路",
+      "recommendation": "16.5 | 17.5"
+    },
+    {
+      "id": "g2_3a",
+      "name": "哈拉妮關口 (受阻)"
+    },
+    {
+      "id": "g2_3",
+      "name": "哈拉妮關口",
+      "recommendation": "17.5 | 18.5"
+    },
+    {
+      "id": "g2_4_1",
+      "name": "凱斯城",
+      "recommendation": "18.5 | 19"
+    },
+    {
+      "id": "g2_4_2",
+      "name": "失落之城",
+      "recommendation": "19 | 20"
+    },
+    {
+      "id": "g2_4_3",
+      "name": "掩埋神殿",
+      "recommendation": "20 | 21"
+    },
+    {
+      "id": "g2_5_1",
+      "name": "乳齒象惡地",
+      "recommendation": "21 | 21.5"
+    },
+    {
+      "id": "g2_5_2",
+      "name": "骨坑",
+      "recommendation": "21.5 | 22.5"
+    },
+    {
+      "id": "g2_6",
+      "name": "泰坦之谷",
+      "recommendation": "22.5 | 23.5"
+    },
+    {
+      "id": "g2_7",
+      "name": "泰坦石窟",
+      "recommendation": "23.5 | 24"
+    },
+    {
+      "id": "g2_8",
+      "name": "戴斯哈",
+      "recommendation": "24 | 25"
+    },
+    {
+      "id": "g2_9_1",
+      "name": "悼念之路",
+      "recommendation": "25 | 26"
+    },
+    {
+      "id": "g2_9_2",
+      "name": "戴斯哈尖塔",
+      "recommendation": "26 | 27"
+    },
+    {
+      "id": "g2_10_1",
+      "name": "莫頓挖石場",
+      "recommendation": "14 | 15.5"
+    },
+    {
+      "id": "g2_10_2",
+      "name": "莫頓礦坑",
+      "recommendation": "15.5 | 16.5"
+    },
+    {
+      "id": "g2_12",
+      "name": "無畏隊",
+      "recommendation": "27 | 28.5"
+    },
+    {
+      "id": "g2_13",
+      "name": "絲克瑪試煉"
+    },
+    {
+      "id": "ExpeditionSubArea_Kalguur_Act2",
+      "name": "泰坦之顱"
+    }
+  ],
+  [
+    {
+      "id": "g3_1",
+      "name": "風沙沼澤",
+      "recommendation": "28.5 | 29"
+    },
+    {
+      "id": "g3_town",
+      "name": "高地神塔營地"
+    },
+    {
+      "id": "g3_2_1",
+      "name": "感染荒地",
+      "recommendation": "31 | 32"
+    },
+    {
+      "id": "g3_2_2",
+      "name": "瑪特蘭水道",
+      "recommendation": "34 | 35"
+    },
+    {
+      "id": "g3_4",
+      "name": "劇毒墓穴",
+      "recommendation": "30 | 31"
+    },
+    {
+      "id": "g3_3",
+      "name": "叢林遺跡",
+      "recommendation": "29 | 30"
+    },
+    {
+      "id": "g3_5",
+      "name": "龍蜥濕地",
+      "recommendation": "32 | 33"
+    },
+    {
+      "id": "g3_6_1",
+      "name": "吉卡尼的機械迷城",
+      "recommendation": "33 | 33"
+    },
+    {
+      "id": "g3_6_2",
+      "name": "吉卡尼的聖域",
+      "recommendation": "33 | 34"
+    },
+    {
+      "id": "g3_7",
+      "name": "阿札克泥沼",
+      "recommendation": "35 | 36"
+    },
+    {
+      "id": "g3_8",
+      "name": "淹沒之城",
+      "recommendation": "36 | 36"
+    },
+    {
+      "id": "g3_9",
+      "name": "熔岩寶庫",
+      "recommendation": "37 | 37"
+    },
+    {
+      "id": "g3_10_airlock",
+      "name": "混沌神殿"
+    },
+    {
+      "id": "g3_11",
+      "name": "污垢頂峰",
+      "recommendation": "36 | 37"
+    },
+    {
+      "id": "g3_12",
+      "name": "科佩克神殿",
+      "recommendation": "37 | 38"
+    },
+    {
+      "id": "g3_14",
+      "name": "奧札爾",
+      "recommendation": "38 | 39"
+    },
+    {
+      "id": "g3_16",
+      "name": "阿戈拉",
+      "recommendation": "39 | 40"
+    },
+    {
+      "id": "g3_17",
+      "name": "漆黑密室",
+      "recommendation": "40 | 41"
+    },
+    {
+      "id": "ExpeditionSubArea_Kalguur_Act3",
+      "name": "神祕避難所"
+    }
+  ],
+  [
+    {
+      "id": "g4_town",
+      "name": "金司馬區"
+    },
+    {
+      "id": "g4_1_1",
+      "name": "金氏島",
+      "recommendation": "41 | 41.5"
+    },
+    {
+      "id": "g4_1_2",
+      "name": "火山迷窟",
+      "recommendation": "41.5 | 42"
+    },
+    {
+      "id": "g4_2_1",
+      "name": "凱吉灣",
+      "recommendation": "42 | 42.5"
+    },
+    {
+      "id": "g4_2_2",
+      "name": "旅程之末",
+      "recommendation": "42.5 | 43"
+    },
+    {
+      "id": "g4_3_1",
+      "name": "瓦卡帕努島",
+      "recommendation": "43 | 43"
+    },
+    {
+      "id": "g4_3_2",
+      "name": "吟謠洞窟",
+      "recommendation": "43 | 43"
+    },
+    {
+      "id": "g4_4_1",
+      "name": "悉妮蔻拉之眼",
+      "recommendation": "45 | 46"
+    },
+    {
+      "id": "g4_4_2",
+      "name": "亡者之殿",
+      "recommendation": "46 | 47"
+    },
+    {
+      "id": "g4_4_3",
+      "name": "祖靈的試煉"
+    },
+    {
+      "id": "g4_5_1",
+      "name": "廢棄監獄",
+      "recommendation": "43 | 44"
+    },
+    {
+      "id": "g4_5_2",
+      "name": "單獨禁閉室",
+      "recommendation": "44 | 44"
+    },
+    {
+      "id": "g4_7",
+      "name": "伯勞鳥之島",
+      "recommendation": "44 | 45"
+    },
+    {
+      "id": "g4_8a",
+      "name": "阿拉塔斯"
+    },
+    {
+      "id": "g4_8b",
+      "name": "阿拉塔斯 (敵對)",
+      "recommendation": "47 | 47"
+    },
+    {
+      "id": "g4_10",
+      "name": "挖掘",
+      "recommendation": "47 | 48"
+    },
+    {
+      "id": "g4_11_1a",
+      "name": "尼加卡努"
+    },
+    {
+      "id": "g4_11_1b",
+      "name": "尼加卡努 (敵對)",
+      "recommendation": "48 | 48"
+    },
+    {
+      "id": "g4_11_2",
+      "name": "部族之心",
+      "recommendation": "49 | 49"
+    },
+    {
+      "id": "g4_13",
+      "name": "掠奪者之角"
+    }
+  ],
+  [
+    {
+      "id": "p1_town",
+      "name": "庇護所"
+    },
+    {
+      "id": "p1_1",
+      "name": "火噬農地"
+    },
+    {
+      "id": "p1_2",
+      "name": "瑟雷之石"
+    },
+    {
+      "id": "p1_3",
+      "name": "黑木林"
+    },
+    {
+      "id": "p1_4",
+      "name": "霍爾登"
+    },
+    {
+      "id": "p1_5",
+      "name": "狼之要塞"
+    },
+    {
+      "id": "p1_6",
+      "name": "霍爾登宅第"
+    }
+  ],
+  [
+    {
+      "id": "p2_town",
+      "name": "卡里市集"
+    },
+    {
+      "id": "p2_1",
+      "name": "卡里交匯道"
+    },
+    {
+      "id": "p2_2",
+      "name": "卡塔爾之塘"
+    },
+    {
+      "id": "p2_3",
+      "name": "塞爾卡里庇護所"
+    },
+    {
+      "id": "p2_5",
+      "name": "賈萊關口"
+    },
+    {
+      "id": "p2_6",
+      "name": "奇瑪"
+    },
+    {
+      "id": "p2_7",
+      "name": "奇瑪水源地"
+    }
+  ],
+  [
+    {
+      "id": "p3_town",
+      "name": "林間空地"
+    },
+    {
+      "id": "p3_1",
+      "name": "灰燼森林"
+    },
+    {
+      "id": "p3_2",
+      "name": "庫萊亞村"
+    },
+    {
+      "id": "p3_3",
+      "name": "冰川湖泊"
+    },
+    {
+      "id": "p3_4",
+      "name": "狂嗥洞穴"
+    },
+    {
+      "id": "p3_5",
+      "name": "庫萊亞山巔"
+    },
+    {
+      "id": "p3_6",
+      "name": "蝕刻溪谷"
+    },
+    {
+      "id": "p3_7",
+      "name": "庫阿西克寶庫"
+    }
+  ],
+  [
+    {
+      "id": "g_endgame_town",
+      "name": "ziggurat refuge"
+    }
+  ]
+]

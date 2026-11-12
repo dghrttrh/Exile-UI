@@ -5,20 +5,31 @@
 
 	lang := LLK_IniRead("ini" vars.poe_version "\config.ini", "settings", "language", "english"), settings.general.lang := !FileExist("data\" lang "\UI.txt") ? "english" : lang
 	If (lang != "english") ;load English help-tooltips into secondary object as a fallback (in case a translation is not up-to-date and missing certain tooltip-texts)
-		vars.help := Json.Load(LLK_FileRead("data\" (!FileExist("data\" lang "\help tooltips.json") ? "english" : lang) "\help tooltips.json",, "65001")), vars.help2 := Json.Load(LLK_FileRead("data\english\help tooltips.json",, "65001"))
+	{
+		vars.help := Json.Load(LLK_FileRead("data\english\help tooltips.json",, "65001")), vars.help2 := Json.Load(LLK_FileRead("data\english\help tooltips.json",, "65001"))
+		If FileExist("data\" lang "\help tooltips.json") ;translations may be partial: overwrite English entries one by one, so untranslated ones remain available to code that reads vars.help directly
+			For section, entries in Json.Load(LLK_FileRead("data\" lang "\help tooltips.json",, "65001"))
+			{
+				If !IsObject(vars.help[section])
+					vars.help[section] := {}
+				For key, val in entries
+					vars.help[section][key] := val
+			}
+	}
 	Loop 2
 		vars["lang" (A_Index = 1 ? "" : 2)] := Lang_Load((A_Index = 1 ? lang : "english") "\UI.txt")
-	vars.help.settings["lang translators"] := vars.lang.translator.Clone(), vars.system.font := Lang_Trans("system_font")
+	vars.help.settings["lang translators"] := vars.lang.translator.Clone(), vars.system.font := ui_font := Lang_Trans("system_font")
 
 	prev_lang := settings.general.lang_client ? settings.general.lang_client : ""
 	If !FileExist("data\" settings.general.lang_client0 "\")
-		settings.general.lang_client := "unknown", vars.system.font := "Fontin SmallCaps"
+		settings.general.lang_client := "unknown", vars.system.font := ui_font ;Fontin SmallCaps for English UIs, but keep the UI's own font for translations (e.g. CJK glyphs)
 	Else
 	{
 		settings.general.lang_client := settings.general.lang_client0, lang_parse := Lang_Load(settings.general.lang_client0 "\client.txt")
 		For key, val in lang_parse
 			vars.lang[key] := val.Clone()
-		vars.system.font := Lang_Trans("system_font"), vars.help.settings["lang contributors"] := vars.lang.contributor.Clone()
+		client_font := Lang_Trans("system_font") ;the client's font takes priority, unless it's the default font and the UI language needs a different one (e.g. translated UI + English client)
+		vars.system.font := (client_font = "Fontin SmallCaps") ? ui_font : client_font, vars.help.settings["lang contributors"] := vars.lang.contributor.Clone()
 
 		If (settings.general.lang_client != "english")
 		{

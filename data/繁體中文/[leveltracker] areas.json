@@ -1,0 +1,855 @@
+[
+  [
+    {
+      "id": "1_1_1",
+      "lvl": 1,
+      "name": "絕望岩灘"
+    },
+    {
+      "id": "1_1_town",
+      "name": "獅眼守望"
+    },
+    {
+      "id": "1_1_2",
+      "lvl": 2,
+      "name": "暮光海灘"
+    },
+    {
+      "id": "1_1_2a",
+      "lvl": 3,
+      "name": "海潮孤島"
+    },
+    {
+      "id": "1_1_3",
+      "lvl": 4,
+      "name": "炙熱鹽沼"
+    },
+    {
+      "id": "1_1_3a",
+      "lvl": 5,
+      "name": "惡水池"
+    },
+    {
+      "id": "1_1_4_1",
+      "lvl": 5,
+      "name": "海潮地穴"
+    },
+    {
+      "id": "1_1_4_0",
+      "lvl": 6,
+      "name": "水聲之淵"
+    },
+    {
+      "id": "1_1_5",
+      "lvl": 6,
+      "name": "沉寂海崖"
+    },
+    {
+      "id": "1_1_6",
+      "lvl": 7,
+      "name": "碎岩山坡"
+    },
+    {
+      "id": "1_1_7_1",
+      "lvl": 8,
+      "name": "禁靈之獄下層",
+      "map_name": "禁靈之獄"
+    },
+    {
+      "id": "1_1_7_2",
+      "lvl": 9,
+      "name": "禁靈之獄上層"
+    },
+    {
+      "id": "1_1_8",
+      "lvl": 10,
+      "name": "監獄大門"
+    },
+    {
+      "id": "1_1_9",
+      "lvl": 11,
+      "name": "魅影船墓"
+    },
+    {
+      "id": "1_1_9a",
+      "lvl": 12,
+      "name": "魅影船墓洞穴"
+    },
+    {
+      "id": "1_1_11_1",
+      "name": "怨忿之窟",
+      "lvl": 12
+    },
+    {
+      "id": "1_1_11_2",
+      "lvl": 13,
+      "name": "怨忿之窟深處"
+    }
+  ],
+  [
+    {
+      "id": "1_2_1",
+      "lvl": 13,
+      "name": "南部森林"
+    },
+    {
+      "id": "1_2_town",
+      "name": "森林營地"
+    },
+    {
+      "id": "1_2_2",
+      "lvl": 14,
+      "name": "前哨原野"
+    },
+    {
+      "id": "1_2_2a",
+      "lvl": 15,
+      "name": "獸穴"
+    },
+    {
+      "id": "1_2_3",
+      "lvl": 15,
+      "name": "危機叉路"
+    },
+    {
+      "id": "1_2_4",
+      "lvl": 16,
+      "name": "河畔斷橋"
+    },
+    {
+      "id": "1_2_6_1",
+      "lvl": 15,
+      "name": "罪孽之殿：第 1 層",
+      "map_name": "罪孽之殿"
+    },
+    {
+      "id": "1_2_6_2",
+      "lvl": 16,
+      "name": "罪孽之殿：第 2 層"
+    },
+    {
+      "id": "1_2_15",
+      "lvl": 16,
+      "name": "墮道遺跡"
+    },
+    {
+      "id": "1_2_5_1",
+      "lvl": 17,
+      "name": "靜謐陵墓 1 樓",
+      "map_name": "靜謐陵墓"
+    },
+    {
+      "id": "1_2_5_2",
+      "lvl": 18,
+      "name": "靜謐陵墓 2 樓"
+    },
+    {
+      "id": "1_2_7",
+      "lvl": 15,
+      "name": "河道"
+    },
+    {
+      "id": "1_2_8",
+      "lvl": 21,
+      "name": "北部密林"
+    },
+    {
+      "id": "1_2_9",
+      "lvl": 17,
+      "name": "西部密林"
+    },
+    {
+      "id": "1_2_10",
+      "lvl": 18,
+      "name": "織網者巢穴"
+    },
+    {
+      "id": "1_2_11",
+      "lvl": 20,
+      "name": "瓦爾廢墟"
+    },
+    {
+      "id": "1_2_12",
+      "lvl": 19,
+      "name": "濕地"
+    },
+    {
+      "id": "1_2_13",
+      "lvl": 21,
+      "name": "驚魂樹洞"
+    },
+    {
+      "id": "1_2_14_2",
+      "lvl": 22,
+      "name": "瀑布洞穴",
+      "crafting_recipe": "Vaal Skill Damage I"
+    },
+    {
+      "id": "1_2_14_3",
+      "lvl": 23,
+      "name": "古金字塔",
+      "crafting_recipe": "Spell Damage I"
+    }
+  ],
+  [
+    {
+      "id": "1_3_1",
+      "lvl": 23,
+      "name": "薩恩城廢墟",
+      "crafting_recipe": "Movement Speed I"
+    },
+    {
+      "id": "1_3_town",
+      "name": "薩恩營地"
+    },
+    {
+      "id": "1_3_2",
+      "lvl": 24,
+      "name": "貧民窟"
+    },
+    {
+      "id": "1_3_3_1",
+      "lvl": 25,
+      "name": "火葬場",
+      "crafting_recipe": "Defences I"
+    },
+    {
+      "id": "1_3_10_1",
+      "lvl": 26,
+      "name": "下水道迷宮",
+      "crafting_recipe": "Physical Damage I"
+    },
+    {
+      "id": "1_3_5",
+      "lvl": 26,
+      "name": "市集地帶"
+    },
+    {
+      "id": "1_3_6",
+      "lvl": 27,
+      "name": "黑石陵墓",
+      "crafting_recipe": "Elemental Damage with Attacks I"
+    },
+    {
+      "id": "1_3_7",
+      "lvl": 27,
+      "name": "激戰廣場"
+    },
+    {
+      "id": "1_3_8_1",
+      "lvl": 27,
+      "name": "日耀神殿：第 1 層"
+    },
+    {
+      "id": "1_3_8_2",
+      "lvl": 28,
+      "name": "日耀神殿：第 2 層",
+      "crafting_recipe": "Fire Damage I"
+    },
+    {
+      "id": "1_3_9",
+      "lvl": 29,
+      "name": "不朽海港"
+    },
+    {
+      "id": "1_3_13",
+      "lvl": 29,
+      "name": "烏旗守衛兵營"
+    },
+    {
+      "id": "1_3_14_1",
+      "lvl": 29,
+      "name": "月影神殿：第 1 層",
+      "map_name": "月影神殿"
+    },
+    {
+      "id": "1_3_14_2",
+      "lvl": 30,
+      "name": "月影神殿：第 2 層",
+      "crafting_recipe": "Lightning Damage I"
+    },
+    {
+      "id": "1_3_15",
+      "lvl": 30,
+      "name": "皇家花園",
+      "crafting_recipe": "All Attributes I"
+    },
+    {
+      "id": "1_3_17_1",
+      "lvl": 30,
+      "name": "圖書館"
+    },
+    {
+      "id": "1_3_17_2",
+      "lvl": 31,
+      "name": "檔案室",
+      "crafting_recipe": "Life and Mana Regeneration I"
+    },
+    {
+      "id": "1_3_18_1",
+      "lvl": 32,
+      "name": "神權之塔"
+    },
+    {
+      "id": "1_3_18_2",
+      "lvl": 33,
+      "name": "上層神權之塔"
+    },
+    {
+      "id": "Labyrinth_Airlock",
+      "name": "Aspirants' Plaza"
+    }
+  ],
+  [
+    {
+      "id": "1_4_1",
+      "lvl": 33,
+      "name": "水道遺跡"
+    },
+    {
+      "id": "1_4_town",
+      "name": "統治者之殿"
+    },
+    {
+      "id": "1_4_2",
+      "lvl": 34,
+      "name": "乾涸湖岸",
+      "crafting_recipe": "Attack, Cast and Warcry Speed I"
+    },
+    {
+      "id": "1_4_3_1",
+      "lvl": 34,
+      "name": "漆黑礦坑：第 1 層",
+      "crafting_recipe": "Socket Colours"
+    },
+    {
+      "id": "1_4_3_2",
+      "lvl": 35,
+      "name": "漆黑礦坑：第 2 層"
+    },
+    {
+      "id": "1_4_3_3",
+      "lvl": 36,
+      "name": "水晶礦脈",
+      "crafting_recipe": "Cold Damage I"
+    },
+    {
+      "id": "1_4_4_1",
+      "lvl": 37,
+      "name": "岡姆的幻境"
+    },
+    {
+      "id": "1_4_4_3",
+      "lvl": 38,
+      "name": "岡姆的堡壘",
+      "crafting_recipe": "Socket Links - 2 to 4 Linked Sockets"
+    },
+    {
+      "id": "1_4_5_1",
+      "lvl": 37,
+      "name": "德瑞索的幻境"
+    },
+    {
+      "id": "1_4_5_2",
+      "lvl": 38,
+      "name": "大競技場",
+      "crafting_recipe": "Socket Numbers - 2 to 4 Sockets"
+    },
+    {
+      "id": "1_4_6_1",
+      "lvl": 38,
+      "name": "巨獸之腹：第 1 層"
+    },
+    {
+      "id": "1_4_6_2",
+      "lvl": 39,
+      "name": "巨獸之腹：第 2 層",
+      "crafting_recipe": "Elemental Resistances II"
+    },
+    {
+      "id": "1_4_6_3",
+      "lvl": 40,
+      "name": "育靈之室"
+    },
+    {
+      "id": "1_4_7",
+      "lvl": 40,
+      "name": "岩岸陡坡",
+      "crafting_recipe": "Ailment, Stun and Curse Mitigation I"
+    },
+    {
+      "id": "Labyrinth_Airlock",
+      "name": "Aspirants' Plaza"
+    }
+  ],
+  [
+    {
+      "id": "1_5_1",
+      "lvl": 41,
+      "name": "奴役監牢"
+    },
+    {
+      "id": "1_5_town",
+      "name": "監守高塔"
+    },
+    {
+      "id": "1_5_2",
+      "lvl": 41,
+      "name": "鎮壓地帶"
+    },
+    {
+      "id": "1_5_3",
+      "lvl": 42,
+      "name": "奧瑞亞大廣場"
+    },
+    {
+      "id": "1_5_4",
+      "lvl": 42,
+      "name": "神聖大教堂"
+    },
+    {
+      "id": "1_5_5",
+      "lvl": 43,
+      "name": "無罪之室",
+      "crafting_recipe": "Movement Speed and Exerted Attacks II"
+    },
+    {
+      "id": "1_5_4b",
+      "lvl": 44,
+      "name": "焚燒大教堂"
+    },
+    {
+      "id": "1_5_3b",
+      "lvl": 44,
+      "name": "大廣場廢墟"
+    },
+    {
+      "id": "1_5_6",
+      "lvl": 44,
+      "name": "葬骨禮堂",
+      "crafting_recipe": "Physical Damage II"
+    },
+    {
+      "id": "1_5_7",
+      "lvl": 44,
+      "name": "聖物間",
+      "crafting_recipe": "Accuracy I"
+    },
+    {
+      "id": "1_5_8",
+      "lvl": 45,
+      "name": "聖堂屋頂"
+    }
+  ],
+  [
+    {
+      "id": "2_6_town",
+      "name": "獅眼守望"
+    },
+    {
+      "id": "2_6_1",
+      "lvl": 45,
+      "name": "絕望岩灘"
+    },
+    {
+      "id": "2_6_2",
+      "lvl": 45,
+      "name": "暮光海灘"
+    },
+    {
+      "id": "2_6_3",
+      "lvl": 45,
+      "name": "海潮孤島"
+    },
+    {
+      "id": "2_6_4",
+      "lvl": 46,
+      "name": "炙熱鹽沼"
+    },
+    {
+      "id": "2_6_5",
+      "lvl": 46,
+      "name": "卡魯堡壘",
+      "crafting_recipe": "Defences II"
+    },
+    {
+      "id": "2_6_6",
+      "lvl": 46,
+      "name": "破碎山脊"
+    },
+    {
+      "id": "2_6_7_1",
+      "lvl": 47,
+      "name": "禁靈之獄下層",
+      "map_name": "禁靈之獄",
+      "crafting_recipe": "Double Resistances I"
+    },
+    {
+      "id": "2_6_7_2",
+      "lvl": 47,
+      "name": "薛朗監塔",
+      "crafting_recipe": "Spell Damage II"
+    },
+    {
+      "id": "2_6_8",
+      "lvl": 47,
+      "name": "監獄大門"
+    },
+    {
+      "id": "2_6_9",
+      "lvl": 48,
+      "name": "西部密林",
+      "crafting_recipe": "Attributes II"
+    },
+    {
+      "id": "2_6_10",
+      "lvl": 48,
+      "name": "河道"
+    },
+    {
+      "id": "2_6_11",
+      "lvl": 48,
+      "name": "濕地"
+    },
+    {
+      "id": "2_6_12",
+      "lvl": 49,
+      "name": "南部森林"
+    },
+    {
+      "id": "2_6_13",
+      "lvl": 49,
+      "name": "忿怒山洞"
+    },
+    {
+      "id": "2_6_14",
+      "lvl": 49,
+      "name": "絕望烽塔",
+      "crafting_recipe": "Life and Mana II"
+    },
+    {
+      "id": "2_6_15",
+      "lvl": 50,
+      "name": "海洋王堡礁"
+    }
+  ],
+  [
+    {
+      "id": "2_7_town",
+      "name": "橋墩營地"
+    },
+    {
+      "id": "2_7_1",
+      "lvl": 50,
+      "name": "河畔斷橋"
+    },
+    {
+      "id": "2_7_2",
+      "lvl": 51,
+      "name": "危機叉路"
+    },
+    {
+      "id": "2_7_3",
+      "lvl": 51,
+      "name": "墮道遺跡"
+    },
+    {
+      "id": "2_7_4",
+      "lvl": 51,
+      "name": "靜謐陵墓",
+      "crafting_recipe": "Damage over Time I"
+    },
+    {
+      "id": "2_7_5_1",
+      "lvl": 52,
+      "name": "罪孽之殿：第一層",
+      "map_name": "罪孽之殿",
+      "crafting_recipe": "Lightning Damage II"
+    },
+    {
+      "id": "2_7_5_2",
+      "lvl": 52,
+      "name": "罪孽之殿：第二層",
+      "crafting_recipe": "Mana Regen I"
+    },
+    {
+      "id": "2_7_5_map",
+      "lvl": 52,
+      "name": "馬雷葛蘿的書房"
+    },
+    {
+      "id": "2_7_6",
+      "lvl": 53,
+      "name": "獸穴"
+    },
+    {
+      "id": "2_7_7",
+      "lvl": 53,
+      "name": "旱木原野"
+    },
+    {
+      "id": "2_7_8",
+      "lvl": 53,
+      "name": "北部密林"
+    },
+    {
+      "id": "2_7_9",
+      "lvl": 53,
+      "name": "驚魂樹洞",
+      "crafting_recipe": "Fire Damage II"
+    },
+    {
+      "id": "2_7_10",
+      "lvl": 54,
+      "name": "堤道",
+      "crafting_recipe": "Cold Damage II"
+    },
+    {
+      "id": "2_7_11",
+      "lvl": 54,
+      "name": "瓦爾城市"
+    },
+    {
+      "id": "2_7_12_1",
+      "lvl": 54,
+      "name": "腐朽寺廟：第一層"
+    },
+    {
+      "id": "2_7_12_2",
+      "lvl": 55,
+      "name": "腐朽寺廟：第二層",
+      "crafting_recipe": "Chaos Damage I"
+    },
+    {
+      "id": "Labyrinth_Airlock",
+      "name": "Aspirants' Plaza"
+    }
+  ],
+  [
+    {
+      "id": "2_8_1",
+      "lvl": 55,
+      "name": "薩恩城牆"
+    },
+    {
+      "id": "2_8_town",
+      "name": "薩恩營地"
+    },
+    {
+      "id": "2_8_2_1",
+      "lvl": 56,
+      "name": "腐化渠道"
+    },
+    {
+      "id": "2_8_2_2",
+      "lvl": 56,
+      "name": "德瑞的腐化池",
+      "map_name": "腐化渠道",
+      "crafting_recipe": "Elemental Resistances III"
+    },
+    {
+      "id": "2_8_3",
+      "lvl": 56,
+      "name": "宏偉行道"
+    },
+    {
+      "id": "2_8_5",
+      "lvl": 57,
+      "name": "大浴堂",
+      "crafting_recipe": "Flask Duration I"
+    },
+    {
+      "id": "2_8_4",
+      "lvl": 58,
+      "name": "空中花園"
+    },
+    {
+      "id": "2_8_6",
+      "lvl": 58,
+      "name": "月影神廣場"
+    },
+    {
+      "id": "2_8_7_1_",
+      "lvl": 59,
+      "name": "月影神殿：第一層"
+    },
+    {
+      "id": "2_8_7_2",
+      "lvl": 59,
+      "name": "月影神殿：第二層",
+      "crafting_recipe": "Minions I"
+    },
+    {
+      "id": "2_8_8",
+      "lvl": 57,
+      "name": "啟程碼頭"
+    },
+    {
+      "id": "2_8_9",
+      "lvl": 57,
+      "name": "糧儲關口"
+    },
+    {
+      "id": "2_8_10",
+      "lvl": 58,
+      "name": "皇家疆界"
+    },
+    {
+      "id": "2_8_11",
+      "lvl": 58,
+      "name": "日耀神廣場"
+    },
+    {
+      "id": "2_8_12_1",
+      "lvl": 59,
+      "name": "日耀神殿：第一層"
+    },
+    {
+      "id": "2_8_12_2",
+      "lvl": 59,
+      "name": "日耀神殿：第二層",
+      "crafting_recipe": "Traps and Mines I"
+    },
+    {
+      "id": "2_8_13",
+      "lvl": 60,
+      "name": "海港大橋"
+    },
+    {
+      "id": "2_8_14",
+      "lvl": 58,
+      "name": "Hidden Underbelly"
+    }
+  ],
+  [
+    {
+      "id": "2_9_1",
+      "lvl": 61,
+      "name": "滲血水道"
+    },
+    {
+      "id": "2_9_town",
+      "name": "統治者之殿"
+    },
+    {
+      "id": "2_9_2",
+      "lvl": 61,
+      "name": "下沉地區"
+    },
+    {
+      "id": "2_9_3",
+      "lvl": 61,
+      "name": "瓦斯提里荒漠",
+      "crafting_recipe": "Attack and Cast Speed II"
+    },
+    {
+      "id": "2_9_4",
+      "lvl": 61,
+      "name": "幻景綠洲"
+    },
+    {
+      "id": "2_9_5",
+      "lvl": 62,
+      "name": "山麓"
+    },
+    {
+      "id": "2_9_6",
+      "lvl": 62,
+      "name": "沸騰湖泊",
+      "crafting_recipe": "Spell Damage III"
+    },
+    {
+      "id": "2_9_7",
+      "lvl": 62,
+      "name": "隧道遺跡",
+      "crafting_recipe": "All Attributes II"
+    },
+    {
+      "id": "2_9_8",
+      "lvl": 63,
+      "name": "廢棄挖石場",
+      "crafting_recipe": "Physical Damage III"
+    },
+    {
+      "id": "2_9_9",
+      "lvl": 63,
+      "name": "破損煉油廠",
+      "crafting_recipe": "Trigger a Socketed Spell when you Use a Skill"
+    },
+    {
+      "id": "2_9_10_1",
+      "lvl": 63,
+      "name": "獸穴之腹"
+    },
+    {
+      "id": "2_9_10_2",
+      "lvl": 64,
+      "name": "腐敗之核"
+    }
+  ],
+  [
+    {
+      "id": "2_10_town",
+      "name": "奧瑞亞港口"
+    },
+    {
+      "id": "2_10_1",
+      "lvl": 64,
+      "name": "聖堂屋頂"
+    },
+    {
+      "id": "2_10_2",
+      "lvl": 64,
+      "name": "殘摧大廣場"
+    },
+    {
+      "id": "2_10_8",
+      "lvl": 67,
+      "name": "聖物間"
+    },
+    {
+      "id": "2_10_7",
+      "lvl": 66,
+      "name": "鎮壓地帶"
+    },
+    {
+      "id": "2_10_9",
+      "lvl": 67,
+      "name": "葬骨禮堂",
+      "crafting_recipe": "Chaos Damage II"
+    },
+    {
+      "id": "2_10_3",
+      "lvl": 65,
+      "name": "焚燒大教堂"
+    },
+    {
+      "id": "2_10_4",
+      "lvl": 65,
+      "name": "褻瀆之室",
+      "crafting_recipe": "Accuracy II"
+    },
+    {
+      "id": "2_10_5",
+      "lvl": 66,
+      "name": "陰屍河道"
+    },
+    {
+      "id": "2_10_6",
+      "lvl": 67,
+      "name": "破沿血道",
+      "crafting_recipe": "Life and Mana III"
+    },
+    {
+      "id": "Labyrinth_Airlock",
+      "name": "Aspirants' Plaza"
+    }
+  ],
+  [
+    {
+      "id": "2_11_endgame_town",
+      "name": "Karui Shores",
+      "crafting_recipe": "Movement Speed and Flask Enchantments III"
+    }
+  ]
+]
